@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit{
   public consumption = '0';
   public generation = '0';
   public flexibility = '0';
-  public participants = '0';
+  public members = '0';
   public last_dr_datetime = '';
 
   public canvas : any;
@@ -310,7 +310,7 @@ export class DashboardComponent implements OnInit{
       this.generation =arr[1] + ' kWh';
       this.flexibility =arr[2] + ' kWh';
 
-      async function getParticipants(): Promise<number>{
+      async function getMembers(): Promise<number>{
         return await fetch('http://192.168.2.171:5000/community')
           .then(res => res.json())
           .then(res =>{
@@ -318,8 +318,8 @@ export class DashboardComponent implements OnInit{
           })
       }
       
-      const numberParticipants = await getParticipants();
-      this.participants = numberParticipants + '';
+      const numberMembers = await getMembers();
+      this.members = numberMembers + '';
       
       setInterval(() => {
         this.loopWithDelay();
