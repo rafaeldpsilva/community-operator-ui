@@ -28,9 +28,9 @@ export class DashboardComponent implements OnInit{
     }
     async loopWithDelay() {
         const arr = await this.getConsumption();
-        this.consumption =arr[0] + ' kWh';
-        this.generation =arr[1] + ' kWh';
-        this.flexibility =arr[2] + ' kWh';
+        this.consumption =arr[0] + ' W';
+        this.generation =arr[1] + ' W';
+        this.flexibility =arr[2] + ' W';
     }
   
     async ngOnInit(){
