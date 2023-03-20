@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title"> Participants</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table id="participantsTable" class="table table-hover">
+            <thead class=" text-primary">
+              <th>
+                Name
+              </th>
+              <th>
+                Type
+              </th>
+              <th>
+                URI
+              </th>
+              <th class="text-right">
+                Method
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of table1" (click)="onRowClick(item)">
+                <td>{{ item.name }}</td>
+                <td>{{ item.type }}</td>
+                <td>{{ item.uri }}</td>
+                <td class="text-right">{{ item.method }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card card-plain">
+      <div class="card-header">
+        <h4 class="card-title"> Iots of {{participant}}</h4>
+        <p class="card-category"> Each row represents an iot of a given participant</p>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <th>
+                Name
+              </th>
+              <th>
+                Type
+              </th>
+            </thead>
+            <tr *ngFor="let iot of table2">
+              <td>{{ iot.name }}</td>
+              <td>{{ iot.type }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
