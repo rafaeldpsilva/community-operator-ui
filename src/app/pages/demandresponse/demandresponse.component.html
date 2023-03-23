@@ -1,22 +1,24 @@
 <div class="row">
   <div class="col-md-12">
-    <div class="card ">
-      <div class="card-header ">
-        <h5 class="card-title">Community Overview</h5>
-        <p class="card-category">Last 24 Hours</p>
+    <div class="card card-chart">
+      <div class="card-header">
+        <h5 class="card-title">Forecast For Tommorow</h5>
+        <p class="card-category">Demand Response Opportunities</p>
       </div>
-      <div class="card-body ">
-        <canvas id=chartMonitoring width="400" height="100"></canvas>
+      <div class="card-body">
+        <canvas id="speedChart" width="400" height="100"></canvas>
       </div>
-      <div class="card-footer ">
-        <div class="legend">
+      <div class="card-footer">
+        <div class="chart-legend">
           <i class="fa fa-circle text-primary"></i> Consumption
           <i class="fa fa-circle text-success"></i> Generation
           <i class="fa fa-circle text-danger"></i> Flexibility
+          <i class="fa fa-circle-thin text-purple"></i> DR Opportunity
+          <i class="fa fa-circle-thin text-success"></i> Generation Surplus
         </div>
-        <hr>
-        <div class="stats">
-          <i class="fa fa-history"></i> Updated 3 minutes ago
+        <hr/>
+        <div class="card-stats">
+          <i class="fa fa-check"></i> Last Event: {{last_dr_datetime}}
         </div>
       </div>
     </div>
@@ -47,23 +49,76 @@
     </div>
   </div>
   <div class="col-md-8">
-    <div class="card card-chart">
-      <div class="card-header">
-        <h5 class="card-title">Forecast For Tommorow</h5>
-        <p class="card-category">Demand Response Opportunities</p>
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title">Forecast</h5>
+        <p class="card-category">Last 24 Hours</p>
       </div>
-      <div class="card-body">
-        <canvas id="speedChart" width="400" height="100"></canvas>
+      <div class="card-body ">
+        <canvas id=chartMonitoring width="400" height="100"></canvas>
       </div>
-      <div class="card-footer">
-        <div class="chart-legend">
+      <div class="card-footer ">
+        <div class="legend">
           <i class="fa fa-circle text-primary"></i> Consumption
           <i class="fa fa-circle text-success"></i> Generation
           <i class="fa fa-circle text-danger"></i> Flexibility
         </div>
-        <hr/>
-        <div class="card-stats">
-          <i class="fa fa-check"></i> Last Event: {{last_dr_datetime}}
+        <hr>
+        <div class="stats">
+          <i class="fa fa-history"></i> Updated 3 minutes ago
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title"> Ranking</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table id="rankingTable" class="table table-hover">
+            <thead class=" text-primary">
+              <th>
+                Name
+              </th>
+              <th>
+                Flexibility
+              </th>
+              <th>
+                Metric 1 - Historic of Average vs Participation (%)
+              </th>
+              <th>
+                Metric 2 - Average Energy Reduction vs Total Participation
+              </th>
+              <th>
+                Metric 3 - Flexibility (Reduction) vs Participation (%)
+              </th>
+              <th>
+                Metric 4 - Shifting Cost
+              </th>
+              <th>
+                Total Score
+              </th>
+              <th>
+                Fair Score
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of rankingTable" (click)="onRowClick(item)">
+                <td>{{ item.name }}</td>
+                <td>{{ item.flexibility }}</td>
+                <td>{{ item.metric1 }}</td>
+                <td>{{ item.metric2 }}</td>
+                <td>{{ item.metric3 }}</td>
+                <td>{{ item.metric4 }}</td>
+                <td>{{ item.totalscore }}</td>
+                <td>{{ item.fairscore }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
