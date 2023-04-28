@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-3 col-md-6 col-sm-6">
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="idro == 0" (click)="getIDRO()">
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="idro_button == 0" (click)="getIDRO()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
@@ -9,12 +9,12 @@
         </div>
         <div class="col-7 col-md-8 align-self-center">
           <div class="numbers">
-            <span id="consumption" class="card-title">IDRO</span>
+            <span class="card-title">IDRO</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="idro == 1" (click)="getIDRO()">
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="idro_button == 1" (click)="getIDRO()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
@@ -23,12 +23,12 @@
         </div>
         <div class="col-7 col-md-8 align-self-center">
           <div class="numbers">
-            <span id="consumption" class="card-title">IDRO</span>
+            <span class="card-title">IDRO</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="idro == 2" (click)="getIDRO()">
+    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="idro_button == 2" (click)="getIDRO()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
@@ -37,14 +37,14 @@
         </div>
         <div class="col-7 col-md-8 align-self-center">
           <div class="numbers">
-            <span id="consumption" class="card-title">IDRO</span>
+            <span class="card-title">IDRO</span>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="col-lg-3 col-md-6 col-sm-6">
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="flexibility_forecast == 0" (click)="getIoTFlexibility()">
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="flexibility_forecast_button == 0" (click)="getIoTFlexibility()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
@@ -59,7 +59,7 @@
         </div>
       </div>
     </div>
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="flexibility_forecast == 1" (click)="getIoTFlexibility()">
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="flexibility_forecast_button == 1" (click)="getIoTFlexibility()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
@@ -74,7 +74,7 @@
         </div>
       </div>
     </div>
-    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="flexibility_forecast == 2" (click)="getIoTFlexibility()">
+    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="flexibility_forecast_button == 2" (click)="getIoTFlexibility()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
@@ -91,7 +91,7 @@
     </div>
   </div>
   <div class="col-lg-3 col-md-6 col-sm-6">
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="ranking == 0" (click)="runRanking()">
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="ranking_button == 0" (click)="runRanking()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
@@ -106,7 +106,7 @@
         </div>
       </div>
     </div>
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="ranking == 1" (click)="runRanking()">
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="ranking_button == 1" (click)="runRanking()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
@@ -121,7 +121,7 @@
         </div>
       </div>
     </div>
-    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="ranking == 2" (click)="runRanking()">
+    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="ranking_button == 2" (click)="runRanking()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
@@ -138,7 +138,7 @@
     </div>
   </div>
   <div class="col-lg-3 col-md-6 col-sm-6">
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="invite_participants == 0" (click)="inviteParticipants()">
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="invite_participants_button == 0" (click)="inviteParticipants()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
@@ -153,7 +153,7 @@
         </div>
       </div>
     </div>
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="invite_participants == 1" (click)="inviteParticipants()">
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="invite_participants_button == 1" (click)="inviteParticipants()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
@@ -168,7 +168,7 @@
         </div>
       </div>
     </div>
-    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="invite_participants == 2" (click)="inviteParticipants()">
+    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="invite_participants_button == 2" (click)="inviteParticipants()">
         <div class="row">
           <div class="col-5 col-md-4">
             <div class="icon-big text-center icon-warning">
@@ -250,20 +250,28 @@
                 Fair Score
               </th>
             </thead>
-            <tbody>
-              <tr *ngFor="let item of rankingTable; let i = index" (click)="onRowClick(item)"
-                [ngStyle]="{ color: i < mainParticipants ? 'green' : 'black' }">
-                <td>{{ item.name }}</td>
-                <td>{{ item.flexibility }}</td>
-                <td>{{ item.metric1 }}</td>
-                <td>{{ item.metric2 }}</td>
-                <td>{{ item.metric3 }}</td>
-                <td>{{ item.metric4 }}</td>
-                <td>{{ item.totalscore }}</td>
-                <td>{{ item.fairscore }}</td>
-              </tr>
+            <tbody >
+              <ng-container *ngFor="let item of rankingTable; let i = index">
+                <tr *ngIf="isRankingTableExtended || i < 5" (click)="onRowClick(item)"
+                  [ngStyle]="{ color: i < mainParticipants ? 'green' : 'black' }">
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.flexibility }}</td>
+                  <td>{{ item.metric1 }}</td>
+                  <td>{{ item.metric2 }}</td>
+                  <td>{{ item.metric3 }}</td>
+                  <td>{{ item.metric4 }}</td>
+                  <td>{{ item.totalscore }}</td>
+                  <td>{{ item.fairscore }}</td>
+                </tr>
+              </ng-container>
             </tbody>
           </table>
+          <div class="text-center">
+            <a class="" (click)="extendTable()">
+              <i *ngIf="!isRankingTableExtended" class="fa fa-angle-down"></i>
+              <i *ngIf="isRankingTableExtended" class="fa fa-angle-up"></i>
+            </a>
+          </div>
         </div>
       </div>
     </div>

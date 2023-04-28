@@ -9,25 +9,23 @@ import { DemandresponseService } from '../../../services/demandresponse/demandre
 })
 
 export class DemandResponseComponent implements OnInit{
-  public idro = 0;
-  public flexibility_forecast = 0;
-  public ranking = 0;
-  public invite_participants = 0;
+  //button states
+  public idro_button = 0;
+  public flexibility_forecast_button = 0;
+  public ranking_button = 0;
+  public invite_participants_button = 0;
+  public isRankingTableExtended = false;
 
-  public consumption = '0';
-  public generation = '0';
-  public flexibility = '0';
-  public members = '0';
-  
-  public last_dro_char_datetime = '';
-
+  //html variables
   public canvas : any;
   public ctx;
-  public chartColor;
+  public chartHistoric;
   public chartMetrics;
   public chartMonitoring;
   public rankingTable;
   
+  //variables
+  public last_dro_char_datetime = '';
   public dro;
   public iot_flexibility_forecast;
   public ranking_table;
@@ -36,21 +34,21 @@ export class DemandResponseComponent implements OnInit{
   constructor(private demandresponseService: DemandresponseService) { }
 
   async getIDRO(){
-    this.idro = 1;
+    this.idro_button = 1;
     this.dro = await this.demandresponseService.getDRO()
     this.createDROGraph(this.dro['consumption'],this.dro['generation'],this.dro['flexibility'],this.dro['dr_period'],this.dro['gs_period'])
     this.last_dro_char_datetime= new Date().toLocaleString();
-    this.idro = 2;
+    this.idro_button = 2;
   }
 
   async getIoTFlexibility(){
-    this.flexibility_forecast = 1;
+    this.flexibility_forecast_button = 1;
     this.iot_flexibility_forecast = await this.demandresponseService.getIotForecast();
-    this.flexibility_forecast = 2;
+    this.flexibility_forecast_button = 2;
   }
 
   async runRanking(){
-    this.ranking = 1;
+    this.ranking_button = 1;
     const ranking_response = await this.demandresponseService.postRanking(this.iot_flexibility_forecast)
     this.ranking_table = ranking_response[0]
     this.mainParticipants = ranking_response[1]
@@ -58,16 +56,22 @@ export class DemandResponseComponent implements OnInit{
     const metricsAverage = await this.demandresponseService.getMetricsAverage(this.ranking_table)
     console.log(metricsAverage)
     this.createMetricsChart(metricsAverage)
-    this.ranking = 2;
+    this.ranking_button = 2;
   }
 
   async inviteParticipants(){
-    this.invite_participants = 1;
+    this.invite_participants_button = 1;
     this.participantsResponses = await this.demandresponseService.postInviteParticipants(this.dro['consumption'],this.dro['generation'],this.dro['flexibility'],this.dro['dr_period'],this.dro['dr_energy'],this.dro['gs_period'],this.dro['gs_energy'],this.mainParticipants, this.ranking_table)
-    this.invite_participants = 2;
+    this.invite_participants_button = 2;
   }
 
-  async createDROGraph(consumption, generation, flexibility, dr_period, gs_period){
+  createDROGraph(consumption, generation, flexibility, dr_period, gs_period){
+    let flexibility_area = [];
+    consumption.forEach((element, index) => {
+      console.log(element, index);
+      flexibility_area.push(consumption[index]- flexibility[index]);
+    });
+    console.log(flexibility_area)
     var dr_data = [] 
     let j = 0;
     for (const index of dr_period) {
@@ -96,21 +100,24 @@ export class DemandResponseComponent implements OnInit{
       type: 'line',
       data: {
         labels: ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'],
-        datasets: [{
+        datasets: [
+        {
           data: consumption,
+          type: 'line',
+          fill: 1,
           borderColor: '#51cbce',
+          backgroundColor: 'rgba(81, 203, 206, 0.4)', // Change color and alpha value as desired
+          pointRadius: 0
+        },
+        {
+          data: flexibility_area,
+          borderColor: '#ef8157',
           backgroundColor: 'transparent',
           pointRadius: 0
-        }, 
+        },
         {
           data: generation,
           borderColor: '#6bd098',
-          backgroundColor: 'transparent',
-          pointRadius: 0
-        }, 
-        {
-          data: flexibility,
-          borderColor: '#ef8157',
           backgroundColor: 'transparent',
           pointRadius: 0
         }, 
@@ -142,10 +149,10 @@ export class DemandResponseComponent implements OnInit{
     });
   }
 
-  async createRankingTable(ranking){
+  createRankingTable(ranking){
     var json = [];
     for (const iot of ranking) {
-        json.push({name:iot[7],flexibility:iot[0],metric1:iot[1],metric2:iot[2],metric3:iot[3],metric4:iot[4],totalscore:iot[5],fairscore:iot[6]})
+        json.push({name:iot[7],flexibility:iot[0],metric1:iot[1],metric2:iot[2],metric3:iot[3],metric4:iot[4], totalscore:iot[5].toFixed(2),fairscore:iot[6]})
     }
     this.rankingTable = json
   }
@@ -218,8 +225,8 @@ export class DemandResponseComponent implements OnInit{
     });
   }
 
-  async createHistoricChart(historic){
-    this.chartColor = "#FFFFFF";
+  createHistoricChart(historic){
+    this.chartHistoric = "#FFFFFF";
     this.canvas = document.getElementById("chartMonitoring");
     this.ctx = this.canvas.getContext("2d");
     this.chartMonitoring = new Chart(this.ctx, {
@@ -314,4 +321,9 @@ export class DemandResponseComponent implements OnInit{
 
     this.createMetricsChart(last_dr_event['metrics'])    
   }
+
+  extendTable(){
+    this.isRankingTableExtended = !this.isRankingTableExtended;
+  }
+
 }
