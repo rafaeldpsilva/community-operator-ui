@@ -156,7 +156,7 @@
 @mixin btn-outline-styles($btn-color, $btn-states-color){
     background: $transparent-bg;
     border: 2px solid $btn-color !important;
-    color: $btn-color;
+    color: $btn-color !important;
     @include opacity(1);
 
     &:hover,
