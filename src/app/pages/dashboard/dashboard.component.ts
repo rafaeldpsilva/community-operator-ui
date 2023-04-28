@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
 import { DashboardService } from '../../../services/dashboard/dashboard.service'
+
+
 @Component({
     selector: 'dashboard-cmp',
     moduleId: module.id,
@@ -8,6 +10,7 @@ import { DashboardService } from '../../../services/dashboard/dashboard.service'
 })
 
 export class DashboardComponent implements OnInit{
+  public loading = false;
   public consumption = '0';
   public generation = '0';
   public flexibility = '0';
@@ -22,6 +25,7 @@ export class DashboardComponent implements OnInit{
   constructor(private dashboardService: DashboardService) { }
 
     async ngOnInit(){  
+      this.loading = true;
       const numberMembers = await this.dashboardService.getMembers();
       this.members = numberMembers + '';
 
@@ -106,17 +110,18 @@ export class DashboardComponent implements OnInit{
           },
         }
       });
-      
       const arr = await this.dashboardService.getConsumption();
       this.consumption =arr[0] + ' W';
       this.generation =arr[1] + ' W';
       this.flexibility =arr[2] + ' W';
-
+      this.loading = false;
       setInterval(async () => {
+        this.loading = true;
         const arr = await this.dashboardService.getConsumption();
         this.consumption =arr[0] + ' W';
         this.generation =arr[1] + ' W';
         this.flexibility =arr[2] + ' W';
+        this.loading = false
       }, 20000);
     }
 }

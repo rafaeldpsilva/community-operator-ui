@@ -1,71 +1,215 @@
 <div class="row">
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="idro == 0" (click)="getIDRO()">
+      <div class="row">
+        <div class="col-5 col-md-4">
+          <div class="icon-big text-center icon-warning">
+            <i class="fa fa-area-chart"></i>
+          </div>
+        </div>
+        <div class="col-7 col-md-8 align-self-center">
+          <div class="numbers">
+            <span id="consumption" class="card-title">IDRO</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="idro == 1" (click)="getIDRO()">
+      <div class="row">
+        <div class="col-5 col-md-4">
+          <div class="icon-big text-center icon-warning">
+            <i class="fa fa-cog fa-spin fa-fw"></i>
+          </div>
+        </div>
+        <div class="col-7 col-md-8 align-self-center">
+          <div class="numbers">
+            <span id="consumption" class="card-title">IDRO</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="idro == 2" (click)="getIDRO()">
+      <div class="row">
+        <div class="col-5 col-md-4">
+          <div class="icon-big text-center icon-warning">
+            <i class="fa fa-area-chart"></i>
+          </div>
+        </div>
+        <div class="col-7 col-md-8 align-self-center">
+          <div class="numbers">
+            <span id="consumption" class="card-title">IDRO</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="flexibility_forecast == 0" (click)="getIoTFlexibility()">
+      <div class="row">
+        <div class="col-5 col-md-4">
+          <div class="icon-big text-center icon-warning">
+            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="col-7 col-md-8 align-self-center">
+          <div class="numbers">
+            <span class="card-title">Flexibility Forecast
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="flexibility_forecast == 1" (click)="getIoTFlexibility()">
+      <div class="row">
+        <div class="col-5 col-md-4">
+          <div class="icon-big text-center icon-warning">
+            <i class="fa fa-cog fa-spin fa-fw"></i>
+          </div>
+        </div>
+        <div class="col-7 col-md-8 align-self-center">
+          <div class="numbers">
+            <span class="card-title">Flexibility Forecast
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="flexibility_forecast == 2" (click)="getIoTFlexibility()">
+      <div class="row">
+        <div class="col-5 col-md-4">
+          <div class="icon-big text-center icon-warning">
+            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="col-7 col-md-8 align-self-center">
+          <div class="numbers">
+            <span class="card-title">Flexibility Forecast
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="ranking == 0" (click)="runRanking()">
+      <div class="row">
+        <div class="col-5 col-md-4">
+          <div class="icon-big text-center icon-warning">
+            <i class="fa fa-list-ol"></i>
+          </div>
+        </div>
+        <div class="col-7 col-md-8 align-self-center">
+          <div class="numbers">
+            <span class="card-title">Ranking
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="ranking == 1" (click)="runRanking()">
+      <div class="row">
+        <div class="col-5 col-md-4">
+          <div class="icon-big text-center icon-warning">
+            <i class="fa fa-cog fa-spin fa-fw"></i>
+          </div>
+        </div>
+        <div class="col-7 col-md-8 align-self-center">
+          <div class="numbers">
+            <span class="card-title">Ranking
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="ranking == 2" (click)="runRanking()">
+      <div class="row">
+        <div class="col-5 col-md-4">
+          <div class="icon-big text-center icon-warning">
+            <i class="fa fa-list-ol"></i>
+          </div>
+        </div>
+        <div class="col-7 col-md-8 align-self-center">
+          <div class="numbers">
+            <span class="card-title">Ranking
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="invite_participants == 0" (click)="inviteParticipants()">
+      <div class="row">
+        <div class="col-5 col-md-4">
+          <div class="icon-big text-center icon-warning">
+            <i class="fa fa-envelope"></i>
+          </div>
+        </div>
+        <div class="col-7 col-md-8 align-self-center">
+          <div class="numbers">
+            <span class="card-title">Invite Participants
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="invite_participants == 1" (click)="inviteParticipants()">
+      <div class="row">
+        <div class="col-5 col-md-4">
+          <div class="icon-big text-center icon-warning">
+            <i class="fa fa-cog fa-spin fa-fw"></i>
+          </div>
+        </div>
+        <div class="col-7 col-md-8 align-self-center">
+          <div class="numbers">
+            <span class="card-title">Invite Participants
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="invite_participants == 2" (click)="inviteParticipants()">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="fa fa-envelope"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8 align-self-center">
+            <div class="numbers">
+              <span class="card-title">Invite Participants
+              </span>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="row">
   <div class="col-md-12">
     <div class="card card-chart">
-      <div class="card-header">
-        <h5 class="card-title">Forecast For Tommorow</h5>
-        <p class="card-category">Demand Response Opportunities</p>
+      <div class="card-header">      
+          <h5 class="card-title">Demand Response Opportunities</h5>
+          <p class="card-category">Forecast For Tommorow</p>
       </div>
       <div class="card-body">
         <canvas id="speedChart" width="400" height="100"></canvas>
       </div>
       <div class="card-footer">
         <div class="chart-legend">
-          <i class="fa fa-circle text-primary"></i> Consumption
-          <i class="fa fa-circle text-success"></i> Generation
-          <i class="fa fa-circle text-danger"></i> Flexibility
-          <i class="fa fa-circle-thin text-purple"></i> DR Opportunity
-          <i class="fa fa-circle-thin text-success"></i> Generation Surplus
+          <div class="col-md-3 col-3">
+            <i class="fa fa-circle text-primary"></i> Consumption
+            <i class="fa fa-circle text-success"></i> Generation
+            <i class="fa fa-circle text-danger"></i> Flexibility
+          </div>
+          <div class="col-md-3 col-3">
+            <i class="fa fa-circle-thin text-purple"></i> DR Opportunity
+            <i class="fa fa-circle-thin text-success"></i> Generation Surplus
+          </div>
         </div>
         <hr/>
         <div class="card-stats">
-          <i class="fa fa-check"></i> Last Event: {{last_dr_datetime}}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-4">
-    <div class="card ">
-      <div class="card-header ">
-        <h5 class="card-title">Average Metric Score</h5>
-        <p class="card-category">Last Demand Response Event</p>
-      </div>
-      <div class="card-body ">
-        <canvas id="chartMetrics"></canvas>
-      </div>
-      <div class="card-footer ">
-        <div class="legend">
-          <i class="fa fa-circle text-primary"></i> Metric 1
-          <i class="fa fa-circle text-warning"></i> Metric 2
-          <i class="fa fa-circle text-danger"></i> Metric 3
-          <i class="fa fa-circle text-gray"></i> Metric 4
-        </div>
-        <hr>
-        <div class="stats">
-          <i class="fa fa-calendar"></i> Last Event: {{last_dr_datetime}}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-8">
-    <div class="card ">
-      <div class="card-header ">
-        <h5 class="card-title">Forecast</h5>
-        <p class="card-category">Last 24 Hours</p>
-      </div>
-      <div class="card-body ">
-        <canvas id=chartMonitoring width="400" height="100"></canvas>
-      </div>
-      <div class="card-footer ">
-        <div class="legend">
-          <i class="fa fa-circle text-primary"></i> Consumption
-          <i class="fa fa-circle text-success"></i> Generation
-          <i class="fa fa-circle text-danger"></i> Flexibility
-        </div>
-        <hr>
-        <div class="stats">
-          <i class="fa fa-history"></i> Updated 3 minutes ago
+          <i class="fa fa-check"></i> Last Event: {{last_dro_char_datetime}}
         </div>
       </div>
     </div>
@@ -107,7 +251,8 @@
               </th>
             </thead>
             <tbody>
-              <tr *ngFor="let item of rankingTable" (click)="onRowClick(item)">
+              <tr *ngFor="let item of rankingTable; let i = index" (click)="onRowClick(item)"
+                [ngStyle]="{ color: i < mainParticipants ? 'green' : 'black' }">
                 <td>{{ item.name }}</td>
                 <td>{{ item.flexibility }}</td>
                 <td>{{ item.metric1 }}</td>
@@ -119,6 +264,53 @@
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title">Average Metric Score</h5>
+        <p class="card-category">Last Demand Response Event</p>
+      </div>
+      <div class="card-body ">
+        <canvas id="chartMetrics"></canvas>
+      </div>
+      <div class="card-footer ">
+        <div class="legend">
+          <i class="fa fa-circle text-primary"></i> Metric 1
+          <i class="fa fa-circle text-warning"></i> Metric 2
+          <i class="fa fa-circle text-danger"></i> Metric 3
+          <i class="fa fa-circle text-gray"></i> Metric 4
+        </div>
+        <hr>
+        <div class="stats">
+          <i class="fa fa-calendar"></i> Last Event: {{last_dro_char_datetime}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title">Forecast</h5>
+        <p class="card-category">Last 24 Hours</p>
+      </div>
+      <div class="card-body ">
+        <canvas id=chartMonitoring width="400" height="100"></canvas>
+      </div>
+      <div class="card-footer ">
+        <div class="legend">
+          <i class="fa fa-circle text-primary"></i> Consumption
+          <i class="fa fa-circle text-success"></i> Generation
+          <i class="fa fa-circle text-danger"></i> Flexibility
+        </div>
+        <hr>
+        <div class="stats">
+          <i class="fa fa-history"></i> Updated 3 minutes ago
         </div>
       </div>
     </div>

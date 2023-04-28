@@ -19,8 +19,11 @@
       </div>
       <div class="card-footer">
         <hr>
-        <div class="stats stats-hover">
+        <div class="stats stats-hover" *ngIf="!loading">
           <i class="fa fa-history"></i> Updated 1 minute ago 
+        </div>
+        <div class="stats stats-hover" *ngIf="loading">
+          <i class="fas fa-sync fa-spin" ></i> Updating...
         </div>
       </div>
     </div>
@@ -45,8 +48,11 @@
       </div>
       <div class="card-footer ">
         <hr>
-        <div class="stats stats-hover">
-          <i class="fa fa-history"></i> Updated 1 minute ago
+        <div class="stats stats-hover" *ngIf="!loading">
+          <i class="fa fa-history"></i> Updated 1 minute ago 
+        </div>
+        <div class="stats stats-hover" *ngIf="loading">
+          <i class="fas fa-sync fa-spin" ></i> Updating...
         </div>
       </div>
     </div>
@@ -71,8 +77,11 @@
       </div>
       <div class="card-footer ">
         <hr>
-        <div class="stats stats-hover">
-          <i class="fa fa-history"></i> Updated 1 minute ago
+        <div class="stats stats-hover" *ngIf="!loading">
+          <i class="fa fa-history"></i> Updated 1 minute ago 
+        </div>
+        <div class="stats stats-hover" *ngIf="loading">
+          <i class="fas fa-sync fa-spin" ></i> Updating...
         </div>
       </div>
     </div>
@@ -97,8 +106,11 @@
       </div>
       <div class="card-footer ">
         <hr>
-        <div class="stats stats-hover">
-          <i class="fa fa-history"></i> Updated 1 minute ago
+        <div class="stats stats-hover" *ngIf="!loading">
+          <i class="fa fa-history"></i> Updated 1 minute ago 
+        </div>
+        <div class="stats stats-hover" *ngIf="loading">
+          <i class="fas fa-sync fa-spin" ></i> Updating...
         </div>
       </div>
     </div>
@@ -121,10 +133,39 @@
           <i class="fa fa-circle text-danger"></i> Flexibility
         </div>
         <hr>
+        <div class="stats" *ngIf="!loading">
+          <i class="fa fa-history"></i> Updated 1 minute ago 
+        </div>
+        <div class="stats" *ngIf="loading">
+          <i class="fas fa-sync fa-spin" ></i> Updating...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--div class="row">
+  <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header ">
+        <div>
+          <h5 class="card-title">Community Overview</h5>
+          <p class="card-category">Last 24 Hours</p>
+        </div>
+      </div>
+      <div class="card-body ">
+        <canvas id=chatBuilding width="400" height="100"></canvas>
+      </div>
+      <div class="card-footer ">
+        <div class="legend">
+          <i class="fa fa-circle text-primary"></i> Consumption
+          <i class="fa fa-circle text-success"></i> Generation
+          <i class="fa fa-circle text-danger"></i> Flexibility
+        </div>
+        <hr>
         <div class="stats">
           <i class="fa fa-history"></i> Updated 3 minutes ago
         </div>
       </div>
     </div>
   </div>
-</div>
+</div-->
