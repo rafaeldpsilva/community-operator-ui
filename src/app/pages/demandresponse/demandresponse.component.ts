@@ -66,17 +66,21 @@ export class DemandResponseComponent implements OnInit{
 
   async inviteParticipants(){
     this.invite_participants_button = 1;
-    //this.participantsResponses = await this.demandresponseService.postInviteParticipants(this.dro['consumption'],this.dro['generation'],this.dro['flexibility'],this.dro['dr_period'],this.dro['dr_energy'],this.dro['gs_period'],this.dro['gs_energy'],this.mainParticipants, this.ranking_table)
-    this.invite_participants_button = 2;
     const currentDate = new Date();
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth() + 1;
     const day = currentDate.getDate() + 1;
+    if (this.eventHours == null){
+      console.log("ERROR")
+      return
+    }
     const hour = this.selectedHour;
     const minute = currentDate.getMinutes();
     let time = `${year}-${month}-${day} ${hour}:${minute}`;
-
-    this.upcomingEvents.push({time:time,okParticipants:'',notOkParticipants:this.mainParticipants})
+    this.participantsResponses = await this.demandresponseService.postInviteParticipants(this.dro['consumption'],this.dro['generation'],this.dro['flexibility'],this.dro['dr_period'],this.dro['dr_energy'],this.dro['gs_period'],this.dro['gs_energy'],this.mainParticipants, this.ranking_table, time)
+    this.invite_participants_button = 2;
+  
+    //this.upcomingEvents.push({time:time,okParticipants:'',notOkParticipants:this.mainParticipants})
   }
 
   createDROGraph(consumption, generation, flexibility, dr_period, gs_period){
@@ -164,10 +168,9 @@ export class DemandResponseComponent implements OnInit{
   }
 
   createUpcomingEvents(events){
-    events = [['2923-123-23 14:18', 'P1,P2,P3', 'P4'],['2923-123-23 14:18', 'P1,P3', 'P2,P4']];
     var json = [];
     for (const event of events) {
-        json.push({time:event[0],okParticipants:event[1],notOkParticipants:event[2]})
+      json.push({time:event[0],okParticipants:event[1],notOkParticipants:event[2]})
     }
     this.upcomingEvents = json
   }
@@ -331,11 +334,14 @@ export class DemandResponseComponent implements OnInit{
   }
 
   async ngOnInit(){
-    const last_dr_event = await this.demandresponseService.getLastDREvent()
-    this.last_dro_char_datetime = last_dr_event['datetime']
+    const last_dr_event = await this.demandresponseService.getLastDREvent();
+    this.last_dro_char_datetime = last_dr_event['datetime'];
 
     //TEMPORARY
-    this.createUpcomingEvents([])
+    const upcoming = await this.demandresponseService.getUpcomingEvents();
+    if (upcoming[0] != '') {
+      this.createUpcomingEvents(upcoming);
+    }
     this.createDROGraph(last_dr_event['consumption'],last_dr_event['generation'],last_dr_event['flexibility'],last_dr_event['dr_period'], last_dr_event['gs_period']);
     
     this.mainParticipants = last_dr_event['participants_responses'].length

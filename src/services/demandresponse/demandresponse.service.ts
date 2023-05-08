@@ -46,6 +46,15 @@ export class DemandresponseService {
       })
   }
 
+  async getUpcomingEvents(): Promise<object>{
+    return await fetch('http://192.168.2.171:5000/demandresponse/upcoming')
+      .then(res => res.json())
+      .then(res =>{
+        console.log(res)
+        return res.upcoming_events
+      })
+  }
+
   async getMetricsAverage(ranking): Promise<object>{
     return await fetch('http://192.168.2.171:5000/demandresponse/metrics',{
       method: 'POST',
@@ -61,10 +70,10 @@ export class DemandresponseService {
       })
   }
 
-  async postInviteParticipants(consumption, generation, flexibility, dr_period, dr_energy, gs_period, gs_energy,participants_iots, ranking): Promise<object>{
+  async postInviteParticipants(consumption, generation, flexibility, dr_period, dr_energy, gs_period, gs_energy,participants_iots, ranking, time): Promise<object>{
     return await fetch('http://192.168.2.171:5000/demandresponse/invite',{
       method: 'POST',
-      body: JSON.stringify({"consumption":consumption, "generation": generation, "flexibility": flexibility, "dr_period": dr_period, "dr_energy": dr_energy, "gs_period": gs_period, "gs_energy": gs_energy, "participants_iots": participants_iots, "ranking": ranking}),
+      body: JSON.stringify({"consumption":consumption, "generation": generation, "flexibility": flexibility, "dr_period": dr_period, "dr_energy": dr_energy, "gs_period": gs_period, "gs_energy": gs_energy, "participants_iots": participants_iots, "ranking": ranking, "event_time": time}),
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
