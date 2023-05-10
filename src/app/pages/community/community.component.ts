@@ -7,12 +7,12 @@ declare interface TableData {
 }
 
 @Component({
-    selector: 'table-cmp',
+    selector: 'community-cmp',
     moduleId: module.id,
-    templateUrl: 'table.component.html'
+    templateUrl: 'community.component.html'
 })
 
-export class TableComponent implements OnInit{
+export class CommunityComponent implements OnInit{
     public table1;
     public table2;
     public participant;

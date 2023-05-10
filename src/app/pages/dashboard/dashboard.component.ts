@@ -122,6 +122,6 @@ export class DashboardComponent implements OnInit{
         this.generation =arr[1] + ' W';
         this.flexibility =arr[2] + ' W';
         this.loading = false
-      }, 20000);
+      }, 60000);
     }
 }
