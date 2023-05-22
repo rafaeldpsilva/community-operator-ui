@@ -16,7 +16,7 @@
         </div>
         <div class="col-7 col-md-8 align-self-center">
           <div class="numbers">
-            <span class="card-title">IDRO</span>
+            <span class="card-title">Identify DR Oportunities</span>
           </div>
         </div>
       </div>
@@ -137,8 +137,8 @@
         <h5 class="card-title">Demand Response Event</h5>
         <p class="card-category">Choose hour to create demand response event</p>
       </div>
-      <div class="card-body ">
-        <select [(ngModel)]="selectedHour">
+      <div class="card-body">
+        <select [(ngModel)]="selectedHour" aria-label=".form-select-lg example" style="background-color: #cfcfcf00; border: 1px solid #66615B !important; box-shadow: 0 6px 10px -4px #00000026; border-radius: 12px; margin-top: 10px; font-size: x-large;">
           <option *ngFor="let option of eventHours" [value]="option">{{ option }}</option>
         </select>
       </div>
