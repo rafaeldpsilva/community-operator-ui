@@ -71,16 +71,17 @@ export class DemandResponseComponent implements OnInit{
     const month = currentDate.getMonth() + 1;
     const day = currentDate.getDate() + 1;
     if (this.eventHours == null){
+      this.invite_participants_button = 0;
       console.log("ERROR")
       return
+    } else {
+      const hour = this.selectedHour;
+      let time = `${year}-${month}-${day} ${hour}`;
+      this.participantsResponses = await this.demandresponseService.postInviteParticipants(this.dro['consumption'],this.dro['generation'],this.dro['flexibility'],this.dro['dr_period'],this.dro['dr_energy'],this.dro['gs_period'],this.dro['gs_energy'],this.mainParticipants, this.ranking_table, time)
+      this.invite_participants_button = 2;
+   
+      this.upcomingEvents.push({time:time,okParticipants:'',notOkParticipants:this.mainParticipants})
     }
-    const hour = this.selectedHour;
-    const minute = currentDate.getMinutes();
-    let time = `${year}-${month}-${day} ${hour}:${minute}`;
-    this.participantsResponses = await this.demandresponseService.postInviteParticipants(this.dro['consumption'],this.dro['generation'],this.dro['flexibility'],this.dro['dr_period'],this.dro['dr_energy'],this.dro['gs_period'],this.dro['gs_energy'],this.mainParticipants, this.ranking_table, time)
-    this.invite_participants_button = 2;
-  
-    //this.upcomingEvents.push({time:time,okParticipants:'',notOkParticipants:this.mainParticipants})
   }
 
   createDROGraph(consumption, generation, flexibility, dr_period, gs_period){

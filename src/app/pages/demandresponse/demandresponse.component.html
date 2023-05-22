@@ -1,38 +1,17 @@
 <div class="row">
   <div class="col-lg-3 col-md-6 col-sm-6">
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="idro_button == 0" (click)="getIDRO()">
+    <div class="card card-stats btn btn-sm btn-round" 
+      [class.btn-outline-default]="idro_button != 2" 
+      [class.btn-outline-success]="idro_button == 2" (click)="getIDRO()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
-            <i class="fa fa-area-chart"></i>
-          </div>
-        </div>
-        <div class="col-7 col-md-8 align-self-center">
-          <div class="numbers">
-            <span class="card-title">IDRO</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="idro_button == 1" (click)="getIDRO()">
-      <div class="row">
-        <div class="col-5 col-md-4">
-          <div class="icon-big text-center icon-warning">
-            <i class="fa fa-cog fa-spin fa-fw"></i>
-          </div>
-        </div>
-        <div class="col-7 col-md-8 align-self-center">
-          <div class="numbers">
-            <span class="card-title">IDRO</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="idro_button == 2" (click)="getIDRO()">
-      <div class="row">
-        <div class="col-5 col-md-4">
-          <div class="icon-big text-center icon-warning">
-            <i class="fa fa-area-chart"></i>
+            <i class="fa "
+              [class.fa-cog]="idro_button == 1"
+              [class.fa-spin]="idro_button == 1"
+              [class.fa-fw]="idro_button == 1"
+              [class.fa-area-chart]="idro_button != 1"
+            ></i>
           </div>
         </div>
         <div class="col-7 col-md-8 align-self-center">
@@ -44,41 +23,18 @@
     </div>
   </div>
   <div class="col-lg-3 col-md-6 col-sm-6">
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="flexibility_forecast_button == 0" (click)="getIoTFlexibility()">
+    <div class="card card-stats btn btn-sm btn-round" [class.btn-outline-default]="flexibility_forecast_button != 2" 
+    [class.btn-outline-success]="flexibility_forecast_button == 2" 
+      (click)="getIoTFlexibility()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
-            <i class="fa fa-bar-chart" aria-hidden="true"></i>
-          </div>
-        </div>
-        <div class="col-7 col-md-8 align-self-center">
-          <div class="numbers">
-            <span class="card-title">Flexibility Forecast
-              </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="flexibility_forecast_button == 1" (click)="getIoTFlexibility()">
-      <div class="row">
-        <div class="col-5 col-md-4">
-          <div class="icon-big text-center icon-warning">
-            <i class="fa fa-cog fa-spin fa-fw"></i>
-          </div>
-        </div>
-        <div class="col-7 col-md-8 align-self-center">
-          <div class="numbers">
-            <span class="card-title">Flexibility Forecast
-              </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="flexibility_forecast_button == 2" (click)="getIoTFlexibility()">
-      <div class="row">
-        <div class="col-5 col-md-4">
-          <div class="icon-big text-center icon-warning">
-            <i class="fa fa-bar-chart" aria-hidden="true"></i>
+            <i class="fa "
+              [class.fa-cog]="flexibility_forecast_button == 1"
+              [class.fa-spin]="flexibility_forecast_button == 1"
+              [class.fa-fw]="flexibility_forecast_button == 1"
+              [class.fa-bar-chart]="flexibility_forecast_button != 1"
+            ></i>
           </div>
         </div>
         <div class="col-7 col-md-8 align-self-center">
@@ -91,41 +47,19 @@
     </div>
   </div>
   <div class="col-lg-3 col-md-6 col-sm-6">
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="ranking_button == 0" (click)="runRanking()">
+    <div class="card card-stats btn btn-sm btn-round"
+      [class.btn-outline-default]="ranking_button != 2" 
+      [class.btn-outline-success]="ranking_button == 2" 
+      (click)="runRanking()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
-            <i class="fa fa-list-ol"></i>
-          </div>
-        </div>
-        <div class="col-7 col-md-8 align-self-center">
-          <div class="numbers">
-            <span class="card-title">Ranking
-              </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="ranking_button == 1" (click)="runRanking()">
-      <div class="row">
-        <div class="col-5 col-md-4">
-          <div class="icon-big text-center icon-warning">
-            <i class="fa fa-cog fa-spin fa-fw"></i>
-          </div>
-        </div>
-        <div class="col-7 col-md-8 align-self-center">
-          <div class="numbers">
-            <span class="card-title">Ranking
-              </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="ranking_button == 2" (click)="runRanking()">
-      <div class="row">
-        <div class="col-5 col-md-4">
-          <div class="icon-big text-center icon-warning">
-            <i class="fa fa-list-ol"></i>
+            <i class="fa "
+              [class.fa-cog]="ranking_button == 1"
+              [class.fa-spin]="ranking_button == 1"
+              [class.fa-fw]="ranking_button == 1"
+              [class.fa-list-ol]="ranking_button != 1"
+            ></i>
           </div>
         </div>
         <div class="col-7 col-md-8 align-self-center">
@@ -138,11 +72,19 @@
     </div>
   </div>
   <div class="col-lg-3 col-md-6 col-sm-6">
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="invite_participants_button == 0" (click)="inviteParticipants()">
+    <div class="card card-stats btn btn-sm btn-round"
+      [class.btn-outline-default]="invite_participants_button != 2" 
+      [class.btn-outline-success]="invite_participants_button == 2"
+      (click)="inviteParticipants()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
-            <i class="fa fa-envelope"></i>
+            <i class="fa "
+              [class.fa-cog]="invite_participants_button == 1"
+              [class.fa-spin]="invite_participants_button == 1"
+              [class.fa-fw]="invite_participants_button == 1"
+              [class.fa-envelope]="invite_participants_button != 1"
+            ></i>
           </div>
         </div>
         <div class="col-7 col-md-8 align-self-center">
@@ -152,36 +94,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="card card-stats btn btn-sm btn-outline-default btn-round" *ngIf="invite_participants_button == 1" (click)="inviteParticipants()">
-      <div class="row">
-        <div class="col-5 col-md-4">
-          <div class="icon-big text-center icon-warning">
-            <i class="fa fa-cog fa-spin fa-fw"></i>
-          </div>
-        </div>
-        <div class="col-7 col-md-8 align-self-center">
-          <div class="numbers">
-            <span class="card-title">Invite Participants
-              </span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card card-stats btn btn-sm btn-outline-success btn-round" *ngIf="invite_participants_button == 2" (click)="inviteParticipants()">
-        <div class="row">
-          <div class="col-5 col-md-4">
-            <div class="icon-big text-center icon-warning">
-              <i class="fa fa-envelope"></i>
-            </div>
-          </div>
-          <div class="col-7 col-md-8 align-self-center">
-            <div class="numbers">
-              <span class="card-title">Invite Participants
-              </span>
-            </div>
-          </div>
-        </div>
     </div>
   </div>
 </div>
