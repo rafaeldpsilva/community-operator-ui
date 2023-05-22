@@ -76,7 +76,7 @@ export class DemandResponseComponent implements OnInit{
       return
     } else {
       const hour = this.selectedHour;
-      let time = `${year}-${month}-${day} ${hour}`;
+      let time = `${year}-${month}-${day} ${hour}:00:00`;
       this.participantsResponses = await this.demandresponseService.postInviteParticipants(this.dro['consumption'],this.dro['generation'],this.dro['flexibility'],this.dro['dr_period'],this.dro['dr_energy'],this.dro['gs_period'],this.dro['gs_energy'],this.mainParticipants, this.ranking_table, time)
       this.invite_participants_button = 2;
    

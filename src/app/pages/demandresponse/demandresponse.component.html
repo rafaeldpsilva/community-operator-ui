@@ -102,19 +102,20 @@
     <div class="card">
       <div class="card-header">
         <h4 class="card-title">Upcoming Events</h4>
+        <p *ngIf="upcomingEvents.length == 0" class="card-category">No Upcoming Events</p>
       </div>
       <div class="card-body">
-        <div class="table-responsive">
+        <div *ngIf="upcomingEvents.length != 0" class="table-responsive">
           <table id="rankingTable" class="table table-hover">
             <thead class=" text-primary">
               <th>
-                Time
+                Event Time
               </th>
               <th>
-                Participants (Answered)
+                Accepted
               </th>
               <th>
-                Participants (Not Answered Yet)
+                Declined
               </th>
             </thead>
             <tbody >
