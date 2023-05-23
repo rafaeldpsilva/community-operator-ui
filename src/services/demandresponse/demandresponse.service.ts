@@ -50,7 +50,6 @@ export class DemandresponseService {
     return await fetch('http://192.168.2.171:5000/demandresponse/upcoming')
       .then(res => res.json())
       .then(res =>{
-        console.log(res)
         return res.upcoming_events
       })
   }
@@ -85,11 +84,18 @@ export class DemandresponseService {
       })
   }
   
-  async getHistoric(): Promise<object>{
-    return await fetch('http://192.168.2.171:5000/historic/total')
+  async getMonitoring(event_time): Promise<object>{
+    return await fetch('http://192.168.2.171:5000/demandresponse/monitoring',{
+      method: 'POST',
+      body: JSON.stringify({"event_time": event_time}),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
       .then(res => res.json())
       .then(res =>{
-        return [res.hours, res.consumption, res.generation, res.flexibility]
+        return res.aggregated_balance
       })
   }
 }

@@ -29,7 +29,7 @@ export class DemandResponseComponent implements OnInit{
   public dro;
   public iot_flexibility_forecast;
   public ranking_table;
-  public upcomingEvents;
+  public upcomingEvents = [];
   public mainParticipants;
   public participantsResponses;
   public eventHours;
@@ -87,10 +87,8 @@ export class DemandResponseComponent implements OnInit{
   createDROGraph(consumption, generation, flexibility, dr_period, gs_period){
     let flexibility_area = [];
     consumption.forEach((element, index) => {
-      console.log(element, index);
       flexibility_area.push(consumption[index]- flexibility[index]);
     });
-    console.log(flexibility_area)
     var dr_data = [] 
     let j = 0;
     for (const index of dr_period) {
@@ -252,22 +250,22 @@ export class DemandResponseComponent implements OnInit{
     });
   }
 
-  createHistoricChart(historic){
+  createEventMonitoringChart(hours, consumption, generation, flexibility){
     this.chartHistoric = "#FFFFFF";
-    this.canvas = document.getElementById("chartMonitoring");
+    this.canvas = document.getElementById("chartEventMonitoring");
     this.ctx = this.canvas.getContext("2d");
     this.chartMonitoring = new Chart(this.ctx, {
       type: 'line',
 
       data: {
-        labels: historic[0],
+        labels: hours,
         datasets: [{
           borderColor: "#51cbce",
           backgroundColor: "transparent",
           pointRadius: 0,
           pointHoverRadius: 0,
           borderWidth: 3,
-          data: historic[1],
+          data: consumption,
           label: 'consumption'
         },
         {
@@ -276,7 +274,7 @@ export class DemandResponseComponent implements OnInit{
             pointRadius: 0,
             pointHoverRadius: 0,
             borderWidth: 3,
-            data: historic[2],
+            data: generation,
             label: 'generation'
           },
           {
@@ -285,7 +283,7 @@ export class DemandResponseComponent implements OnInit{
             pointRadius: 0,
             pointHoverRadius: 0,
             borderWidth: 3,
-            data: historic[3],
+            data: flexibility,
             label: 'flexibility'
           }
         ]
@@ -338,7 +336,6 @@ export class DemandResponseComponent implements OnInit{
     const last_dr_event = await this.demandresponseService.getLastDREvent();
     this.last_dro_char_datetime = last_dr_event['datetime'];
 
-    //TEMPORARY
     const upcoming = await this.demandresponseService.getUpcomingEvents();
     if (upcoming[0] != '') {
       this.createUpcomingEvents(upcoming);
@@ -347,11 +344,13 @@ export class DemandResponseComponent implements OnInit{
     
     this.mainParticipants = last_dr_event['participants_responses'].length
     this.createRankingTable(last_dr_event['ranking']);
-
-    const historic = await this.demandresponseService.getHistoric();
-    this.createHistoricChart(historic)
-
+    
     this.createMetricsChart(last_dr_event['metrics'])    
+    
+    const monitoring = await this.demandresponseService.getMonitoring(upcoming[0][0]);
+    let hour = upcoming[0][0].slice(11,-6)
+    let intervals = [hour+':00',hour+':10',hour+':20',hour+':30',hour+':40',hour+':50',parseInt(hour)+1+':00']
+    this.createEventMonitoringChart(intervals,[],[],[])
   }
 
   extendTable(){
