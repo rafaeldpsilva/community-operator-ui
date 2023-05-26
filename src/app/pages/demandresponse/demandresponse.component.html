@@ -101,7 +101,7 @@
   <div class="col-md-8">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Upcoming Events</h4>
+        <h4 class="card-title">Events</h4>
         <p *ngIf="upcomingEvents.length == 0" class="card-category">No Upcoming Events</p>
       </div>
       <div class="card-body">
@@ -120,7 +120,25 @@
             </thead>
             <tbody >
               <ng-container *ngFor="let item of upcomingEvents; let i = index">
-                <tr (click)="onRowClick(item)">
+                <tr (click)="createEventMonitoringChart(item.time)">
+                  <td>{{ item.time }}</td>
+                  <td [ngStyle]="{ color: 'green'}">{{ item.okParticipants }}</td>
+                  <td [ngStyle]="{ color: 'red' }">{{ item.notOkParticipants }}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+            <tbody >
+              <ng-container *ngFor="let item of currentEvents; let i = index">
+                <tr (click)="createEventMonitoringChart(item.time)">
+                  <td>{{ item.time }}</td>
+                  <td [ngStyle]="{ color: 'green'}">{{ item.okParticipants }}</td>
+                  <td [ngStyle]="{ color: 'red' }">{{ item.notOkParticipants }}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+            <tbody >
+              <ng-container *ngFor="let item of historicEvents; let i = index">
+                <tr (click)="createEventMonitoringChart(item.time)">
                   <td>{{ item.time }}</td>
                   <td [ngStyle]="{ color: 'green'}">{{ item.okParticipants }}</td>
                   <td [ngStyle]="{ color: 'red' }">{{ item.notOkParticipants }}</td>
@@ -132,7 +150,18 @@
       </div>
     </div>
   </div>
-  <div class="col-md-4">
+  <div *ngIf="idro_button != 2" class="col-md-4">
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title">Next Event</h5>
+        <p class="card-category">T- {{ event_time_left }}</p>
+      </div>
+      <div class="card-body">
+        <p>At: {{ next_event }}</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="idro_button == 2" class="col-md-4">
     <div class="card ">
       <div class="card-header ">
         <h5 class="card-title">Demand Response Event</h5>
@@ -158,9 +187,7 @@
       </div>
       <div class="card-footer ">
         <div class="legend">
-          <i class="fa fa-circle text-primary"></i> Consumption
-          <i class="fa fa-circle text-success"></i> Generation
-          <i class="fa fa-circle text-danger"></i> Flexibility
+          <i class="fa fa-circle text-primary"></i> Aggregated Balance
         </div>
         <hr>
         <div class="stats">

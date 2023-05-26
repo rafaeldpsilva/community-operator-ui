@@ -29,7 +29,13 @@ export class DemandResponseComponent implements OnInit{
   public dro;
   public iot_flexibility_forecast;
   public ranking_table;
+
+  public next_event;
+  public event_time_left;
   public upcomingEvents = [];
+  public currentEvents = [];
+  public historicEvents = [];
+
   public mainParticipants;
   public participantsResponses;
   public eventHours;
@@ -250,7 +256,11 @@ export class DemandResponseComponent implements OnInit{
     });
   }
 
-  createEventMonitoringChart(hours, consumption, generation, flexibility){
+  async createEventMonitoringChart(event_time){
+    const monitoring = await this.demandresponseService.getMonitoring(event_time);
+    let hour = event_time.slice(11,-6)
+    let hours = [hour+':00',hour+':10',hour+':20',hour+':30',hour+':40',hour+':50',parseInt(hour)+1+':00']
+
     this.chartHistoric = "#FFFFFF";
     this.canvas = document.getElementById("chartEventMonitoring");
     this.ctx = this.canvas.getContext("2d");
@@ -265,27 +275,9 @@ export class DemandResponseComponent implements OnInit{
           pointRadius: 0,
           pointHoverRadius: 0,
           borderWidth: 3,
-          data: consumption,
-          label: 'consumption'
-        },
-        {
-            borderColor: "#6bd098",
-            backgroundColor: "transparent",
-            pointRadius: 0,
-            pointHoverRadius: 0,
-            borderWidth: 3,
-            data: generation,
-            label: 'generation'
-          },
-          {
-            borderColor: "#ef8157",
-            backgroundColor: "transparent",
-            pointRadius: 0,
-            pointHoverRadius: 0,
-            borderWidth: 3,
-            data: flexibility,
-            label: 'flexibility'
-          }
+          data: monitoring,
+          label: 'Aggregated Balance'
+        }
         ]
       },
       options: {
@@ -337,8 +329,12 @@ export class DemandResponseComponent implements OnInit{
     this.last_dro_char_datetime = last_dr_event['datetime'];
 
     const upcoming = await this.demandresponseService.getUpcomingEvents();
+    let sortedAsc;
     if (upcoming[0] != '') {
-      this.createUpcomingEvents(upcoming);
+      sortedAsc = Object.values(upcoming).sort(
+        (objA, objB) => Number(Date.parse(objA[0])) - Number(Date.parse(objB[0])),
+        );
+      this.createUpcomingEvents(sortedAsc);
     }
     this.createDROGraph(last_dr_event['consumption'],last_dr_event['generation'],last_dr_event['flexibility'],last_dr_event['dr_period'], last_dr_event['gs_period']);
     
@@ -346,11 +342,10 @@ export class DemandResponseComponent implements OnInit{
     this.createRankingTable(last_dr_event['ranking']);
     
     this.createMetricsChart(last_dr_event['metrics'])    
-    
-    const monitoring = await this.demandresponseService.getMonitoring(upcoming[0][0]);
-    let hour = upcoming[0][0].slice(11,-6)
-    let intervals = [hour+':00',hour+':10',hour+':20',hour+':30',hour+':40',hour+':50',parseInt(hour)+1+':00']
-    this.createEventMonitoringChart(intervals,[],[],[])
+
+    this.next_event = sortedAsc[0][0]
+    this.event_time_left = Math.abs(Date.parse(sortedAsc[0][0]) - Date.now())
+    this.createEventMonitoringChart(sortedAsc[0][0])
   }
 
   extendTable(){
