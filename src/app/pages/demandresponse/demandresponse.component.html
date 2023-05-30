@@ -101,8 +101,17 @@
   <div class="col-md-8">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Events</h4>
-        <p *ngIf="upcomingEvents.length == 0" class="card-category">No Upcoming Events</p>
+        <div class="row ml-0 mr-0">
+          <h5 class="card-title mr-auto">Events</h5>
+          <div class="btn btn-round btn-neutral align-self-top btn-lg my-0" (click)="eventsDayIncrement(-1)">
+            <i class="fa fa-angle-left"></i>
+          </div>
+          <span class="card-title align-self-center">{{ events_day_date }}</span>
+          <div class="btn btn-round btn-neutral align-self-top btn-lg my-0" (click)="eventsDayIncrement(1)">
+            <i class="fa fa-angle-right"></i>
+          </div>
+        </div>
+        <p *ngIf="upcomingEvents.length == 0" class="card-category">No Existing Events</p>
       </div>
       <div class="card-body">
         <div *ngIf="upcomingEvents.length != 0" class="table-responsive">
@@ -127,37 +136,31 @@
                 </tr>
               </ng-container>
             </tbody>
-            <tbody >
-              <ng-container *ngFor="let item of currentEvents; let i = index">
-                <tr (click)="createEventMonitoringChart(item.time)">
-                  <td>{{ item.time }}</td>
-                  <td [ngStyle]="{ color: 'green'}">{{ item.okParticipants }}</td>
-                  <td [ngStyle]="{ color: 'red' }">{{ item.notOkParticipants }}</td>
-                </tr>
-              </ng-container>
-            </tbody>
-            <tbody >
-              <ng-container *ngFor="let item of historicEvents; let i = index">
-                <tr (click)="createEventMonitoringChart(item.time)">
-                  <td>{{ item.time }}</td>
-                  <td [ngStyle]="{ color: 'green'}">{{ item.okParticipants }}</td>
-                  <td [ngStyle]="{ color: 'red' }">{{ item.notOkParticipants }}</td>
-                </tr>
-              </ng-container>
-            </tbody>
           </table>          
         </div>
       </div>
     </div>
   </div>
-  <div *ngIf="idro_button != 2" class="col-md-4">
+  <div *ngIf="(currentEvent != '' && idro_button != 2)" class="col-md-2">
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title">Current Event</h5>
+        <p class="card-category">Interval: 5</p>
+      </div>
+      <div class="card-body">
+        <p>Aggregated Balance: 10</p>
+        <p>At: {{ currentEvent }}</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="idro_button != 2" class="col-md-2">
     <div class="card ">
       <div class="card-header ">
         <h5 class="card-title">Next Event</h5>
         <p class="card-category">T- {{ event_time_left }}</p>
       </div>
       <div class="card-body">
-        <p>At: {{ next_event }}</p>
+        <p>The next demand response event will be at: {{ next_event }} in T - {{ event_time_left }}</p>
       </div>
     </div>
   </div>
@@ -189,10 +192,6 @@
         <div class="legend">
           <i class="fa fa-circle text-primary"></i> Aggregated Balance
         </div>
-        <hr>
-        <div class="stats">
-          <i class="fa fa-history"></i> Updated 3 minutes ago
-        </div>
       </div>
     </div>
   </div>
@@ -211,10 +210,6 @@
           <i class="fa fa-circle text-warning"></i> Metric 2
           <i class="fa fa-circle text-danger"></i> Metric 3
           <i class="fa fa-circle text-gray"></i> Metric 4
-        </div>
-        <hr>
-        <div class="stats">
-          <i class="fa fa-calendar"></i> Last Event: {{last_dro_char_datetime}}
         </div>
       </div>
     </div>
@@ -241,10 +236,6 @@
             <i class="fa fa-circle-thin text-purple"></i> DR Opportunity
             <i class="fa fa-circle-thin text-success"></i> Generation Surplus
           </div>
-        </div>
-        <hr/>
-        <div class="card-stats">
-          <i class="fa fa-check"></i> Last Event: {{last_dro_char_datetime}}
         </div>
       </div>
     </div>

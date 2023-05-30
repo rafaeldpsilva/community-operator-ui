@@ -16,6 +16,11 @@ export class DemandResponseComponent implements OnInit{
   public invite_participants_button = 0;
   public isRankingTableExtended = false;
 
+  public mainParticipants;
+  public participantsResponses;
+  public eventHours;
+  public selectedHour;
+
   //html variables
   public canvas : any;
   public ctx;
@@ -24,22 +29,17 @@ export class DemandResponseComponent implements OnInit{
   public chartMonitoring;
   public rankingTable;
   
-  //variables
-  public last_dro_char_datetime = '';
   public dro;
   public iot_flexibility_forecast;
   public ranking_table;
 
+  public selectedDay;
+  public events_day_date;
   public next_event;
+  public currentEvent;
   public event_time_left;
   public upcomingEvents = [];
-  public currentEvents = [];
-  public historicEvents = [];
 
-  public mainParticipants;
-  public participantsResponses;
-  public eventHours;
-  public selectedHour;
 
   constructor(private demandresponseService: DemandresponseService) { }
 
@@ -47,7 +47,6 @@ export class DemandResponseComponent implements OnInit{
     this.idro_button = 1;
     this.dro = await this.demandresponseService.getDRO()
     this.createDROGraph(this.dro['consumption'],this.dro['generation'],this.dro['flexibility'],this.dro['dr_period'],this.dro['gs_period'])
-    this.last_dro_char_datetime= new Date().toLocaleString();
     this.idro_button = 2;
 
     this.eventHours = this.dro['dr_period'].concat(this.dro['gs_period'])
@@ -172,12 +171,35 @@ export class DemandResponseComponent implements OnInit{
     });
   }
 
-  createUpcomingEvents(events){
+  async createEventsTable(events){
+    let sortedAsc;
+    if (events[0] != '') {
+      sortedAsc = Object.values(events).sort(
+        (objA, objB) => Number(Date.parse(objA[0])) - Number(Date.parse(objB[0])),
+        );
+    }
     var json = [];
-    for (const event of events) {
+    for (const event of sortedAsc) {
       json.push({time:event[0],okParticipants:event[1],notOkParticipants:event[2]})
     }
     this.upcomingEvents = json
+
+    const upcoming = await this.demandresponseService.getUpcomingEvents();
+    if (upcoming[0] != '') {
+      sortedAsc = Object.values(upcoming).sort(
+        (objA, objB) => Number(Date.parse(objA[0])) - Number(Date.parse(objB[0])),
+        );
+    }
+    if (new Date() > new Date(Date.parse(sortedAsc[0][0]))){
+      this.currentEvent = sortedAsc[0][0]
+      this.next_event = sortedAsc[1][0]
+      setInterval(() => this.calculateDifference(sortedAsc[1][0]), 1000);
+    } else{
+      this.currentEvent = '';
+      this.next_event = sortedAsc[0][0]
+      setInterval(() => this.calculateDifference(sortedAsc[0][0]), 1000);
+    }
+    this.createEventMonitoringChart(sortedAsc[0][0])
   }
 
   createRankingTable(ranking){
@@ -325,31 +347,52 @@ export class DemandResponseComponent implements OnInit{
   }
 
   async ngOnInit(){
-    const last_dr_event = await this.demandresponseService.getLastDREvent();
-    this.last_dro_char_datetime = last_dr_event['datetime'];
+    this.selectedDay = new Date()
+    console.log(this.selectedDay)
+    this.events_day_date = `${this.selectedDay.getDate()}-${this.selectedDay.getMonth()+1}-${this.selectedDay.getFullYear()}`;
 
-    const upcoming = await this.demandresponseService.getUpcomingEvents();
-    let sortedAsc;
-    if (upcoming[0] != '') {
-      sortedAsc = Object.values(upcoming).sort(
-        (objA, objB) => Number(Date.parse(objA[0])) - Number(Date.parse(objB[0])),
-        );
-      this.createUpcomingEvents(sortedAsc);
-    }
+    const last_dr_event = await this.demandresponseService.getLastDREvent();
+
     this.createDROGraph(last_dr_event['consumption'],last_dr_event['generation'],last_dr_event['flexibility'],last_dr_event['dr_period'], last_dr_event['gs_period']);
     
     this.mainParticipants = last_dr_event['participants_responses'].length
     this.createRankingTable(last_dr_event['ranking']);
     
     this.createMetricsChart(last_dr_event['metrics'])    
+    
 
-    this.next_event = sortedAsc[0][0]
-    this.event_time_left = Math.abs(Date.parse(sortedAsc[0][0]) - Date.now())
-    this.createEventMonitoringChart(sortedAsc[0][0])
+    const events = await this.demandresponseService.getEvents(this.selectedDay);
+    this.createEventsTable(events);
+  }
+
+  private calculateDifference(date1) {
+    const difference = Math.abs(Date.parse(date1) - Date.now());
+    const secondsDifference = Math.floor(difference / 1000);
+    const minutesDifference = Math.floor(secondsDifference / 60);
+    const remainingHours = Math.floor(minutesDifference / 60);
+    const remainingMinutes = Math.floor(minutesDifference % 60);
+    const remainingSeconds = Math.floor(secondsDifference % 60);
+    this.event_time_left = `${remainingHours}:${remainingMinutes}:${remainingSeconds}`
   }
 
   extendTable(){
     this.isRankingTableExtended = !this.isRankingTableExtended;
   }
 
+  async eventsDayIncrement(increment){
+    if (increment == 1){
+      this.selectedDay.setDate(this.selectedDay.getDate() + 1)
+    }else{
+      this.selectedDay.setDate(this.selectedDay.getDate() - 1)
+    }
+    this.events_day_date = `${this.selectedDay.getDate()}-${this.selectedDay.getMonth()+1}-${this.selectedDay.getFullYear()}`;
+    const events = await this.demandresponseService.getEvents(this.selectedDay);
+    let sortedAsc;
+    if (events[0] != '') {
+      sortedAsc = Object.values(events).sort(
+        (objA, objB) => Number(Date.parse(objA[0])) - Number(Date.parse(objB[0])),
+        );
+      this.createEventsTable(sortedAsc);
+    }
+  }
 }

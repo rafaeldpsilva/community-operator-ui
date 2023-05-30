@@ -54,19 +54,18 @@ export class DemandresponseService {
       })
   }
 
-  async getCurrentEvents(): Promise<object>{
-    return await fetch('http://192.168.2.171:5000/demandresponse/current')
+  async getEvents(date): Promise<object>{
+    return await fetch('http://192.168.2.171:5000/demandresponse/events',{
+      method: 'POST',
+      body: JSON.stringify({"date": date.toISOString().split('T')[0]}),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
       .then(res => res.json())
       .then(res =>{
-        return res.current_events
-      })
-  }
-
-  async getHistoricEvents(): Promise<object>{
-    return await fetch('http://192.168.2.171:5000/demandresponse/historic')
-      .then(res => res.json())
-      .then(res =>{
-        return res.historic_events
+        return res.events
       })
   }
 
