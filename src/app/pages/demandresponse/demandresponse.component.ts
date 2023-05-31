@@ -71,17 +71,14 @@ export class DemandResponseComponent implements OnInit{
 
   async inviteParticipants(){
     this.invite_participants_button = 1;
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth() + 1;
-    const day = currentDate.getDate() + 1;
     if (this.eventHours == null){
       this.invite_participants_button = 0;
       console.log("ERROR")
       return
     } else {
-      const hour = this.selectedHour;
-      let time = `${year}-${month}-${day} ${hour}:00:00`;
+      let date = new Date();
+      date.setDate(date.getDate() + 1);
+      let time = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${this.selectedHour}:00:00`;
       this.participantsResponses = await this.demandresponseService.postInviteParticipants(this.dro['consumption'],this.dro['generation'],this.dro['flexibility'],this.dro['dr_period'],this.dro['dr_energy'],this.dro['gs_period'],this.dro['gs_energy'],this.mainParticipants, this.ranking_table, time)
       this.invite_participants_button = 2;
    
