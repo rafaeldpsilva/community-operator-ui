@@ -1,16 +1,16 @@
 <div class="row">
   <div class="col-lg-3 col-md-6 col-sm-6">
     <div class="card card-demandresponse btn btn-sm btn-round" 
-      [class.btn-outline-default]="idro_button != 2" 
-      [class.btn-outline-success]="idro_button == 2" (click)="getIDRO()">
+      [class.btn-outline-default]="idroButton != 2" 
+      [class.btn-outline-success]="idroButton == 2" (click)="getIDRO()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
             <i class="fa "
-              [class.fa-cog]="idro_button == 1"
-              [class.fa-spin]="idro_button == 1"
-              [class.fa-fw]="idro_button == 1"
-              [class.fa-area-chart]="idro_button != 1"
+              [class.fa-cog]="idroButton == 1"
+              [class.fa-spin]="idroButton == 1"
+              [class.fa-fw]="idroButton == 1"
+              [class.fa-area-chart]="idroButton != 1"
             ></i>
           </div>
         </div>
@@ -23,17 +23,17 @@
     </div>
   </div>
   <div class="col-lg-3 col-md-6 col-sm-6">
-    <div class="card card-demandresponse btn btn-sm btn-round" [class.btn-outline-default]="flexibility_forecast_button != 2" 
-    [class.btn-outline-success]="flexibility_forecast_button == 2" 
+    <div class="card card-demandresponse btn btn-sm btn-round" [class.btn-outline-default]="flexibilityForecastButton != 2" 
+    [class.btn-outline-success]="flexibilityForecastButton == 2" 
       (click)="getIoTFlexibility()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
             <i class="fa "
-              [class.fa-cog]="flexibility_forecast_button == 1"
-              [class.fa-spin]="flexibility_forecast_button == 1"
-              [class.fa-fw]="flexibility_forecast_button == 1"
-              [class.fa-bar-chart]="flexibility_forecast_button != 1"
+              [class.fa-cog]="flexibilityForecastButton == 1"
+              [class.fa-spin]="flexibilityForecastButton == 1"
+              [class.fa-fw]="flexibilityForecastButton == 1"
+              [class.fa-bar-chart]="flexibilityForecastButton != 1"
             ></i>
           </div>
         </div>
@@ -48,17 +48,17 @@
   </div>
   <div class="col-lg-3 col-md-6 col-sm-6">
     <div class="card card-demandresponse btn btn-sm btn-round"
-      [class.btn-outline-default]="ranking_button != 2" 
-      [class.btn-outline-success]="ranking_button == 2" 
+      [class.btn-outline-default]="rankingButton != 2" 
+      [class.btn-outline-success]="rankingButton == 2" 
       (click)="runRanking()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
             <i class="fa "
-              [class.fa-cog]="ranking_button == 1"
-              [class.fa-spin]="ranking_button == 1"
-              [class.fa-fw]="ranking_button == 1"
-              [class.fa-list-ol]="ranking_button != 1"
+              [class.fa-cog]="rankingButton == 1"
+              [class.fa-spin]="rankingButton == 1"
+              [class.fa-fw]="rankingButton == 1"
+              [class.fa-list-ol]="rankingButton != 1"
             ></i>
           </div>
         </div>
@@ -73,17 +73,17 @@
   </div>
   <div class="col-lg-3 col-md-6 col-sm-6">
     <div class="card card-demandresponse btn btn-sm btn-round"
-      [class.btn-outline-default]="invite_participants_button != 2" 
-      [class.btn-outline-success]="invite_participants_button == 2"
+      [class.btn-outline-default]="inviteParticipantsButton != 2" 
+      [class.btn-outline-success]="inviteParticipantsButton == 2"
       (click)="inviteParticipants()">
       <div class="row">
         <div class="col-5 col-md-4">
           <div class="icon-big text-center icon-warning">
             <i class="fa "
-              [class.fa-cog]="invite_participants_button == 1"
-              [class.fa-spin]="invite_participants_button == 1"
-              [class.fa-fw]="invite_participants_button == 1"
-              [class.fa-envelope]="invite_participants_button != 1"
+              [class.fa-cog]="inviteParticipantsButton == 1"
+              [class.fa-spin]="inviteParticipantsButton == 1"
+              [class.fa-fw]="inviteParticipantsButton == 1"
+              [class.fa-envelope]="inviteParticipantsButton != 1"
             ></i>
           </div>
         </div>
@@ -106,7 +106,7 @@
           <div class="btn btn-round btn-neutral align-self-top btn-lg my-0" (click)="eventsDayIncrement(-1)">
             <i class="fa fa-angle-left"></i>
           </div>
-          <span class="card-title align-self-center">{{ events_day_date }}</span>
+          <span class="card-title align-self-center">{{ eventsDayDate }}</span>
           <div class="btn btn-round btn-neutral align-self-top btn-lg my-0" (click)="eventsDayIncrement(1)">
             <i class="fa fa-angle-right"></i>
           </div>
@@ -115,7 +115,7 @@
       </div>
       <div class="card-body">
         <div *ngIf="upcomingEvents.length != 0" class="table-responsive">
-          <table id="rankingTable" class="table table-hover">
+          <table class="table table-hover">
             <thead class=" text-primary">
               <th>
                 Event Time
@@ -141,7 +141,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="(currentEvent != '' && idro_button != 2)" class="col-md-2">
+  <div *ngIf="(currentEvent != '' && idroButton != 2)" class="col-md-2">
     <div class="card ">
       <div class="card-header ">
         <h5 class="card-title">Current Event</h5>
@@ -153,18 +153,18 @@
       </div>
     </div>
   </div>
-  <div *ngIf="idro_button != 2" class="col-md-2">
+  <div *ngIf="nextEvent != '' && idroButton != 2" class="col-md-2">
     <div class="card ">
       <div class="card-header ">
         <h5 class="card-title">Next Event</h5>
-        <p class="card-category">T- {{ event_time_left }}</p>
+        <p class="card-category">T- {{ eventTimeLeft }}</p>
       </div>
       <div class="card-body">
-        <p>The next demand response event will be at: {{ next_event }} in T - {{ event_time_left }}</p>
+        <p>The next demand response event will be at: {{ nextEvent }} in T - {{ eventTimeLeft }}</p>
       </div>
     </div>
   </div>
-  <div *ngIf="idro_button == 2" class="col-md-4">
+  <div *ngIf="idroButton == 2" class="col-md-4">
     <div class="card ">
       <div class="card-header ">
         <h5 class="card-title">Demand Response Event</h5>
@@ -186,7 +186,7 @@
         <p class="card-category">Current Event</p>
       </div>
       <div class="card-body ">
-        <canvas id=chartEventMonitoring width="400" height="100"></canvas>
+        <canvas id=chartEventMonitoring width="400" height="93"></canvas>
       </div>
       <div class="card-footer ">
         <div class="legend">
@@ -249,7 +249,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table id="rankingTable" class="table table-hover">
+          <table class="table table-hover">
             <thead class=" text-primary">
               <th>
                 Name

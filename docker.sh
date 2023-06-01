@@ -21,8 +21,8 @@ echo "Updated version: $new_version"
 docker rmi rdpds/tiocps-community-operator-ui:latest
 docker rmi rdpds/tiocps-community-operator-ui:v$input_version
 docker build -t rdpds/tiocps-community-operator-ui .
-#id=$(docker images | grep 'rdpds/tiocps-community*' | head -1 | awk '{print $3}')
-#echo "ID: $id"
-#docker tag $id rdpds/tiocps-community-operator-ui:$new_version
-#docker tag $id rdpds/tiocps-community-operator-ui:latest
-#docker push --all-tags rdpds/tiocps-community-operator-ui
+id=$(docker images | grep 'rdpds/tiocps-community*' | head -1 | awk '{print $3}')
+echo "ID: $id"
+docker tag $id rdpds/tiocps-community-operator-ui:$new_version
+docker tag $id rdpds/tiocps-community-operator-ui:latest
+docker push --all-tags rdpds/tiocps-community-operator-ui

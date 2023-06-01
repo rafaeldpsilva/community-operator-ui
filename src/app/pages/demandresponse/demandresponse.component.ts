@@ -10,10 +10,10 @@ import { DemandresponseService } from '../../../services/demandresponse/demandre
 
 export class DemandResponseComponent implements OnInit{
   //button states
-  public idro_button = 0;
-  public flexibility_forecast_button = 0;
-  public ranking_button = 0;
-  public invite_participants_button = 0;
+  public idroButton = 0;
+  public flexibilityForecastButton = 0;
+  public rankingButton = 0;
+  public inviteParticipantsButton = 0;
   public isRankingTableExtended = false;
 
   public mainParticipants;
@@ -30,59 +30,57 @@ export class DemandResponseComponent implements OnInit{
   public rankingTable;
   
   public dro;
-  public iot_flexibility_forecast;
-  public ranking_table;
+  public iotFlexibilityForecast;
+  public rankingMatrix;
 
   public selectedDay;
-  public events_day_date;
-  public next_event;
-  public currentEvent;
-  public event_time_left;
+  public eventsDayDate;
+  public nextEvent = "";
+  public currentEvent = "";
+  public eventTimeLeft;
   public upcomingEvents = [];
 
 
   constructor(private demandresponseService: DemandresponseService) { }
 
   async getIDRO(){
-    this.idro_button = 1;
+    this.idroButton = 1;
     this.dro = await this.demandresponseService.getDRO()
     this.createDROGraph(this.dro['consumption'],this.dro['generation'],this.dro['flexibility'],this.dro['dr_period'],this.dro['gs_period'])
-    this.idro_button = 2;
+    this.idroButton = 2;
 
     this.eventHours = this.dro['dr_period'].concat(this.dro['gs_period'])
   }
 
   async getIoTFlexibility(){
-    this.flexibility_forecast_button = 1;
-    this.iot_flexibility_forecast = await this.demandresponseService.getIotForecast();
-    this.flexibility_forecast_button = 2;
+    this.flexibilityForecastButton = 1;
+    this.iotFlexibilityForecast = await this.demandresponseService.getIotForecast();
+    this.flexibilityForecastButton = 2;
   }
 
   async runRanking(){
-    this.ranking_button = 1;
-    const ranking_response = await this.demandresponseService.postRanking(this.iot_flexibility_forecast)
-    this.ranking_table = ranking_response[0]
+    this.rankingButton = 1;
+    const ranking_response = await this.demandresponseService.postRanking(this.iotFlexibilityForecast)
+    this.rankingMatrix = ranking_response[0]
     this.mainParticipants = ranking_response[1]
     this.createRankingTable(ranking_response[0])
-    const metricsAverage = await this.demandresponseService.getMetricsAverage(this.ranking_table)
+    const metricsAverage = await this.demandresponseService.getMetricsAverage(ranking_response[0])
     this.createMetricsChart(metricsAverage)
-    this.ranking_button = 2;
+    this.rankingButton = 2;
   }
 
   async inviteParticipants(){
-    this.invite_participants_button = 1;
+    this.inviteParticipantsButton = 1;
     if (this.eventHours == null){
-      this.invite_participants_button = 0;
+      this.inviteParticipantsButton = 0;
       console.log("ERROR")
       return
     } else {
       let date = new Date();
       date.setDate(date.getDate() + 1);
       let time = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${this.selectedHour}:00:00`;
-      this.participantsResponses = await this.demandresponseService.postInviteParticipants(this.dro['consumption'],this.dro['generation'],this.dro['flexibility'],this.dro['dr_period'],this.dro['dr_energy'],this.dro['gs_period'],this.dro['gs_energy'],this.mainParticipants, this.ranking_table, time)
-      this.invite_participants_button = 2;
-   
-      this.upcomingEvents.push({time:time,okParticipants:'',notOkParticipants:this.mainParticipants})
+      this.participantsResponses = await this.demandresponseService.postInviteParticipants(this.dro['consumption'],this.dro['generation'],this.dro['flexibility'],this.dro['dr_period'],this.dro['dr_energy'],this.dro['gs_period'],this.dro['gs_energy'],this.mainParticipants, this.rankingMatrix, time)
+      this.inviteParticipantsButton = 2;
     }
   }
 
@@ -189,11 +187,11 @@ export class DemandResponseComponent implements OnInit{
     }
     if (new Date() > new Date(Date.parse(sortedAsc[0][0]))){
       this.currentEvent = sortedAsc[0][0]
-      this.next_event = sortedAsc[1][0]
+      this.nextEvent = sortedAsc[1][0]
       setInterval(() => this.calculateDifference(sortedAsc[1][0]), 1000);
     } else{
       this.currentEvent = '';
-      this.next_event = sortedAsc[0][0]
+      this.nextEvent = sortedAsc[0][0]
       setInterval(() => this.calculateDifference(sortedAsc[0][0]), 1000);
     }
     this.createEventMonitoringChart(sortedAsc[0][0])
@@ -346,7 +344,7 @@ export class DemandResponseComponent implements OnInit{
   async ngOnInit(){
     this.selectedDay = new Date()
     console.log(this.selectedDay)
-    this.events_day_date = `${this.selectedDay.getDate()}-${this.selectedDay.getMonth()+1}-${this.selectedDay.getFullYear()}`;
+    this.eventsDayDate = `${this.selectedDay.getDate()}-${this.selectedDay.getMonth()+1}-${this.selectedDay.getFullYear()}`;
 
     const last_dr_event = await this.demandresponseService.getLastDREvent();
 
@@ -369,7 +367,7 @@ export class DemandResponseComponent implements OnInit{
     const remainingHours = Math.floor(minutesDifference / 60);
     const remainingMinutes = Math.floor(minutesDifference % 60);
     const remainingSeconds = Math.floor(secondsDifference % 60);
-    this.event_time_left = `${remainingHours}:${remainingMinutes}:${remainingSeconds}`
+    this.eventTimeLeft = `${remainingHours}:${remainingMinutes}:${remainingSeconds}`
   }
 
   extendTable(){
@@ -382,7 +380,7 @@ export class DemandResponseComponent implements OnInit{
     }else{
       this.selectedDay.setDate(this.selectedDay.getDate() - 1)
     }
-    this.events_day_date = `${this.selectedDay.getDate()}-${this.selectedDay.getMonth()+1}-${this.selectedDay.getFullYear()}`;
+    this.eventsDayDate = `${this.selectedDay.getDate()}-${this.selectedDay.getMonth()+1}-${this.selectedDay.getFullYear()}`;
     const events = await this.demandresponseService.getEvents(this.selectedDay);
     let sortedAsc;
     if (events[0] != '') {
