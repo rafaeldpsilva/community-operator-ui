@@ -99,7 +99,7 @@ export class DemandresponseService {
       })
   }
   
-  async getMonitoring(event_time): Promise<object>{
+  async getMonitoring(event_time): Promise<any[]>{
     return await fetch('http://192.168.2.171:5000/demandresponse/monitoring',{
       method: 'POST',
       body: JSON.stringify({"event_time": event_time}),
@@ -111,6 +111,21 @@ export class DemandresponseService {
       .then(res => res.json())
       .then(res =>{
         return res.aggregated_balance
+      })
+  }
+  
+  async getDemandResponseEvent(event_time): Promise<any[]>{
+    return await fetch('http://192.168.2.171:5000/demandresponse/event',{
+      method: 'POST',
+      body: JSON.stringify({"event_time": event_time}),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(res =>{
+        return res
       })
   }
 }

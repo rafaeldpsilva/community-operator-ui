@@ -129,7 +129,7 @@
             </thead>
             <tbody >
               <ng-container *ngFor="let item of upcomingEvents; let i = index">
-                <tr (click)="createEventMonitoringChart(item.time)">
+                <tr (click)="loadEventData(item.time)">
                   <td>{{ item.time }}</td>
                   <td [ngStyle]="{ color: 'green'}">{{ item.okParticipants }}</td>
                   <td [ngStyle]="{ color: 'red' }">{{ item.notOkParticipants }}</td>
@@ -145,10 +145,10 @@
     <div class="card ">
       <div class="card-header ">
         <h5 class="card-title">Current Event</h5>
-        <p class="card-category">Interval: 5</p>
+        <p class="card-category">Interval: {{ currentEventInterval }}</p>
       </div>
       <div class="card-body">
-        <p>Aggregated Balance: 10</p>
+        <p>Aggregated Balance: {{ currentEventAggregatedBalance }}</p>
         <p>At: {{ currentEvent }}</p>
       </div>
     </div>

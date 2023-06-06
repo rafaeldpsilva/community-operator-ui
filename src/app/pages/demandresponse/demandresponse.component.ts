@@ -37,6 +37,8 @@ export class DemandResponseComponent implements OnInit{
   public eventsDayDate;
   public nextEvent = "";
   public currentEvent = "";
+  public currentEventInterval = 0;
+  public currentEventAggregatedBalance = 0;
   public eventTimeLeft;
   public upcomingEvents = [];
 
@@ -194,7 +196,7 @@ export class DemandResponseComponent implements OnInit{
       this.nextEvent = sortedAsc[0][0]
       setInterval(() => this.calculateDifference(sortedAsc[0][0]), 1000);
     }
-    this.createEventMonitoringChart(sortedAsc[0][0])
+    this.loadEventData(sortedAsc[0][0])
   }
 
   createRankingTable(ranking){
@@ -273,10 +275,24 @@ export class DemandResponseComponent implements OnInit{
     });
   }
 
-  async createEventMonitoringChart(event_time){
-    const monitoring = await this.demandresponseService.getMonitoring(event_time);
+  async loadEventData(event_time){
+    const event = await this.demandresponseService.getDemandResponseEvent(event_time);
+    this.createEventMonitoringChart(event_time, event['aggregated_balance'])
+    this.createDROGraph(event['consumption'],event['generation'],event['flexibility'],event['dr_period'], event['gs_period']);
+    
+    this.mainParticipants = event['participants_responses'].length
+    this.createRankingTable(event['ranking']);
+    
+    this.createMetricsChart(event['metrics'])
+    
+  }
+
+  async createEventMonitoringChart(event_time, monitoring){
     let hour = event_time.slice(11,-6)
     let hours = [hour+':00',hour+':10',hour+':20',hour+':30',hour+':40',hour+':50',parseInt(hour)+1+':00']
+
+    this.currentEventAggregatedBalance = monitoring.at(-1)
+    this.currentEventInterval = monitoring.length - 1
 
     this.chartHistoric = "#FFFFFF";
     this.canvas = document.getElementById("chartEventMonitoring");
@@ -343,19 +359,7 @@ export class DemandResponseComponent implements OnInit{
 
   async ngOnInit(){
     this.selectedDay = new Date()
-    console.log(this.selectedDay)
     this.eventsDayDate = `${this.selectedDay.getDate()}-${this.selectedDay.getMonth()+1}-${this.selectedDay.getFullYear()}`;
-
-    const last_dr_event = await this.demandresponseService.getLastDREvent();
-
-    this.createDROGraph(last_dr_event['consumption'],last_dr_event['generation'],last_dr_event['flexibility'],last_dr_event['dr_period'], last_dr_event['gs_period']);
-    
-    this.mainParticipants = last_dr_event['participants_responses'].length
-    this.createRankingTable(last_dr_event['ranking']);
-    
-    this.createMetricsChart(last_dr_event['metrics'])    
-    
-
     const events = await this.demandresponseService.getEvents(this.selectedDay);
     this.createEventsTable(events);
   }
