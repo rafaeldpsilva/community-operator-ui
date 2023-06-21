@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
 import { DemandresponseService } from '../../../services/demandresponse/demandresponse.service'
+import { interval } from 'rxjs';
 
 @Component({
     selector: 'demandresponse-cmp',
@@ -287,7 +288,27 @@ export class DemandResponseComponent implements OnInit{
     
   }
 
-  async createEventMonitoringChart(event_time, monitoring){
+  async createEventMonitoringChart(event_time, aggregated_balance){
+    let monitoring = aggregated_balance[0];
+
+    let corrections = [[],[],[],[],[],[]];
+    if (aggregated_balance[0][1] != null) {
+      for(let i = 0; i< aggregated_balance[1].length; i++){
+        for(let j = 0; j < aggregated_balance[1][i].length; j++){
+          if (i>j){
+            corrections[j].push(aggregated_balance[1][j][i])
+          }else{
+            if(i==j){
+              corrections[j].push(aggregated_balance[0][i])
+            }else{
+              corrections[j].push(NaN)
+            }
+          }
+        }
+      }
+      //corrections = aggregated_balance[1][0].map((_, colIndex) => aggregated_balance[1].map(row => row[colIndex]));
+    }
+
     let hour = event_time.slice(11,-6)
     let hours = [hour+':00',hour+':10',hour+':20',hour+':30',hour+':40',hour+':50',parseInt(hour)+1+':00']
 
@@ -305,11 +326,71 @@ export class DemandResponseComponent implements OnInit{
         datasets: [{
           borderColor: "#51cbce",
           backgroundColor: "transparent",
-          pointRadius: 0,
+          pointRadius: 2,
           pointHoverRadius: 0,
           borderWidth: 3,
           data: monitoring,
           label: 'Aggregated Balance'
+        },
+        {
+          borderColor: "#3be332",
+          backgroundColor: "transparent",
+          pointRadius: 2,
+          pointHoverRadius: 0,
+          borderWidth: 3,
+          borderDash: [5, 5],
+          data: corrections[0],
+          label: 'Correction 1'
+        },
+        {
+          borderColor: "#de2fd2",
+          backgroundColor: "transparent",
+          pointRadius: 2,
+          pointHoverRadius: 0,
+          borderWidth: 3,
+          borderDash: [5, 5],
+          data: corrections[1],
+          label: 'Correction 2'
+        },
+        {
+          borderColor: "#de752f",
+          backgroundColor: "transparent",
+          pointRadius: 2,
+          pointHoverRadius: 0,
+          borderWidth: 3,
+          borderDash: [5, 5],
+          data: corrections[2],
+          label: 'Correction 3'
+        },
+        {
+          borderColor: "#b0a50b",
+          backgroundColor: "transparent",
+          pointRadius: 2,
+          pointHoverRadius: 0,
+          borderWidth: 3,
+          borderDash: [5, 5],
+          data: corrections[3],
+          label: 'Correction 4'
+        },
+        {
+          borderColor: "#1043eb",
+          backgroundColor: "transparent",
+          pointRadius: 2,
+          pointHoverRadius: 0,
+          borderWidth: 3,
+          borderDash: [5, 5],
+          data: corrections[4],
+          label: 'Correction 5'
+        },
+        {
+          borderColor: "#03154f",
+          backgroundColor: "transparent",
+          pointRadius: 2,
+          pointHoverRadius: 0,
+          borderWidth: 3,
+          borderDash: [5, 5],
+          data: corrections[5],
+          label: 'Correction 6'
         }
         ]
       },
@@ -324,7 +405,6 @@ export class DemandResponseComponent implements OnInit{
 
         scales: {
           yAxes: [{
-
             ticks: {
               fontColor: "#9f9f9f",
               beginAtZero: false,
@@ -338,7 +418,6 @@ export class DemandResponseComponent implements OnInit{
             }
 
           }],
-
           xAxes: [{
             barPercentage: 1.6,
             gridLines: {
