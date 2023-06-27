@@ -326,6 +326,7 @@ export class DemandResponseComponent implements OnInit{
         datasets: [{
           borderColor: "#51cbce",
           backgroundColor: "transparent",
+          lineTension: 0,
           pointRadius: 2,
           pointHoverRadius: 0,
           borderWidth: 3,
@@ -335,6 +336,7 @@ export class DemandResponseComponent implements OnInit{
         {
           borderColor: "#3be332",
           backgroundColor: "transparent",
+          lineTension: 0,
           pointRadius: 2,
           pointHoverRadius: 0,
           borderWidth: 3,
@@ -346,6 +348,7 @@ export class DemandResponseComponent implements OnInit{
         {
           borderColor: "#de2fd2",
           backgroundColor: "transparent",
+          lineTension: 0,
           pointRadius: 2,
           pointHoverRadius: 0,
           borderWidth: 3,
@@ -357,6 +360,7 @@ export class DemandResponseComponent implements OnInit{
         {
           borderColor: "#de752f",
           backgroundColor: "transparent",
+          lineTension: 0,
           pointRadius: 2,
           pointHoverRadius: 0,
           borderWidth: 3,
@@ -368,6 +372,7 @@ export class DemandResponseComponent implements OnInit{
         {
           borderColor: "#b0a50b",
           backgroundColor: "transparent",
+          lineTension: 0,
           pointRadius: 2,
           pointHoverRadius: 0,
           borderWidth: 3,
@@ -379,6 +384,7 @@ export class DemandResponseComponent implements OnInit{
         {
           borderColor: "#1043eb",
           backgroundColor: "transparent",
+          lineTension: 0,
           pointRadius: 2,
           pointHoverRadius: 0,
           borderWidth: 3,
@@ -390,6 +396,7 @@ export class DemandResponseComponent implements OnInit{
         {
           borderColor: "#03154f",
           backgroundColor: "transparent",
+          lineTension: 0,
           pointRadius: 2,
           pointHoverRadius: 0,
           borderWidth: 3,
