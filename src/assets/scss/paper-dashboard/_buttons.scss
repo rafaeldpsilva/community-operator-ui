@@ -116,6 +116,29 @@
         background-color: $white-color;
     }
 }
+.btn-legend {
+    
+    @include transition($fast-transition-time, linear);
+    color: #252422;
+    border: none;
+    margin-left: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover,
+    &:focus{
+        background-color: #ccc;
+    }
+    &:active,
+        &.active,
+        .open > &.dropdown-toggle{
+             background-color: #ccc;
+             color: $default-color;
+        }
+}
+
 .btn-neutral {
     @include btn-styles($white-color, $white-color);
     color: $default-color;

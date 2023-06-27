@@ -340,7 +340,8 @@ export class DemandResponseComponent implements OnInit{
           borderWidth: 3,
           borderDash: [5, 5],
           data: corrections[0],
-          label: 'Correction 1'
+          label: 'w/o DR',
+          showLine: true
         },
         {
           borderColor: "#de2fd2",
@@ -350,7 +351,8 @@ export class DemandResponseComponent implements OnInit{
           borderWidth: 3,
           borderDash: [5, 5],
           data: corrections[1],
-          label: 'Correction 2'
+          label: 'Correction 1',
+          showLine: true
         },
         {
           borderColor: "#de752f",
@@ -360,7 +362,8 @@ export class DemandResponseComponent implements OnInit{
           borderWidth: 3,
           borderDash: [5, 5],
           data: corrections[2],
-          label: 'Correction 3'
+          label: 'Correction 2',
+          showLine: true
         },
         {
           borderColor: "#b0a50b",
@@ -370,7 +373,8 @@ export class DemandResponseComponent implements OnInit{
           borderWidth: 3,
           borderDash: [5, 5],
           data: corrections[3],
-          label: 'Correction 4'
+          label: 'Correction 3',
+          showLine: true
         },
         {
           borderColor: "#1043eb",
@@ -380,7 +384,8 @@ export class DemandResponseComponent implements OnInit{
           borderWidth: 3,
           borderDash: [5, 5],
           data: corrections[4],
-          label: 'Correction 5'
+          label: 'Correction 4',
+          showLine: true
         },
         {
           borderColor: "#03154f",
@@ -390,7 +395,8 @@ export class DemandResponseComponent implements OnInit{
           borderWidth: 3,
           borderDash: [5, 5],
           data: corrections[5],
-          label: 'Correction 6'
+          label: 'Correction 5',
+          showLine: true
         }
         ]
       },
@@ -451,6 +457,18 @@ export class DemandResponseComponent implements OnInit{
     const remainingMinutes = Math.floor(minutesDifference % 60);
     const remainingSeconds = Math.floor(secondsDifference % 60);
     this.eventTimeLeft = `${remainingHours}:${remainingMinutes}:${remainingSeconds}`
+  }
+
+  hideLine(line){
+    if (this.chartMonitoring.data.datasets[line].showLine){
+      this.chartMonitoring.data.datasets[line].showLine = false;
+      this.chartMonitoring.data.datasets[line].pointRadius = 0;
+    } else {
+      this.chartMonitoring.data.datasets[line].showLine = true;
+      this.chartMonitoring.data.datasets[line].pointRadius = 2;
+    }
+    console.log(this.chartMonitoring.data.datasets[line])
+    this.chartMonitoring.update();
   }
 
   extendTable(){
