@@ -10,6 +10,14 @@ import { interval } from 'rxjs';
 })
 
 export class DemandResponseComponent implements OnInit{
+  //html variables
+  public canvas : any;
+  public ctx;
+  public chartHistoric;
+  public chartMetrics;
+  public chartMonitoring;
+  public rankingTable;
+
   //button states
   public idroButton = 0;
   public flexibilityForecastButton = 0;
@@ -22,14 +30,6 @@ export class DemandResponseComponent implements OnInit{
   public eventHours;
   public selectedHour;
 
-  //html variables
-  public canvas : any;
-  public ctx;
-  public chartHistoric;
-  public chartMetrics;
-  public chartMonitoring;
-  public rankingTable;
-  
   public dro;
   public iotFlexibilityForecast;
   public rankingMatrix;
@@ -57,6 +57,8 @@ export class DemandResponseComponent implements OnInit{
 
   async getIoTFlexibility(){
     this.flexibilityForecastButton = 1;
+    this.rankingButton = 0;
+    this.inviteParticipantsButton = 0;
     this.iotFlexibilityForecast = await this.demandresponseService.getIotForecast();
     this.flexibilityForecastButton = 2;
   }
