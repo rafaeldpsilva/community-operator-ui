@@ -298,15 +298,10 @@ export class DemandResponseComponent implements OnInit{
           if (i>j){
             corrections[j].push(aggregated_balance[1][j][i])
           }else{
-            if(i==j){
-              corrections[j].push(aggregated_balance[0][i])
-            }else{
-              corrections[j].push(NaN)
-            }
+            corrections[j].push(NaN)
           }
         }
       }
-      //corrections = aggregated_balance[1][0].map((_, colIndex) => aggregated_balance[1].map(row => row[colIndex]));
     }
 
     let hour = event_time.slice(11,-6)
