@@ -31,10 +31,10 @@ export class DemandresponseService {
       })
   }
 
-  async postRanking(iots_flexibility_forecast): Promise<object>{
+  async postRanking(iots_flexibility_forecast, difference): Promise<object>{
     return await fetch('http://192.168.2.171:5000/demandresponse/ranking',{
         method: 'POST',
-        body: JSON.stringify({"iots_flexibility_forecast":iots_flexibility_forecast}),
+        body: JSON.stringify({"iots_flexibility_forecast":iots_flexibility_forecast, "difference": difference}),
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',

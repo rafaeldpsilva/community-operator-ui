@@ -65,7 +65,7 @@ export class DemandResponseComponent implements OnInit{
 
   async runRanking(){
     this.rankingButton = 1;
-    const ranking_response = await this.demandresponseService.postRanking(this.iotFlexibilityForecast)
+    const ranking_response = await this.demandresponseService.postRanking(this.iotFlexibilityForecast, this.dro['consumption'][parseInt(this.selectedHour)] - this.dro['generation'][parseInt(this.selectedHour)])
     this.rankingMatrix = ranking_response[0]
     this.mainParticipants = ranking_response[1]
     this.createRankingTable(ranking_response[0])
