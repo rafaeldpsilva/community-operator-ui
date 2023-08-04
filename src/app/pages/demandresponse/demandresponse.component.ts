@@ -295,16 +295,16 @@ export class DemandResponseComponent implements OnInit{
 
     let corrections = [[],[],[],[],[],[]];
     if (aggregated_balance[0][1] != null) {
-      for(let i = 0; i< aggregated_balance[1].length; i++){
-        for(let j = 0; j < aggregated_balance[1][i].length; j++){
-          if (i>j && aggregated_balance[1][j][i] != 0){
-            corrections[j].push(aggregated_balance[1][j][i])
-          }else{
-            corrections[j].push(NaN)
+      let corret = aggregated_balance[1]
+      for(let i = 0; i < corret.length; i++){
+        for(let j = 0; j < corret[i].length; j++){
+          if (j <= i && corret[i][j] == 0){
+            corrections[i].push(NaN)
+          } else {
+            corrections[i].push(corret[i][j])
           }
         }
       }
-      //corrections = aggregated_balance[1][0].map((_, colIndex) => aggregated_balance[1].map(row => row[colIndex]));
     }
 
     let hour = event_time.slice(11,-6)
@@ -347,61 +347,61 @@ export class DemandResponseComponent implements OnInit{
           borderColor: "#de2fd2",
           backgroundColor: "transparent",
           lineTension: 0,
-          pointRadius: 2,
+          pointRadius: 0,
           pointHoverRadius: 0,
           borderWidth: 3,
           borderDash: [5, 5],
           data: corrections[1],
           label: 'Correction 1',
-          showLine: true
+          showLine: false
         },
         {
           borderColor: "#de752f",
           backgroundColor: "transparent",
           lineTension: 0,
-          pointRadius: 2,
+          pointRadius: 0,
           pointHoverRadius: 0,
           borderWidth: 3,
           borderDash: [5, 5],
           data: corrections[2],
           label: 'Correction 2',
-          showLine: true
+          showLine: false
         },
         {
           borderColor: "#b0a50b",
           backgroundColor: "transparent",
           lineTension: 0,
-          pointRadius: 2,
+          pointRadius: 0,
           pointHoverRadius: 0,
           borderWidth: 3,
           borderDash: [5, 5],
           data: corrections[3],
           label: 'Correction 3',
-          showLine: true
+          showLine: false
         },
         {
           borderColor: "#1043eb",
           backgroundColor: "transparent",
           lineTension: 0,
-          pointRadius: 2,
+          pointRadius: 0,
           pointHoverRadius: 0,
           borderWidth: 3,
           borderDash: [5, 5],
           data: corrections[4],
           label: 'Correction 4',
-          showLine: true
+          showLine: false
         },
         {
           borderColor: "#03154f",
           backgroundColor: "transparent",
           lineTension: 0,
-          pointRadius: 2,
+          pointRadius: 0,
           pointHoverRadius: 0,
           borderWidth: 3,
           borderDash: [5, 5],
           data: corrections[5],
           label: 'Correction 5',
-          showLine: true
+          showLine: false
         }
         ]
       },
