@@ -24,7 +24,7 @@ export class CommunityComponent implements OnInit{
 
         var json = [];
         for (const item of participantsData) {
-            json.push({name:item['name'],type:item['type'],uri:item['uri'],method:item['method']})
+          json.push({name:item['name'],type:item['type'],uri:item['uri'],method:item['method'], status: item['status']})
         }
         
         this.table1 = json

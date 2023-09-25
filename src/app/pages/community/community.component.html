@@ -18,7 +18,7 @@
                 URI
               </th>
               <th class="text-right">
-                Method
+                Status
               </th>
             </thead>
             <tbody>
@@ -26,7 +26,12 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.type }}</td>
                 <td>{{ item.uri }}</td>
-                <td class="text-right">{{ item.method }}</td>
+                <td *ngIf="item.status" class="text-right text-success">
+                  <i class="fa fa-circle text-success"></i>Online
+                </td>
+                <td *ngIf="!item.status" class="text-right text-danger">
+                  <i class="fa fa-circle text-danger"></i>Offline
+                </td>
               </tr>
             </tbody>
           </table>
