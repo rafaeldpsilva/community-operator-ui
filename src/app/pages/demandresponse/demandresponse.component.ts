@@ -451,7 +451,19 @@ export class DemandResponseComponent implements OnInit{
     this.selectedDay = new Date()
     this.eventsDayDate = `${this.selectedDay.getDate()}-${this.selectedDay.getMonth()+1}-${this.selectedDay.getFullYear()}`;
     const events = await this.demandresponseService.getEvents(this.selectedDay);
-    this.createEventsTable(events);
+    if (events){
+      this.createEventsTable(events);
+    }
+
+    var last_event = await this.demandresponseService.getLastDREvent();
+    console.log(last_event)
+    if (last_event) {
+      this.createEventMonitoringChart(last_event['datetime'], last_event['aggregated_balance'])
+      this.createDROGraph(last_event['consumption'],last_event['generation'],last_event['flexibility'],last_event['dr_period'], last_event['gs_period']);
+      this.mainParticipants = last_event['participants_responses'].length
+      this.createRankingTable(last_event['ranking']);
+      this.createMetricsChart(last_event['metrics'])
+    }
   }
 
   private calculateDifference(date1) {

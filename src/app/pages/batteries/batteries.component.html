@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title"> Participants</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table id="participantsTable" class="table table-hover">
+            <thead class=" text-primary">
+              <th>
+                Name
+              </th>
+              <th>
+                Capacity
+              </th>
+              <th>
+                Charge
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let bat of table1">
+                <td>{{ bat.name }}</td>
+                <td>{{ bat.capacity }}</td>
+                <td>{{ bat.charging_rate }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
