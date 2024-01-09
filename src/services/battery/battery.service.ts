@@ -14,4 +14,9 @@ export class BatteryService {
         return res.batteries
       })
   }
+
+  async  getBatteriesOptimization(): Promise<string[]>{
+    return await fetch('http://192.168.2.171:5000/batteries/optimization')
+      .then(res => res.json())
+  }
 }

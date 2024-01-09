@@ -9,9 +9,7 @@ import { DashboardComponent }       from '../../pages/dashboard/dashboard.compon
 import { DemandResponseComponent }       from '../../pages/demandresponse/demandresponse.component';
 import { CommunityComponent }           from '../../pages/community/community.component';
 import { BatteriesComponent }            from '../../pages/batteries/batteries.component';
-//import { TypographyComponent }      from '../../pages/typography/typography.component';
-//import { IconsComponent }           from '../../pages/icons/icons.component';
-//import { NotificationsComponent }   from '../../pages/notifications/notifications.component';
+import { OptimizationcharComponent} from '../../pages/batteries/optimizationchart.component'
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -26,11 +24,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     DashboardComponent,
     DemandResponseComponent,
     CommunityComponent,
-    BatteriesComponent
-    //UserComponent,
-    //TypographyComponent,
-    //IconsComponent,
-    //NotificationsComponent,
+    BatteriesComponent,
+    OptimizationcharComponent
   ]
 })
 

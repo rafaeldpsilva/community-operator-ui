@@ -22,5 +22,5 @@ export class BatteriesComponent implements OnInit{
     async ngOnInit(){
         var batteries = await this.batteryService.getCommunityBatteries();
         this.table1 = batteries
-    }z
+    }
 }
