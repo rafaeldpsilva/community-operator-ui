@@ -94,6 +94,7 @@ import $ from 'jquery';
     plt.xlabel("Periods (h)")
     plt.ylabel("Energy (kWh)")
     plt.show() */
+
 export class OptimizationcharComponent implements OnInit {
     public option;
     constructor(private elm: ElementRef,
@@ -127,17 +128,19 @@ export class OptimizationcharComponent implements OnInit {
 
         var optimization = await this.batteryService.getBatteriesOptimization();
         this.option.xAxis.data = optimization['x']
-        this.option.legend.data = ['Battery 1','Battery 2','Battery 3','Battery 4','Battery 5','Battery 6']
-
+        var legend = []
         for (var i = 0; i < optimization['y_batteries'].length; i++){
+            var seriesName ='Battery '+(i+1) 
+            legend.push(seriesName)
             this.option.series.push({
-                name: 'Battery '+i,
+                name: seriesName,
                 type: 'line',
-                data: optimization['y_batteries'][i],
+                data: optimization['y_batteries'][i][1],
                 showSymbol: false,
-                smooth: true,
+                smooth: false,
             })
         }
+        this.option.legend.data = legend
         this.optionsGraph(lineChart)
     }
 

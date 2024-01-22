@@ -12,16 +12,23 @@
                 Name
               </th>
               <th>
-                Capacity
+                Capacity (Wh)
               </th>
               <th>
-                Charge
+                Action
+              </th>
+              <th>
+                Charging Rate (W)
               </th>
             </thead>
             <tbody>
               <tr *ngFor="let bat of table1">
                 <td>{{ bat.name }}</td>
                 <td>{{ bat.capacity }}</td>
+
+                <td *ngIf="bat.charging_rate == 0">On Hold (until ...)</td>
+                <td *ngIf="bat.charging_rate > 0">Charging (until ...)</td>
+                <td *ngIf="bat.charging_rate < 0">Discharging (until ...)</td>
                 <td>{{ bat.charging_rate }}</td>
               </tr>
             </tbody>
