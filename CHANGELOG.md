@@ -1,42 +1,31 @@
-## [2.4.0] 2022-12-08
-### Updates
-- update to Angular 14
-- update all dependencies to match Angular 14 version
+## [3.0.0] 2022-05-26
 
-## [2.3.0] 2022-05-06
-### Updates
-- update to Angular 13
-- update all dependencies to match Angular 13 version
-- fixed cosmetic issue
+- Fix errors
+- Update dependencies
+- Add new components
+- Add new pages and layouts
+- Add new design blocks
+- Add vuex to the project
+- New base strucuture for more reusable components
 
-## [2.2.0] 2020-10-08
-### Updates
-- update to Angular 10
-- update all dependencies to match Angular 10 version
+## [2.0.1] - 2021-09-17
 
-## [2.1.0] 2020-03-16
-### Updates
-- update to Angular 9
-- update all dependencies to match Angular 9 version
+- Fix Inputs v-model
 
-## [2.0.0] 2019-17-07
-### Updates
-- update from Bootstrap 3 to Bootstrap 4
-- update to Angular 8
-- update all dependencies to match Angular 8 version
-- change the product structure
-### Added
-- useHash
-- online doc
-- paper 2 styles
-- fixed plugin
-- copyright
-- issue_template
-### Bug Fixing
-- fix sidebar scroll
+## [2.0.0] - 2021-02-22
 
-## [1.0.1] 2017-12-07
-- fixed errors for npm start
+### Vue 3 Update
 
-## [1.0.0] 2017-06-27
+- Compatibility with new Vuejs 3
+
+## [1.1.1] - 2020-11-25
+
+- Change broken links
+
+## [1.1.0] - 2020-06-30
+
+- Package updates
+
+## [1.0.0] - 2019-04-07
+
 ### Initial Release
