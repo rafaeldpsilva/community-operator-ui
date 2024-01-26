@@ -6,7 +6,7 @@ const DashboardService = {
                 return [Math.round(res.consumption), Math.round(res.generation), Math.round(res.flexibility)];
             }).catch(error => {
                 console.error('Error fetching energy values:', error);
-                return [0,0,0];
+                return [0, 0, 0];
             });
     },
     async getMembers() {
@@ -26,7 +26,7 @@ const DashboardService = {
                 return [res.hours, res.consumption, res.generation, res.flexibility];
             }).catch(error => {
                 console.error('Error fetching historic:', error);
-                return [[0],[0],[0],[0]];
+                return [[0], [0], [0], [0]];
             });
     }
 }
