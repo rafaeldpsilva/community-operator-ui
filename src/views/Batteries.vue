@@ -104,7 +104,7 @@ import GB from "@/assets/img/icons/flags/GB.png";
 import BR from "@/assets/img/icons/flags/BR.png";
 
 export default {
-    name: "dashboard-default",
+    name: "batteries",
     data() {
         return {
             stats: {

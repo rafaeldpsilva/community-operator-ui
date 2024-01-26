@@ -10,6 +10,20 @@
         </sidenav-item>
       </li>
       <li class="nav-item">
+        <sidenav-item url="/demand-response" :class="getRoute() === 'demand-response' ? 'active' : ''" :navText="'Demand Response'">
+          <template v-slot:icon>
+            <i class="fas fa-exchange-alt  text-warning text-sm opacity-10"></i>
+          </template>
+        </sidenav-item>
+      </li>
+      <li class="nav-item">
+        <sidenav-item url="/batteries" :class="getRoute() === 'batteries' ? 'active' : ''" :navText="'Batteries'">
+          <template v-slot:icon>
+            <i class="fas fa-battery-three-quarters text-success text-sm opacity-10"></i>
+          </template>
+        </sidenav-item>
+      </li>
+      <li class="nav-item">
         <sidenav-item url="/tables" :class="getRoute() === 'tables' ? 'active' : ''" :navText="'Tables'">
           <template v-slot:icon>
             <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
