@@ -20,7 +20,7 @@ import {
 } from 'echarts/components';
 import VChart, { THEME_KEY } from 'vue-echarts';
 import { ref, defineComponent } from 'vue';
-//import BatteryService from '../../../services/battery/BatteryService.js'
+import BatteryService from '../../../services/battery/BatteryService.js'
 
 use([
   CanvasRenderer,
@@ -60,7 +60,7 @@ export default defineComponent({
   },
   methods: {
     async loadBatteryOptimization() {
-      let optimization = {
+      /* let optimization = {
         "bought": [4.321000000000001, 0.2, 0.4, 3.8, 0.4, 6.0, 0.8, 0.0, 0.0, 0.0, 0.0, 1.5444083333333332, 6.0, 6.0, 4.47243888888889, 3.481740972222222, 0.5763548611111116, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         "gen": [0.4, 0.2, 0.4, 0.6, 0.4, 0.2, 0.8, 1.0, 1.8, 2.4, 4.0, 6.0, 5.0, 3.2, 2.6, 3.8, 4.2, 1.8, 1.0, 0.6, 0.4, 0.8, 0.8, 0.0], "sold": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         "x": [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0],
@@ -71,11 +71,11 @@ export default defineComponent({
           ["Building2_Battery_1", [0.6, 0.6, 0.6, 0.6, 0.6, 1.80, 1.80, 1.80, 1.21, 0.6, 0.6, 0.6, 0.62, 1.80, 1.80, 1.80, 1.5, 0.60, 0.60, 0.60, 0.60, 0.60, 0.60, 0.60]],
           ["Building2_Battery_2", [0.9, 0.9, 0.9, 1.0, 1.0, 2.7, 2.7, 2.7, 2.7, 2.7, 1.90, 0.9, 0.9, 1.65, 2.7, 2.7, 2.7, 1.70, 1.70, 1.70, 1.70, 1.30, 0.90, 0.90]],
           ["Building2_Battery_3", [0.6, 0.6, 0.6, 1.80, 1.80, 1.80, 1.80, 1.38, 1.38, 1.10, 0.6, 0.6, 1.80, 1.80, 1.80, 1.80, 0.6, 1.6, 1.1, 0.8, 0.60, 0.60, 0.60, 0.60]]]
-      };
+      }; */
+      let optimization = await BatteryService.getBatteriesOptimization();
       let legend = [];
 
-      //const now_hour = new Date().getHours()
-      const now_hour = 15;
+      const now_hour = new Date().getHours()
       
       this.option.xAxis.data = [now_hour - 5, now_hour - 4, now_hour - 3, now_hour - 2, now_hour - 1, now_hour, now_hour + 1, now_hour + 2, now_hour + 3, now_hour + 4, now_hour + 5, now_hour + 6]
 
@@ -167,6 +167,6 @@ export default defineComponent({
 
 <style scoped>
 .chart {
-  height: 40vh;
+  height: 30vh;
 }
 </style>
