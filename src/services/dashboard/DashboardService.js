@@ -26,7 +26,7 @@ const DashboardService = {
                 return [res.hours, res.consumption, res.generation, res.flexibility];
             }).catch(error => {
                 console.error('Error fetching historic:', error);
-                return [[0],[0],[0]];
+                return [[0],[0],[0],[0]];
             });
     }
 }

@@ -15,7 +15,6 @@ import { use } from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
 import { LineChart } from 'echarts/charts';
 import {
-  TooltipComponent,
   LegendComponent,
   GridComponent,
 } from 'echarts/components';
@@ -27,7 +26,6 @@ use([
   CanvasRenderer,
   LineChart,
   GridComponent,
-  TooltipComponent,
   LegendComponent
 ]);
 
@@ -62,17 +60,15 @@ export default defineComponent({
   },
   methods: {
     async loadOverview() {
-      let overview = DashboardService.getEnergyHistoric();
-      this.option.series[0].data = overview[0];
-      this.option.series[1].data = overview[1];
-      this.option.series[2].data = overview[2];
+      let overview = await DashboardService.getEnergyHistoric();
+      this.option.xAxis.data = overview[0]
+      this.option.series[0].data = overview[1];
+      this.option.series[1].data = overview[2];
+      this.option.series[2].data = overview[3];
     },
   },
   setup() {
     const option = ref({
-      title: {
-        text: 'Stacked Line'
-      },
       tooltip: {
         trigger: 'axis'
       },
@@ -85,15 +81,10 @@ export default defineComponent({
         bottom: '3%',
         containLabel: true
       },
-      toolbox: {
-        feature: {
-          saveAsImage: {}
-        }
-      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: [0,1,2,3,4,5,6,7,8,9,10]
+        data: [0]
       },
       yAxis: {
         type: 'value'
@@ -102,17 +93,17 @@ export default defineComponent({
         {
           name: 'Consumption',
           type: 'line',
-          data: [120, 132, 101, 134, 90, 230, 210]
+          data: [0]
         },
         {
           name: 'Generation',
           type: 'line',
-          data: [220, 182, 191, 234, 290, 330, 310]
+          data: [0]
         },
         {
           name: 'Flexibility',
           type: 'line',
-          data: [150, 232, 201, 154, 190, 330, 410]
+          data: [0]
         }
       ]
     });
