@@ -19,14 +19,14 @@ const DashboardService = {
                 return 0;
             });
     },
-    async getHistoric() {
+    async getEnergyHistoric() {
         return await fetch('http://192.168.2.171:5000/historic/total')
             .then(res => res.json())
             .then(res => {
                 return [res.hours, res.consumption, res.generation, res.flexibility];
             }).catch(error => {
                 console.error('Error fetching historic:', error);
-                return [0];
+                return [[0],[0],[0]];
             });
     }
 }

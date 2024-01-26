@@ -182,13 +182,18 @@ export default {
     },
     mounted() {
         this.updateMonitoringValues();
+        this.getMembers();
     },
     methods: {
         async updateMonitoringValues() {
             let energyValues = await DashboardService.getEnergyValues();
-            this.stats.consumption.value = energyValues[0] + 'W';
-            this.stats.generation.value = energyValues[1] + 'W';
-            this.stats.flexibility.value = energyValues[2] + 'W';
+            this.stats.consumption.value = energyValues[0] + ' W';
+            this.stats.generation.value = energyValues[1] + ' W';
+            this.stats.flexibility.value = energyValues[2] + ' W';
+        },
+        async getMembers(){
+            let members = await DashboardService.getMembers();
+            this.stats.members.value = members
         }
     }
 };
