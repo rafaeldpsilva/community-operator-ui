@@ -21,6 +21,7 @@ import {
 } from 'echarts/components';
 import VChart, { THEME_KEY } from 'vue-echarts';
 import { ref, defineComponent } from 'vue';
+import DemandResponseService from '../../../services/demandresponse/DemandResponseService.js';
 
 use([
   CanvasRenderer,
@@ -59,17 +60,18 @@ export default defineComponent({
   mounted() {
   },
   methods: {
+    async getMonitoringValues(){
+      const monitoring = await DemandResponseService.getMonitoring();
+      console.log(monitoring);
+    }
   },
   setup() {
     const option = ref({
-      title: {
-        text: 'Stacked Line'
-      },
       tooltip: {
         trigger: 'axis'
       },
       legend: {
-        data: ['Consumption', 'Generation', 'Flexibility']
+        data: ['w/ DR', 'w/o DR', 'w/o Correction 1', 'w/o Correction 2', 'w/o Correction 3', 'w/o Correction 4', 'w/o Correction 5']
       },
       grid: {
         left: '3%',
@@ -77,34 +79,29 @@ export default defineComponent({
         bottom: '3%',
         containLabel: true
       },
-      toolbox: {
-        feature: {
-          saveAsImage: {}
-        }
-      },
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        data: [0, 10, 20, 30, 40, 50, 60]
       },
       yAxis: {
         type: 'value'
       },
       series: [
         {
-          name: 'Consumption',
+          name: 'w/ DR',
           type: 'line',
           data: [120, 132, 101, 134, 90, 230, 210]
         },
         {
-          name: 'Generation',
+          name: 'w/o DR',
           type: 'line',
-          data: [220, 182, 191, 234, 290, 330, 310]
+          data: [150, 182, 191, 154, 190, 330, 310]
         },
         {
-          name: 'Flexibility',
+          name: 'w/o Correction 1',
           type: 'line',
-          data: [150, 232, 201, 154, 190, 330, 410]
+          data: [NaN, 232, 201, 234, 290, 370, 410]
         }
       ]
     });

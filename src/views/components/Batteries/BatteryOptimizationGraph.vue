@@ -2,6 +2,10 @@
   <div class="card">
     <div class="pb-0 card-header mb-0">
       <h6>{{ title }}</h6>
+      <p v-if="loading" class="text-sm">
+        <i class="fas fa-circle-notch fa-spin"></i>
+        <span class="font-weight-bold">{{ detail1 }}</span>
+      </p>
     </div>
     <div class="p-3 card-body">
       <div class="chart">
@@ -38,52 +42,65 @@ export default defineComponent({
       type: String,
       default: "Battery Optimization",
     },
-    detail1: {
-      type: String,
-      default: "4% more",
-    },
-    detail2: {
-      type: String,
-      default: "in 2021",
-    },
   },
   data() {
     return {
       loading: true,
+      detail1: "Loading...",
     }
   },
   provide: {
     [THEME_KEY]: 'light',
   },
-  mounted() {
-    this.loadBatteryOptimization();
+  async mounted() {
+    this.loading = true;
+    const now_hour = new Date().getHours();
+
+    this.detail1 = " Getting Batteries Historic";
+    await this.loadHistoric(now_hour);
+
+    this.detail1 = " Optimizing Batteries";
+    await this.loadOptimization(now_hour);
+
+    this.option.xAxis.axisPointer.value = now_hour.toString();
+    this.loading = false;
   },
   methods: {
-    async loadBatteryOptimization() {
-      /* let optimization = {
-        "bought": [4.321000000000001, 0.2, 0.4, 3.8, 0.4, 6.0, 0.8, 0.0, 0.0, 0.0, 0.0, 1.5444083333333332, 6.0, 6.0, 4.47243888888889, 3.481740972222222, 0.5763548611111116, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-        "gen": [0.4, 0.2, 0.4, 0.6, 0.4, 0.2, 0.8, 1.0, 1.8, 2.4, 4.0, 6.0, 5.0, 3.2, 2.6, 3.8, 4.2, 1.8, 1.0, 0.6, 0.4, 0.8, 0.8, 0.0], "sold": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-        "x": [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0],
-        "y_batteries": [
-          ["Building1_Battery_4", [0.9, 0.9, 0.9, 0.99, 0.99, 2.7, 2.7, 2.7, 2.11, 1.22, 0.9, 0.9, 0.9, 2.61, 2.7, 2.68, 1.80, 0.89, 0.90, 0.90, 0.90, 0.90, 0.90, 0.90]],
-          ["Building1_Battery_5", [0.6, 0.6, 0.6, 1.80, 1.80, 1.80, 1.80, 1.38, 1.38, 1.38, 0.6, 0.6, 1.80, 1.80, 1.80, 1.80, 0.60, 0.60, 0.60, 0.60, 0.60, 0.60, 0.60, 0.60]],
-          ["Building1_Battery_6", [0.9, 0.9, 0.9, 1.51, 1.51, 2.7, 2.7, 2.7, 2.7, 2.7, 2.50, 0.9, 0.92, 1.14, 2.7, 2.7, 2.7, 2.7, 2.2, 1.90, 1.70, 1.30, 0.90, 0.90]],
-          ["Building2_Battery_1", [0.6, 0.6, 0.6, 0.6, 0.6, 1.80, 1.80, 1.80, 1.21, 0.6, 0.6, 0.6, 0.62, 1.80, 1.80, 1.80, 1.5, 0.60, 0.60, 0.60, 0.60, 0.60, 0.60, 0.60]],
-          ["Building2_Battery_2", [0.9, 0.9, 0.9, 1.0, 1.0, 2.7, 2.7, 2.7, 2.7, 2.7, 1.90, 0.9, 0.9, 1.65, 2.7, 2.7, 2.7, 1.70, 1.70, 1.70, 1.70, 1.30, 0.90, 0.90]],
-          ["Building2_Battery_3", [0.6, 0.6, 0.6, 1.80, 1.80, 1.80, 1.80, 1.38, 1.38, 1.10, 0.6, 0.6, 1.80, 1.80, 1.80, 1.80, 0.6, 1.6, 1.1, 0.8, 0.60, 0.60, 0.60, 0.60]]]
-      }; */
+    async loadHistoric(now_hour) {
+      let historic = await BatteryService.getBatteriesHistoric();
+      this.option.xAxis.data = [now_hour - 5, now_hour - 4, now_hour - 3, now_hour - 2, now_hour - 1, now_hour];
+
+      for (var i = 0; i < historic['historic'].length; i++) {
+        let num = historic['names'][i].slice(-1)
+        let capacity = 2.4;
+        if (num % 2 == 0){
+            capacity = 3.6;
+        }
+        for (var j = 0; j < historic['historic'][i].length; j++) {
+            historic['historic'][i][j] = historic['historic'][i][j] / 100 * capacity;
+        }
+      }
+      for (i = 0; i < historic['historic'].length; i++) {
+        this.option.series.push({
+          name: historic['names'][i],
+          type: 'line',
+          data: historic['historic'][i],
+          showSymbol: false,
+          smooth: false,
+        });
+      }
+    },
+    async loadOptimization(now_hour) {
       let optimization = await BatteryService.getBatteriesOptimization();
-      let legend = [];
-
-      const now_hour = new Date().getHours()
+        
+      this.option.xAxis.data = this.option.xAxis.data.concat([now_hour + 1, now_hour + 2, now_hour + 3, now_hour + 4, now_hour + 5, now_hour + 6]);
       
-      this.option.xAxis.data = [now_hour - 5, now_hour - 4, now_hour - 3, now_hour - 2, now_hour - 1, now_hour, now_hour + 1, now_hour + 2, now_hour + 3, now_hour + 4, now_hour + 5, now_hour + 6]
-
+      let legend = [];
       for (var i = 0; i < optimization['y_batteries'].length; i++) {
-        var seriesName = optimization['y_batteries'][i][0]
-        legend.push(seriesName)
+        var seriesName = optimization['y_batteries'][i][0];
+        legend.push(seriesName);
 
-        var array = [NaN, NaN, NaN, NaN, NaN, ...optimization['y_batteries'][i][1].slice(now_hour - 1)]
+        var array = [NaN, NaN, NaN, NaN, NaN, ...optimization['y_batteries'][i][1]];
 
         this.option.series.push({
           name: legend[i],
@@ -94,35 +111,17 @@ export default defineComponent({
           data: array,
           showSymbol: false,
           smooth: false,
-        })
+        });
       }
-      //var historic = await BatteryService.getBatteriesHistoric();
-      var historic = { "historic": [[99.76, 99.92, 99.84, 99.81, 99.8, 99.9], [99.86, 99.86, 99.78, 99.84, 99.88, 99.82], [99.85, 99.88, 99.77, 99.86, 99.8, 99.85], [80.0, 80.0, 80.0, 79.89, 79.0, 79.0], [99.8, 99.84, 99.78, 99.83, 99.8, 99.8], [99.87, 100.0, 100.0, 100.0, 99.77, 100.0]], "names": ["Building1_Battery_4", "Building1_Battery_5", "Building1_Battery_6", "Building2_Battery_1", "Building2_Battery_2", "Building2_Battery_3"] }
+      this.option.legend.data = legend;
       
-      for (i = 0; i < historic['historic'].length; i++) {
-        for (var j = 0; j < historic['historic'][i].length; j++) {
-          historic['historic'][i][j] = historic['historic'][i][j] / 100 * 3.6
-        }
-      }
-      for (i = 0; i < historic['historic'].length; i++) {
-        this.option.series.push({
-          name: legend[i],
-          type: 'line',
-          data: historic['historic'][i],
-          showSymbol: false,
-          smooth: false,
-        })
-      }
-
-      this.option.xAxis.axisPointer.value = now_hour.toString();
-      this.option.legend.data = legend
-    }
+    },
   },
   setup() {
     const option = ref({
       tooltip: {
         trigger: 'axis',
-        triggerOn: 'none',
+        //triggerOn: 'none',
       },
       legend: {
         data: []
