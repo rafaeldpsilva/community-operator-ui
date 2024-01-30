@@ -29,8 +29,8 @@
                                 <p class="text-xs font-weight-bold mb-0">{{ battery.capacity }}</p>
                             </td>
                             <td>
-                                <span v-if="battery.charging_rate > 0" class="badge badge-sm bg-gradient-success">Charging</span>
-                                <span v-else-if="battery.charging_rate == 0" class="badge badge-sm bg-gradient-secondary">On Hold</span>
+                                <span v-if="battery.action == 'Charging'" class="badge badge-sm bg-gradient-success">Charging</span>
+                                <span v-else-if="battery.action == 'On Hold'" class="badge badge-sm bg-gradient-secondary">On Hold</span>
                                 <span v-else class="badge badge-sm bg-gradient-danger">Discharging</span>
                                 <p class="text-xs text-secondary mb-0">Until {{ battery.next_decision }} </p>
                             </td>
@@ -59,8 +59,13 @@
             }
         },
         mounted() {
-            this.loadBatteries();
+            this.tableUpdate = setInterval(() => {
+                this.loadBatteries();
+            }, 5000);
         },
+        beforeUnmount(){
+            clearInterval(this.tableUpdate);
+        }
         methods: {
             async loadBatteries() {
                 let batteries = await BatteryService.getBatteriesTable();
@@ -71,6 +76,7 @@
                             'capacity': batteries[key]['capacity'], 
                             'charging_rate': batteries[key]['charging_rate'], 
                             'charge': batteries[key]['state_of_charge'], 
+                            'action': batteries[key]['action'],
                             'next_decision': batteries[key]['action_until'] + ':00'
                         });
                 }
