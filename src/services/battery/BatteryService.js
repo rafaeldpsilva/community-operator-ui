@@ -10,6 +10,17 @@ const BatteryService = {
       })
   },
 
+  async getBatteriesTable() {
+    return await fetch('http://192.168.2.171:5000/batteries/table')
+      .then(res => res.json())
+      .then(res => {
+        return res
+      }).catch(error => {
+        console.error('Error fetching energy values:', error);
+        return [];
+      })
+  },
+
   async getBatteriesOptimization() {
     return await fetch('http://192.168.2.171:5000/batteries/optimization')
       .then(res => res.json()).catch(error => {

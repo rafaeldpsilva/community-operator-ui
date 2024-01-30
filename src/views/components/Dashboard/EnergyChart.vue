@@ -13,12 +13,6 @@
             </div>
         </div>
     </div>
-    <div class="p-3 card-body">
-      <div class="chart">
-        <v-chart class="chart" :option="option" autoresize />
-      </div>
-    </div>
-  </div>
 </template>
 <script>
     import { use } from 'echarts/core';
@@ -113,16 +107,7 @@
             });
             return { option };
         },
-        {
-          name: 'Flexibility',
-          type: 'line',
-          data: [0]
-        }
-      ]
     });
-    return { option };
-  },
-});
 </script>
 
 <style scoped>

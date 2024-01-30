@@ -63,11 +63,16 @@
         },
         methods: {
             async loadBatteries() {
-                let batteries = await BatteryService.getCommunityBatteries();
-                for (let i = 0; i < batteries.length; i++) {
-                    this.batteries[i] = {
-                        'name': batteries[i]['name'], 'capacity': batteries[i]['capacity'], 'charging_rate': batteries[i]['charging_rate'], 'charge': batteries[i]['charge'], 'next_decision': batteries[i]['next_decision']
-                    }
+                let batteries = await BatteryService.getBatteriesTable();
+                for (var key in batteries) {
+                    this.batteries.push(
+                        {
+                            'name': key, 
+                            'capacity': batteries[key]['capacity'], 
+                            'charging_rate': batteries[key]['charging_rate'], 
+                            'charge': batteries[key]['state_of_charge'], 
+                            'next_decision': batteries[key]['action_until'] + ':00'
+                        });
                 }
             }
         }
