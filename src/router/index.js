@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import DemandResponse from "../views/DemandResponse.vue";
 import Batteries from "../views/Batteries.vue";
@@ -64,7 +64,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes,
   linkActiveClass: "active",
 });

@@ -59,16 +59,18 @@
             }
         },
         mounted() {
+            this.loadBatteries();
             this.tableUpdate = setInterval(() => {
                 this.loadBatteries();
             }, 5000);
         },
         beforeUnmount(){
             clearInterval(this.tableUpdate);
-        }
+        },
         methods: {
             async loadBatteries() {
                 let batteries = await BatteryService.getBatteriesTable();
+                this.batteries = [];
                 for (var key in batteries) {
                     this.batteries.push(
                         {
