@@ -87,18 +87,21 @@ export default {
   async mounted() {
     this.date = new Date();
     this.selectedDay = this.formatDate(this.date)
-    const todayEvents = await DemandResponseService.getEvents(this.date);
-    if (todayEvents.length == 0){
-      this.events = []
-    } else {
-      var json = [];
-      for (const ev of todayEvents) {
-          json.push({ "time": ev[0], "accept": ev[1], "declined": ev[2], "pending": [] })
-      }
-      this.events = json
-    }
+    this.getEvents()
   },
   methods: {
+    async getEvents(){
+      const todayEvents = await DemandResponseService.getEvents(this.date);
+      if (todayEvents.length == 0){
+        this.events = []
+      } else {
+        var json = [];
+        for (const ev of todayEvents) {
+            json.push({ "time": ev[0], "accept": ev[1], "declined": ev[2], "pending": [] })
+        }
+        this.events = json
+      }
+    },
     formatDate(date){
       let year = date.getFullYear()
       let month = date.getMonth()+1
@@ -108,10 +111,12 @@ export default {
     nextDate(){
       this.date.setDate(this.date.getDate() + 1);
       this.selectedDay = this.formatDate(this.date)
+      this.getEvents()
     },
     previousDate(){
       this.date.setDate(this.date.getDate() - 1);
       this.selectedDay = this.formatDate(this.date)
+      this.getEvents()
     },
     showCreateEventModal() {
       this.isModalVisible = true;
