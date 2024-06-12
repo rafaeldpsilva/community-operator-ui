@@ -22,18 +22,11 @@ const DemandResponseService =  {
       })
   },
 
-  async postRanking(iots_flexibility_forecast, difference){
-    return await fetch('http://192.168.2.171:5000/demandresponse/ranking',{
-        method: 'POST',
-        body: JSON.stringify({"iots_flexibility_forecast":iots_flexibility_forecast, "difference": difference}),
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      })
+  async getRanking(){
+    return await fetch('http://192.168.2.171:5000/demandresponse/ranking')
       .then(res => res.json())
       .then(res =>{
-        return [res.ranking, res.main_participants]
+        return res
       })
   },
 
@@ -60,33 +53,20 @@ const DemandResponseService =  {
       })
   },
 
-  async getMetricsAverage(ranking){
-    return await fetch('http://192.168.2.171:5000/demandresponse/metrics',{
-      method: 'POST',
-      body: JSON.stringify({"ranking":ranking}),
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    })
+  async getMetricsAverage(){
+    return await fetch('http://192.168.2.171:5000/demandresponse/metrics')
       .then(res => res.json())
       .then(res =>{
         return [res.names, res.metrics, res.datetime]
       })
   },
 
-  async postInviteParticipants(consumption, generation, flexibility, dr_period, dr_energy, gs_period, gs_energy,participants_iots, ranking, time){
+  async postInviteParticipants(){
     return await fetch('http://192.168.2.171:5000/demandresponse/invite',{
-      method: 'POST',
-      body: JSON.stringify({"consumption":consumption, "generation": generation, "flexibility": flexibility, "dr_period": dr_period, "dr_energy": dr_energy, "gs_period": gs_period, "gs_energy": gs_energy, "participants_iots": participants_iots, "ranking": ranking, "event_time": time}),
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    })
+      method: 'POST'})
       .then(res => res.json())
       .then(res =>{
-        return res.responses
+        return res
       })
   },
   

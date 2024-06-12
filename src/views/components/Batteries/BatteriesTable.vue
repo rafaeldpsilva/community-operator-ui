@@ -30,8 +30,9 @@
                             </td>
                             <td>
                                 <span v-if="battery.action == 'Charging'" class="badge badge-sm bg-gradient-success">Charging</span>
-                                <span v-else-if="battery.action == 'On Hold'" class="badge badge-sm bg-gradient-secondary">On Hold</span>
-                                <span v-else class="badge badge-sm bg-gradient-danger">Discharging</span>
+                                <span v-else-if="battery.action == 'On Hold'" class="badge badge-sm bg-gradient-primary">On Hold</span>
+                                <span v-else-if="battery.action == 'Discharging'" class="badge badge-sm bg-gradient-danger">Discharging</span>
+                                <span v-else class="badge badge-sm bg-gradient-secondary">No Action</span>
                                 <p class="text-xs text-secondary mb-0">Until {{ battery.next_decision }} </p>
                             </td>
                             <td>

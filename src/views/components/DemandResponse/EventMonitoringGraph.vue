@@ -91,16 +91,19 @@ export default defineComponent({
         {
           name: 'w/ DR',
           type: 'line',
+          showSymbol: false,
           data: [120, 132, 101, 134, 90, 230, 210]
         },
         {
           name: 'w/o DR',
           type: 'line',
+          showSymbol: false,
           data: [150, 182, 191, 154, 190, 330, 310]
         },
         {
           name: 'w/o Correction 1',
           type: 'line',
+          showSymbol: false,
           data: [NaN, 232, 201, 234, 290, 370, 410]
         }
       ]

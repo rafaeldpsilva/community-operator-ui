@@ -14,22 +14,44 @@
 
                 <div class="modal-body">
                     <div>
-                        <div v-if="position == 0" class="mt-4 row">
-                            <div class="col-6">
+                        <div v-if="position == 0" class="mt-4 row d-flex justify-content-center">
+                            <div class="col-8">
                                 <demand-response-opportunities-graph />
                             </div>
-                            <div class="col-4">
-                                <average-metric-score-graph />
-                            </div>
-                            <div class="col-2">
-                                <button class="btn btn-sm btn-white mb-0 w-100" @click="position += 1">
+                            <div class="col-1 d-flex align-items-center justify-content-center">
+                                <button class="btn btn-sm btn-warning mb-0 w-50" @click="position += 1">
                                     <i class="fa fa-caret-right" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
-                        <div v-if="position == 1" class="mt-4 row">
-                            <div class="col-12">
+                        <div v-if="position == 1" class="mt-4 row d-flex justify-content-center">
+                            <div class="col-10">
                                 <ranking-table />
+                            </div>
+                            <div class="col-1 d-flex align-items-center justify-content-center">
+                                <button class="btn btn-sm btn-warning mb-0 w-50" @click="position += 1">
+                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div v-if="position == 2" class="mt-4 row d-flex justify-content-center">
+                            <div class="col-6">
+                                <average-metric-score-graph />
+                            </div>
+                            <div class="col-2 d-flex align-items-center">
+                                <div>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <p>Invite Participants?</p>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <button class="btn btn-sm btn-success mb-0 w-0 " @click="inviteParticipants()">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger mb-0 mx-1 w-0" @click="close()">
+                                            <i class="fa fa-close" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -42,6 +64,7 @@
 import DemandResponseOpportunitiesGraph from "./DemandResponseOpportunitiesGraph.vue";
 import AverageMetricScoreGraph from "./AverageMetricScoreGraph.vue";
 import RankingTable from "./RankingTable.vue";
+import DemandResponseService from '../../../services/demandresponse/DemandResponseService.js';
 
 export default {
     name: "create-event-modal",
@@ -58,13 +81,16 @@ export default {
             position: 0,
         }
     },
-    async mounted() {
-    },
     methods: {
+        async inviteParticipants(){
+            await DemandResponseService.postInviteParticipants();
+            this.close()
+        },
         clear() {
         },
         close() {
             this.$emit('close')
+            this.position = 0;
             this.clear()
         },
         async createDivision() {
@@ -91,8 +117,18 @@ export default {
     transition: opacity 0.3s ease;
 }
 
+.modal-body {
+    padding: 20px 30px;
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    flex-grow: 1; /* Allow the body to grow and take up space */
+}
+
 .modal-container {
-    width: 850px;
+    width: 80vw;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     margin: auto;
     padding: 20px 30px;
     background-color: #fff;

@@ -91,16 +91,19 @@
                     {
                         name: 'Consumption',
                         type: 'line',
+                        showSymbol: false,
                         data: [0]
                     },
                     {
                         name: 'Generation',
                         type: 'line',
+                        showSymbol: false,
                         data: [0]
                     },
                     {
                         name: 'Flexibility',
                         type: 'line',
+                        showSymbol: false,
                         data: [0]
                     }
                 ]
