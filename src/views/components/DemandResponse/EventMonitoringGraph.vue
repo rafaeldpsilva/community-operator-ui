@@ -44,10 +44,6 @@ export default defineComponent({
       type: String,
       default: "4% more",
     },
-    detail2: {
-      type: String,
-      default: "in 2021",
-    },
   },
   data() {
     return {
@@ -58,11 +54,25 @@ export default defineComponent({
     [THEME_KEY]: 'light',
   },
   mounted() {
+    this.getMonitoringValues()
   },
   methods: {
     async getMonitoringValues(){
-      const monitoring = await DemandResponseService.getMonitoring();
-      console.log(monitoring);
+      const aggregated_balance = await DemandResponseService.getMonitoring();
+      this.corrections = [[],[],[],[],[],[]];
+      if (aggregated_balance[0][1] != null) {
+        let corret = aggregated_balance[1];
+        for(let i = 0; i < corret.length; i++){
+          for(let j = 0; j < corret[i].length; j++){
+            if (j <= i && corret[i][j] == 0){
+              this.option.series[i].data.push(NaN);
+            } else {
+              this.option.series[i].data.push(corret[i][j]);
+            }
+          }
+        }
+      }
+      this.option.series[0].data = aggregated_balance[0];
     }
   },
   setup() {
@@ -92,19 +102,43 @@ export default defineComponent({
           name: 'w/ DR',
           type: 'line',
           showSymbol: false,
-          data: [120, 132, 101, 134, 90, 230, 210]
+          data: []
         },
         {
           name: 'w/o DR',
           type: 'line',
           showSymbol: false,
-          data: [150, 182, 191, 154, 190, 330, 310]
+          data: []
         },
         {
           name: 'w/o Correction 1',
           type: 'line',
           showSymbol: false,
-          data: [NaN, 232, 201, 234, 290, 370, 410]
+          data: []
+        },
+        {
+          name: 'w/o Correction 2',
+          type: 'line',
+          showSymbol: false,
+          data: []
+        },
+        {
+          name: 'w/o Correction 3',
+          type: 'line',
+          showSymbol: false,
+          data: []
+        },
+        {
+          name: 'w/o Correction 4',
+          type: 'line',
+          showSymbol: false,
+          data: []
+        },
+        {
+          name: 'w/o Correction 5',
+          type: 'line',
+          showSymbol: false,
+          data: []
         }
       ]
     });

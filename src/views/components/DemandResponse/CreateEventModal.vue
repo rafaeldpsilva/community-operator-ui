@@ -16,10 +16,11 @@
                     <div>
                         <div v-if="position == 0" class="mt-4 row d-flex justify-content-center">
                             <div class="col-8">
-                                <demand-response-opportunities-graph />
+                                <demand-response-opportunities-graph @setEventHour="setEventHour"/>
                             </div>
+                            
                             <div class="col-1 d-flex align-items-center justify-content-center">
-                                <button class="btn btn-sm btn-warning mb-0 w-50" @click="position += 1">
+                                <button class="btn btn-sm btn-warning mb-0 w-50" :class="isButtonDisabled ? 'disabled' : ''" @click="position += 1">
                                     <i class="fa fa-caret-right" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -29,7 +30,7 @@
                                 <ranking-table />
                             </div>
                             <div class="col-1 d-flex align-items-center justify-content-center">
-                                <button class="btn btn-sm btn-warning mb-0 w-50" @click="position += 1">
+                                <button class="btn btn-sm btn-warning mb-0 w-50" @click="getIotForecast()">
                                     <i class="fa fa-caret-right" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -78,10 +79,19 @@ export default {
     },
     data() {
         return {
+            eventHour: null,
             position: 0,
         }
     },
     methods: {
+        setEventHour(p){
+            console.log('modal',p)
+            this.eventHour = parseInt(p)
+        },
+        async getIotForecast(){
+            await DemandResponseService.getIotForecast();
+            this.position += 1
+        },
         async inviteParticipants(){
             await DemandResponseService.postInviteParticipants();
             this.close()
@@ -98,6 +108,9 @@ export default {
         },
     },
     computed: {
+        isButtonDisabled: function () {
+            return this.eventHour == null;
+        },
         isCreateButtonDisabled: function () {
             return !this.name || !this.iots_selected || this.iots_selected.length === 0;
         },

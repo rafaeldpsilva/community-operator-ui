@@ -6,8 +6,11 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12">
+      <div class="col-6">
         <event-monitoring-graph />
+      </div>
+      <div class="col-6">
+        <benefit-distribution-table />
       </div>
     </div>
   </div>
@@ -16,11 +19,14 @@
 <script>
 import DemandResponseEventsTable from "./components/DemandResponse/DemandResponseEventsTable.vue";
 import EventMonitoringGraph from "./components/DemandResponse/EventMonitoringGraph.vue";
+import BenefitDistributionTable from "./components/DemandResponse/BenefitDistributionTable.vue";
+
 export default {
   name: "demand-response",
   components: {
     DemandResponseEventsTable,
     EventMonitoringGraph,
+    BenefitDistributionTable,
   },
   data() {
     return {

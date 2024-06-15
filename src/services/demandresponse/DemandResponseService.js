@@ -69,11 +69,10 @@ const DemandResponseService =  {
         return res
       })
   },
-  
-  async getMonitoring(event_time){
-    return await fetch('http://192.168.2.171:5000/demandresponse/monitoring',{
+  async getEventHour(event_hour){
+    return await fetch('http://192.168.2.171:5000/demandresponse/event_hour',{
       method: 'POST',
-      body: JSON.stringify({"event_time": event_time}),
+      body: JSON.stringify({"event_hour": event_hour}),
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -81,10 +80,23 @@ const DemandResponseService =  {
     })
       .then(res => res.json())
       .then(res =>{
-        return res.aggregated_balance
+        return res
       })
   },
-  
+  async getMonitoring(){
+    return await fetch('http://192.168.2.171:5000/demandresponse/monitoring')
+      .then(res => res.json())
+      .then(res =>{
+        return res
+      })
+  },
+  async getBenefits(){
+    return await fetch('http://192.168.2.171:5000/demandresponse/benefits')
+      .then(res => res.json())
+      .then(res =>{
+        return res
+      })
+  },
   async getDemandResponseEvent(event_time){
     return await fetch('http://192.168.2.171:5000/demandresponse/event',{
       method: 'POST',
