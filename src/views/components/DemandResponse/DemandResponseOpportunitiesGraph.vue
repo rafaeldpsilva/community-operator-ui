@@ -33,7 +33,7 @@
 <script>
 import { use } from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
-import { LineChart } from 'echarts/charts';
+import { LineChart, ScatterChart } from 'echarts/charts';
 import {
   TooltipComponent,
   LegendComponent,
@@ -46,6 +46,7 @@ import DemandResponseService from '../../../services/demandresponse/DemandRespon
 use([
   CanvasRenderer,
   LineChart,
+  ScatterChart,
   GridComponent,
   TooltipComponent,
   LegendComponent
@@ -81,24 +82,42 @@ export default defineComponent({
   },
   methods: {
     setEventHour(p){
-      console.log(p)
       this.showDropdown = false
       this.$emit("set-event-hour", p)
     },
     async getDROpportunities(){
       this.loading = true;
-      //const dro = {"consumption":[2711.65380859375,2733.986328125,2700.49609375,2593.73876953125,2478.3876953125,2352.77197265625,2182.390869140625,2038.42529296875,1941.1826171875,1808.6583251953125,1697.60302734375,1633.8192138671875,1557.3466796875,1506.63818359375,1473.8428955078125,1481.63671875,1526.9368896484375,1597.58935546875,1783.93896484375,1922.753662109375,2130.72412109375,2312.277587890625,2475.989501953125,2605.3662109375],"dr_energy":[],"dr_period":[],"flexibility":[231.34742736816406,235.2463836669922,233.2059326171875,228.99551391601562,220.92681884765625,208.47003173828125,196.33111572265625,180.28311157226562,165.46783447265625,151.27944946289062,143.03831481933594,135.39968872070312,129.7207489013672,127.423583984375,127.07835388183594,126.61946105957031,130.5587158203125,136.08131408691406,145.37625122070312,158.03916931152344,170.44598388671875,186.5887908935547,202.93917846679688,217.3510284423828],"generation":[0.0,0.0,0.0,0.0,0.0,0.0,1410.4405517578125,1431.5770263671875,1337.7003173828125,1141.3123779296875,900.188232421875,645.5784912109375,393.4938659667969,219.85519409179688,147.35447692871094,194.72840881347656,348.3440246582031,565.4931030273438,822.3197021484375,1095.3773193359375,1302.7366943359375,0.0,0.0,0.0],"gs_energy":[],"gs_period":[]}
+      /* const dro = {"consumption":[2711.65380859375,2733.986328125,2700.49609375,2593.73876953125,2478.3876953125,2352.77197265625,2182.390869140625,2038.42529296875,1941.1826171875,1808.6583251953125,1697.60302734375,1633.8192138671875,1557.3466796875,1506.63818359375,1473.8428955078125,1481.63671875,1526.9368896484375,1597.58935546875,1783.93896484375,1922.753662109375,2130.72412109375,2312.277587890625,2475.989501953125,2605.3662109375],
+        "dr_energy":[1600,1645],"dr_period":[9,11],
+        "flexibility":[231.34742736816406,235.2463836669922,233.2059326171875,228.99551391601562,220.92681884765625,208.47003173828125,196.33111572265625,180.28311157226562,165.46783447265625,151.27944946289062,143.03831481933594,135.39968872070312,129.7207489013672,127.423583984375,127.07835388183594,126.61946105957031,130.5587158203125,136.08131408691406,145.37625122070312,158.03916931152344,170.44598388671875,186.5887908935547,202.93917846679688,217.3510284423828],
+        "generation":[0.0,0.0,0.0,0.0,0.0,0.0,1410,1431,1337,1600,2000,1645,393,219,147,194,348,565,822,1095,1302,0.0,0.0,0.0],
+        "gs_energy":[2000],"gs_period":[10]} */
       const dro = await DemandResponseService.getDRO()
       this.option.series[0].data = dro['consumption']
       this.option.series[1].data = dro['generation']
       this.option.series[2].data = dro['flexibility']
-      //this.option.series[3].data = dro['dr_period']
+
       if (dro['dr_period'].length == 0){
         this.dropportunities = ['No opportunities']
         this.dropportunities = [12,14,18]
       } else {
         this.dropportunities = dro['dr_period']
       }
+
+      for (let i = 0; i < dro['dr_period'].length; i++){
+        while(dro['dr_period'][i] != this.option.series[3].data.length){
+          this.option.series[3].data.push(NaN)
+        }
+        this.option.series[3].data.push(dro['consumption'][dro['dr_period'][i]]-dro['dr_energy'][i])
+      }
+
+      for (let i = 0; i < dro['gs_period'].length; i++){
+        while(dro['gs_period'][i] != this.option.series[4].data.length){
+          this.option.series[4].data.push(NaN)
+        }
+        this.option.series[4].data.push(dro['consumption'][dro['gs_period'][i]]+dro['gs_energy'][i])
+      }
+
       this.loading = false;
       return dro
     }
@@ -109,7 +128,7 @@ export default defineComponent({
         trigger: 'axis'
       },
       legend: {
-        data: ['Consumption', 'Generation', 'Flexibility']
+        data: ['Consumption', 'Generation', 'Flexibility', 'DR', 'GS']
       },
       grid: {
         left: '3%',
@@ -143,7 +162,19 @@ export default defineComponent({
           type: 'line',
           showSymbol: false,
           data: []
-        }
+        },
+        {
+          name: 'DR',
+          type: 'scatter',
+          showSymbol: false,
+          data: []
+        },
+        {
+          name: 'GS',
+          type: 'scatter',
+          showSymbol: false,
+          data: []
+        },
       ]
     });
     return { option };

@@ -2,10 +2,17 @@
   <div class="card">
     <div class="pb-0 card-header mb-0">
       <h6>{{ title }}</h6>
+      <p v-if="loading" class="text-sm">
+        <i class="fas fa-circle-notch fa-spin"></i>
+        <span class="font-weight-bold">{{ detail1 }}</span>
+      </p>
     </div>
     <div class="p-3 card-body">
-      <div class="chart">
+      <div v-if="hasEvent" class="chart">
         <v-chart class="chart" :option="option" autoresize />
+      </div>
+      <div v-else class="container text-center">
+        <p > No Event Ongoing</p>
       </div>
     </div>
   </div>
@@ -42,12 +49,13 @@ export default defineComponent({
     },
     detail1: {
       type: String,
-      default: "4% more",
+      default: " Loading...",
     },
   },
   data() {
     return {
       loading: true,
+      hasEvent: true,
     }
   },
   provide: {
@@ -58,21 +66,28 @@ export default defineComponent({
   },
   methods: {
     async getMonitoringValues(){
-      const aggregated_balance = await DemandResponseService.getMonitoring();
-      this.corrections = [[],[],[],[],[],[]];
-      if (aggregated_balance[0][1] != null) {
-        let corret = aggregated_balance[1];
-        for(let i = 0; i < corret.length; i++){
-          for(let j = 0; j < corret[i].length; j++){
-            if (j <= i && corret[i][j] == 0){
-              this.option.series[i].data.push(NaN);
-            } else {
-              this.option.series[i].data.push(corret[i][j]);
+      const response = await DemandResponseService.getMonitoring();
+      if (response == false){
+        this.hasEvent = false;
+        this.loading = false;
+      } else{
+        let aggregated_balance = response['aggregated_balance']
+        this.corrections = [[],[],[],[],[],[]];
+        if (aggregated_balance[0][1] != null) {
+          let corret = aggregated_balance[1];
+          for(let i = 0; i < corret.length; i++){
+            for(let j = 0; j < corret[i].length; j++){
+              if (j <= i && corret[i][j] == 0){
+                this.option.series[i].data.push(NaN);
+              } else {
+                this.option.series[i].data.push(corret[i][j]);
+              }
             }
           }
         }
+        this.option.series[0].data = aggregated_balance[0];
       }
-      this.option.series[0].data = aggregated_balance[0];
+      this.loading = false;
     }
   },
   setup() {

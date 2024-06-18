@@ -42,11 +42,6 @@ import Card from "@/examples/Cards/Card.vue";
 import EnergyChart from "./components/Dashboard/EnergyChart.vue";
 import DashboardService from "../services/dashboard/DashboardService.js"
 
-import US from "@/assets/img/icons/flags/US.png";
-import DE from "@/assets/img/icons/flags/DE.png";
-import GB from "@/assets/img/icons/flags/GB.png";
-import BR from "@/assets/img/icons/flags/BR.png";
-
 export default {
     name: "dashboard-default",
     data() {
@@ -55,65 +50,35 @@ export default {
                 consumption: {
                     title: "Consumption",
                     value: "0 W",
-                    percentage: "+55%",
-                    iconClass: "fa fa-flash",
-                    detail: "than forecasted",
+                    percentage: "",
+                    iconClass: "fa fa-bolt",
+                    detail: "",
                     iconBackground: "bg-gradient-primary",
                 },
                 generation: {
                     title: "Generation",
                     value: "0 W",
-                    percentage: "+3%",
-                    iconClass: "fa fa-sun-o",
+                    percentage: "",
+                    iconClass: "fa fa-sun",
                     iconBackground: "bg-gradient-danger",
-                    detail: "than forecasted",
+                    detail: "",
                 },
                 flexibility: {
                     title: "Flexibility",
                     value: "0 W",
-                    percentage: "-2%",
+                    percentage: "",
                     iconClass: "ni ni-sound-wave",
                     percentageColor: "text-danger",
                     iconBackground: "bg-gradient-success",
-                    detail: "since last quarter",
+                    detail: "",
                 },
                 members: {
                     title: "Members",
                     value: "4",
-                    percentage: "+5%",
+                    percentage: "",
                     iconClass: "fa fa-user",
                     iconBackground: "bg-gradient-warning",
-                    detail: "than last month",
-                },
-            },
-            sales: {
-                us: {
-                    country: "United States",
-                    sales: 2500,
-                    value: "$230,900",
-                    bounce: "29.9%",
-                    flag: US,
-                },
-                germany: {
-                    country: "Germany",
-                    sales: "3.900",
-                    value: "$440,000",
-                    bounce: "40.22%",
-                    flag: DE,
-                },
-                britain: {
-                    country: "Great Britain",
-                    sales: "1.400",
-                    value: "$190,700",
-                    bounce: "23.44%",
-                    flag: GB,
-                },
-                brasil: {
-                    country: "Brasil",
-                    sales: "562",
-                    value: "$143,960",
-                    bounce: "32.14%",
-                    flag: BR,
+                    detail: "",
                 },
             },
         };

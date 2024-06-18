@@ -36,7 +36,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="event in events" :key="event.time">
+            <tr v-for="event in events" :key="event.time" @click="showMonitoring(event)">
               <td>
                 <div class="d-flex px-2 py-1">
                   <div class="d-flex flex-column justify-content-center">
@@ -57,30 +57,35 @@
           </tbody>
         </table>
       </div>
-      <div v-else class="container text-center" >
+      <div v-else class="container text-center">
         <p > No Events Registered For Today</p>
       </div>
     </div>
   </div>
   <Teleport to="body">
     <create-event-modal :show="isModalVisible" @close="isModalVisible = false"></create-event-modal>
+    <event-monitoring-modal :show="isModalMonitoringVisible" :event_time="monitoringTime" @close="isModalMonitoringVisible = false"></event-monitoring-modal>
   </Teleport>
 </template>
 
 <script>
 import CreateEventModal from './CreateEventModal.vue';
+import EventMonitoringModal from './EventMonitoringModal.vue';
 import DemandResponseService from '../../../services/demandresponse/DemandResponseService.js';
 
 export default {
   name: "ranking-table",
   components: {
-    CreateEventModal
+    CreateEventModal,
+    EventMonitoringModal
   },
   data() {
     return {
       date: '',
       selectedDay: '',
       isModalVisible: false,
+      isModalMonitoringVisible: false,
+      monitoringTime: '',
       events: []
     }
   },
@@ -90,6 +95,10 @@ export default {
     this.getEvents()
   },
   methods: {
+    showMonitoring(event){
+      this.isModalMonitoringVisible = true;
+      this.monitoringTime = event['time'];
+    },
     async getEvents(){
       const todayEvents = await DemandResponseService.getEvents(this.date);
       if (todayEvents.length == 0){

@@ -40,7 +40,7 @@
 </template>
 
 <script>
-//import DemandResponseService from '../../../services/demandresponse/DemandResponseService.js';
+import DemandResponseService from '../../../services/demandresponse/DemandResponseService.js';
 
 export default {
   name: "ranking-table",
@@ -54,19 +54,15 @@ export default {
   },
   methods: {
     async getBenefits(){
-      //const benefits = await DemandResponseService.getBenefits();
-      const benefits = [
-        {'name': 'Building1', 'benefits': 32.2},
-        {'name': 'Building2', 'benefits': 21.5}
-      ]
+      const benefits = await DemandResponseService.getBenefits();
       if (benefits.length == 0){
         this.benefits = []
       } else {
-        var json = [];
-        for (const ev of benefits) {
-            json.push({ "name": ev['name'], "benefit": ev['benefits']})
-        }
-        this.benefits = json
+        const result = Object.entries(benefits).map(([name, benefit]) => ({
+          name,
+          benefit
+        }));
+        this.benefits = result
       }
       
     },

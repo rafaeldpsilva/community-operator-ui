@@ -20,7 +20,7 @@
                             </div>
                             
                             <div class="col-1 d-flex align-items-center justify-content-center">
-                                <button class="btn btn-sm btn-warning mb-0 w-50" :class="isButtonDisabled ? 'disabled' : ''" @click="position += 1">
+                                <button class="btn btn-sm btn-warning mb-0 w-50" :class="isButtonDisabled ? 'disabled' : ''" @click="getIotForecast()">
                                     <i class="fa fa-caret-right" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -30,7 +30,7 @@
                                 <ranking-table />
                             </div>
                             <div class="col-1 d-flex align-items-center justify-content-center">
-                                <button class="btn btn-sm btn-warning mb-0 w-50" @click="getIotForecast()">
+                                <button class="btn btn-sm btn-warning mb-0 w-50" @click="position += 1">
                                     <i class="fa fa-caret-right" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -89,6 +89,7 @@ export default {
             this.eventHour = parseInt(p)
         },
         async getIotForecast(){
+            await DemandResponseService.setEventHour(this.eventHour);
             await DemandResponseService.getIotForecast();
             this.position += 1
         },

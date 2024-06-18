@@ -13,7 +13,7 @@ const DemandResponseService =  {
         return res.iots_flexibility_forecast
       })
   },
-  
+
   async getDRO(){
     return await fetch('http://192.168.2.171:5000/demandresponse/dro')
       .then(res => res.json())
@@ -69,7 +69,7 @@ const DemandResponseService =  {
         return res
       })
   },
-  async getEventHour(event_hour){
+  async setEventHour(event_hour){
     return await fetch('http://192.168.2.171:5000/demandresponse/event_hour',{
       method: 'POST',
       body: JSON.stringify({"event_hour": event_hour}),
