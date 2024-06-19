@@ -101,14 +101,14 @@ export default defineComponent({
                     
                     for(let i = 0; i < corrections.length; i++){
                         for(let j = 0; j < corrections[i].length; j++){
-                            if (j < i){
+                            if (j <= i){
                                 this.option.series[i+1].data.push(NaN);
                             } else {
-                                if (j == i){
-                                    this.option.series[i+1].data.push(aggregated_balance[0][j])
-                                }else{
+                                //if (j == i){
+                                //    this.option.series[i+1].data.push(aggregated_balance[0][j])
+                                //}else{
                                     this.option.series[i+1].data.push(corrections[i][j]);
-                                }
+                                //}
                             }
                         }
                         //this.option.series[i+1].data = corrections[i]

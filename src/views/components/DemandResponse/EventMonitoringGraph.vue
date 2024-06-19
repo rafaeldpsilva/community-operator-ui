@@ -67,25 +67,32 @@ export default defineComponent({
   methods: {
     async getMonitoringValues(){
       const response = await DemandResponseService.getMonitoring();
+      console.log('eventmonitoring', response)
       if (response == false){
         this.hasEvent = false;
         this.loading = false;
       } else{
-        let aggregated_balance = response['aggregated_balance']
-        this.corrections = [[],[],[],[],[],[]];
-        if (aggregated_balance[0][1] != null) {
-          let corret = aggregated_balance[1];
-          for(let i = 0; i < corret.length; i++){
-            for(let j = 0; j < corret[i].length; j++){
-              if (j <= i && corret[i][j] == 0){
-                this.option.series[i].data.push(NaN);
-              } else {
-                this.option.series[i].data.push(corret[i][j]);
+          let aggregated_balance = response['aggregated_balance']
+          if (aggregated_balance[0][1] != null) {
+              let corrections = aggregated_balance[1];
+              
+              for(let i = 0; i < corrections.length; i++){
+                  for(let j = 0; j < corrections[i].length; j++){
+                      if (j <= i+1){
+                          this.option.series[i+1].data.push(NaN);
+                      } else {
+                          //if (j == i){
+                          //    this.option.series[i+1].data.push(aggregated_balance[0][j])
+                          //}else{
+                              this.option.series[i+1].data.push(corrections[i][j]);
+                          //}
+                      }
+                  }
+                  //this.option.series[i+1].data = corrections[i]
               }
-            }
           }
-        }
-        this.option.series[0].data = aggregated_balance[0];
+          console.log(this.option.series[1].data)
+          this.option.series[0].data = aggregated_balance[0];
       }
       this.loading = false;
     }

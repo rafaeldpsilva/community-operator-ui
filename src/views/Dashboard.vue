@@ -25,12 +25,18 @@
                             :detail="stats.members.detail" directionReverse></card>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-7 mb-lg">
-                        <!-- line chart -->
-                        <div class="card z-index-2">
-                            <energy-chart />
-                        </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-7 mb-lg">
+                    <!-- line chart -->
+                    <div class="card z-index-2">
+                        <energy-chart />
+                    </div>
+                </div>
+                <div class="col-lg-5 mb-lg">
+                    <!-- line chart -->
+                    <div class="card z-index-2">
+                        <energy-forecast-chart />
                     </div>
                 </div>
             </div>
@@ -40,6 +46,7 @@
 <script>
 import Card from "@/examples/Cards/Card.vue";
 import EnergyChart from "./components/Dashboard/EnergyChart.vue";
+import EnergyForecastChart from "./components/Dashboard/EnergyForecastChart.vue";
 import DashboardService from "../services/dashboard/DashboardService.js"
 
 export default {
@@ -85,7 +92,8 @@ export default {
     },
     components: {
         Card,
-        EnergyChart
+        EnergyChart,
+        EnergyForecastChart
     },
     mounted() {
         this.updateMonitoringValues();

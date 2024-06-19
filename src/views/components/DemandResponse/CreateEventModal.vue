@@ -20,7 +20,7 @@
                             </div>
                             
                             <div class="col-1 d-flex align-items-center justify-content-center">
-                                <button class="btn btn-sm btn-warning mb-0 w-50" :class="isButtonDisabled ? 'disabled' : ''" @click="getIotForecast()">
+                                <button class="btn btn-sm btn-warning mb-0 w-50" :class="isButtonDisabled ? 'disabled' : ''" @click="sendEventHour()">
                                     <i class="fa fa-caret-right" aria-hidden="true"></i>
                                 </button>
                             </div>
@@ -88,9 +88,8 @@ export default {
             console.log('modal',p)
             this.eventHour = parseInt(p)
         },
-        async getIotForecast(){
+        async sendEventHour(){
             await DemandResponseService.setEventHour(this.eventHour);
-            await DemandResponseService.getIotForecast();
             this.position += 1
         },
         async inviteParticipants(){

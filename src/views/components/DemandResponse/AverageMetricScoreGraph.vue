@@ -90,7 +90,7 @@ export default defineComponent({
           data: [
             { value: 12.39, name: 'metric1' },
             { value: 11.7, name: 'metric2' },
-            { value: 1.5, name: 'metric3' },
+            { value: 14.5, name: 'metric3' },
             { value: 19.76, name: 'metric4' },
           ]
         }

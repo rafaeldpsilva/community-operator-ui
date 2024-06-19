@@ -1,6 +1,6 @@
 const DashboardService = {
     async getEnergyValues() {
-        return await fetch('http://192.168.2.171:5000/building/total')
+        return await fetch('http://192.168.2.171:5000/community/total')
             .then(res => res.json())
             .then(res => {
                 return [Math.round(res.consumption), Math.round(res.generation), Math.round(res.flexibility)];
