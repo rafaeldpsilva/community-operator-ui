@@ -23,6 +23,13 @@
           </template>
         </sidenav-item>
       </li>
+      <li class="nav-item">
+        <sidenav-item url="/members" :class="getRoute() === 'members' ? 'active' : ''" :navText="'Members'">
+          <template v-slot:icon>
+            <i class="fa fa-users text-danger text-sm opacity-10"></i>
+          </template>
+        </sidenav-item>
+      </li>
 <!--       <li class="nav-item">
         <sidenav-item url="/tables" :class="getRoute() === 'tables' ? 'active' : ''" :navText="'Tables'">
           <template v-slot:icon>

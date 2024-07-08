@@ -1,6 +1,7 @@
+const url = 'http://192.168.2.171:5000'
 const DashboardService = {
     async getEnergyValues() {
-        return await fetch('http://192.168.2.171:5000/community/total')
+        return await fetch(url + '/community/total')
             .then(res => res.json())
             .then(res => {
                 return [Math.round(res.consumption), Math.round(res.generation), Math.round(res.flexibility)];
@@ -10,7 +11,7 @@ const DashboardService = {
             });
     },
     async getMembers() {
-        return await fetch('http://192.168.2.171:5000/community')
+        return await fetch(url + '/community')
             .then(res => res.json())
             .then(res => {
                 return res.community.length;
@@ -20,7 +21,7 @@ const DashboardService = {
             });
     },
     async getEnergyHistoric() {
-        return await fetch('http://192.168.2.171:5000/historic/total')
+        return await fetch(url + '/historic/total')
             .then(res => res.json())
             .then(res => {
                 return [res.hours, res.consumption, res.generation, res.flexibility];

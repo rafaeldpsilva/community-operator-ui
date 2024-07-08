@@ -31,7 +31,7 @@
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Time</th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Accepted</th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Declined</th>
-              <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Pending
+              <th class="align-start text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Pending
               </th>
             </tr>
           </thead>

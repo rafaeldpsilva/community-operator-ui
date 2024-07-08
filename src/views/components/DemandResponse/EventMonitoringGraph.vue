@@ -112,11 +112,21 @@ export default defineComponent({
         containLabel: true
       },
       xAxis: {
+        name: 'Minutes (m)',
+        nameLocation: 'middle',
+        nameTextStyle:{
+            padding: [5, 0, 0, 0]
+        },
         type: 'category',
         boundaryGap: false,
         data: [0, 10, 20, 30, 40, 50, 60]
       },
       yAxis: {
+        name: 'Energy (Wh)',
+        nameLocation: 'middle',
+        nameTextStyle:{
+            padding: [0, 0, 35, 0]
+        },
         type: 'value'
       },
       series: [

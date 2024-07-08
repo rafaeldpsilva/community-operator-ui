@@ -23,11 +23,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="p in participants" :key="p.name">
+            <tr v-for="p in participants" :key="p.fairscore">
               <td>
                 <div class="d-flex px-2 py-1">
                   <div class="d-flex flex-column justify-content-center">
-                    <h6 class="mb-0 text-sm">{{ p.name }}</h6>
+                    <h6 class="mb-0 text-sm" :class="mainParticipants.includes(p.name) ? 'text-success' : ''">{{ p.name }}</h6>
                   </div>
                 </div>
               </td>
@@ -66,6 +66,7 @@ export default {
   name: "ranking-table",
   data() {
     return {
+      mainParticipants: [],
       participants: [],
       loading: true,
     }
@@ -77,11 +78,21 @@ export default {
     async getRanking(){
       this.loading = true;
       let response = await DemandResponseService.getRanking();
-      var json = [];
-      for (const iot of response['ranking']) {
-          json.push({'name':iot[7],'flexibility':iot[0],'metric1':iot[1],'metric2':iot[2],'metric3':iot[3],'metric4':iot[4], 'totalscore':iot[5].toFixed(2),'fairscore':iot[6]})
-      }
-      this.participants = json 
+      let transformedData = Object.entries(response['ranking']).map(([name, values]) => {
+        return {
+            name: name,
+            flexibility: values.flexibility,
+            metric1: values.metric_1,
+            metric2: values.metric_2,
+            metric3: values.metric_3,
+            metric4: values.metric_4,
+            totalscore: values.total_score.toFixed(2), // Rounding to 2 decimal places
+            fairscore: values.fair_score
+        };
+      });
+      transformedData.sort((a, b) => b.fairscore - a.fairscore);
+      this.participants = transformedData
+      this.mainParticipants = response['main_participants']
       this.loading = false;
     },
   }

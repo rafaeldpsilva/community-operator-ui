@@ -21,6 +21,7 @@ import {
 } from 'echarts/components';
 import VChart, { THEME_KEY } from 'vue-echarts';
 import { ref, defineComponent } from 'vue';
+import DemandResponseService from '../../../services/demandresponse/DemandResponseService.js';
 
 use([
   CanvasRenderer,
@@ -49,10 +50,21 @@ export default defineComponent({
     [THEME_KEY]: 'light',
   },
   mounted() {
-    
+    this.getMetricsAverage();
   },
   methods: {
-    
+    async getMetricsAverage(){
+      const average = await DemandResponseService.getMetricsAverage()
+      console.log(average)
+      const transformedMetrics = Object.entries(average).map(([key, value]) => {
+        return {
+            value: value,
+            name: key
+        };
+      });
+      console.log(transformedMetrics)
+      this.option.series[0].data = transformedMetrics
+    }
   },
   setup() {
     const option = ref({
@@ -64,10 +76,10 @@ export default defineComponent({
         left: 'center',
         top: 'bottom',
         data: [
-          'metric1',
-          'metric2',
-          'metric3',
-          'metric4'
+          'metric_1',
+          'metric_2',
+          'metric_3',
+          'metric_4'
         ]
       },
       series: [
@@ -87,12 +99,7 @@ export default defineComponent({
               show: true
             }
           },
-          data: [
-            { value: 12.39, name: 'metric1' },
-            { value: 11.7, name: 'metric2' },
-            { value: 14.5, name: 'metric3' },
-            { value: 19.76, name: 'metric4' },
-          ]
+          data: []
         }
       ]
     });

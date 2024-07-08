@@ -1,13 +1,14 @@
+const url = 'http://192.168.2.171:5000'
 const DemandResponseService =  {
   async getLastDREvent(){
-    return await fetch('http://192.168.2.171:5000/demandresponse/last')
+    return await fetch(url + '/demandresponse/last')
       .then(res => res.json())
       .then(res =>{
         return res
       })
   },
   async getIotForecast(){
-    return await fetch('http://192.168.2.171:5000/demandresponse/forecast')
+    return await fetch(url + '/demandresponse/forecast')
       .then(res => res.json())
       .then(res =>{
         return res.iots_flexibility_forecast
@@ -15,7 +16,7 @@ const DemandResponseService =  {
   },
 
   async getDRO(){
-    return await fetch('http://192.168.2.171:5000/demandresponse/dro')
+    return await fetch(url + '/demandresponse/dro')
       .then(res => res.json())
       .then(res =>{
         return res
@@ -23,7 +24,7 @@ const DemandResponseService =  {
   },
 
   async getRanking(){
-    return await fetch('http://192.168.2.171:5000/demandresponse/ranking')
+    return await fetch(url + '/demandresponse/ranking')
       .then(res => res.json())
       .then(res =>{
         return res
@@ -31,7 +32,7 @@ const DemandResponseService =  {
   },
 
   async getUpcomingEvents(){
-    return await fetch('http://192.168.2.171:5000/demandresponse/upcoming')
+    return await fetch(url + '/demandresponse/upcoming')
       .then(res => res.json())
       .then(res =>{
         return res.upcoming_events
@@ -39,7 +40,7 @@ const DemandResponseService =  {
   },
 
   async getEvents(date){
-    return await fetch('http://192.168.2.171:5000/demandresponse/events',{
+    return await fetch(url + '/demandresponse/events',{
       method: 'POST',
       body: JSON.stringify({"date": date.toISOString().split('T')[0]}),
       headers: {
@@ -54,15 +55,15 @@ const DemandResponseService =  {
   },
 
   async getMetricsAverage(){
-    return await fetch('http://192.168.2.171:5000/demandresponse/metrics')
+    return await fetch(url + '/demandresponse/metrics')
       .then(res => res.json())
       .then(res =>{
-        return [res.names, res.metrics, res.datetime]
+        return res
       })
   },
 
   async postInviteParticipants(){
-    return await fetch('http://192.168.2.171:5000/demandresponse/invite',{
+    return await fetch(url + '/demandresponse/invite',{
       method: 'POST'})
       .then(res => res.json())
       .then(res =>{
@@ -70,7 +71,7 @@ const DemandResponseService =  {
       })
   },
   async setEventHour(event_hour){
-    return await fetch('http://192.168.2.171:5000/demandresponse/event_hour',{
+    return await fetch(url + '/demandresponse/event_hour',{
       method: 'POST',
       body: JSON.stringify({"event_hour": event_hour}),
       headers: {
@@ -84,21 +85,21 @@ const DemandResponseService =  {
       })
   },
   async getMonitoring(){
-    return await fetch('http://192.168.2.171:5000/demandresponse/monitoring')
+    return await fetch(url + '/demandresponse/monitoring')
       .then(res => res.json())
       .then(res =>{
         return res
       })
   },
   async getBenefits(){
-    return await fetch('http://192.168.2.171:5000/demandresponse/benefits')
+    return await fetch(url + '/demandresponse/benefits')
       .then(res => res.json())
       .then(res =>{
         return res
       })
   },
   async getDemandResponseEvent(event_time){
-    return await fetch('http://192.168.2.171:5000/demandresponse/event',{
+    return await fetch(url + '/demandresponse/event',{
       method: 'POST',
       body: JSON.stringify({"event_time": event_time}),
       headers: {

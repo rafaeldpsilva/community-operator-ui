@@ -31,8 +31,8 @@ const routes = [
     component: Batteries,
   },
   {
-    path: "/tables",
-    name: "Tables",
+    path: "/members",
+    name: "Members",
     component: Tables,
   },
   {

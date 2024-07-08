@@ -1,6 +1,7 @@
+const url = 'http://192.168.2.171:5000'
 const BatteryService = {
   async getCommunityBatteries() {
-    return await fetch('http://192.168.2.171:5000/batteries')
+    return await fetch(url + '/batteries')
       .then(res => res.json())
       .then(res => {
         return res.batteries
@@ -11,7 +12,7 @@ const BatteryService = {
   },
 
   async getBatteriesTable() {
-    return await fetch('http://192.168.2.171:5000/batteries/table')
+    return await fetch(url + '/batteries/table')
       .then(res => res.json())
       .then(res => {
         return res
@@ -22,7 +23,7 @@ const BatteryService = {
   },
 
   async getBatteriesOptimization() {
-    return await fetch('http://192.168.2.171:5000/batteries/optimization')
+    return await fetch(url + '/batteries/optimization')
       .then(res => res.json()).catch(error => {
         console.error('Error fetching energy values:', error);
         return [0, 0, 0];
@@ -30,7 +31,7 @@ const BatteryService = {
   },
 
   async getBatteriesHistoric() {
-    return await fetch('http://192.168.2.171:5000/batteries/historic')
+    return await fetch(url + '/batteries/historic')
       .then(res => res.json()).catch(error => {
         console.error('Error fetching energy values:', error);
         return [0, 0, 0];

@@ -74,17 +74,27 @@
                     data: ['Consumption', 'Generation', 'Flexibility']
                 },
                 grid: {
-                    left: '3%',
-                    right: '4%',
+                    left: '4%',
+                    right: '5%',
                     bottom: '3%',
                     containLabel: true
                 },
                 xAxis: {
+                    name: 'Hours (h)',
+                    nameLocation: 'middle',
+                    nameTextStyle:{
+                        padding: [5, 0, 0, 0]
+                    },
                     type: 'category',
                     boundaryGap: false,
                     data: [0]
                 },
                 yAxis: {
+                    name: 'Energy (Wh)',
+                    nameLocation: 'middle',
+                    nameTextStyle:{
+                        padding: [0, 0, 35, 0]
+                    },
                     type: 'value'
                 },
                 series: [

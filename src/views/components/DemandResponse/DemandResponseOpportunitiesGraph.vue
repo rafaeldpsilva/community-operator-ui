@@ -109,7 +109,7 @@ export default defineComponent({
       const array = Array(24).fill(NaN);
       Object.keys(dro['surplus']).forEach(key => {
           const hour = parseInt(key);
-          array[hour] = dro['surplus'][key] + this.option.series[1].data[key];
+          array[hour] = dro['surplus'][key] + this.option.series[0].data[key];
       });
       this.option.series[4].data = array;
 

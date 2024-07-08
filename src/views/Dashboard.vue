@@ -56,7 +56,7 @@ export default {
             stats: {
                 consumption: {
                     title: "Consumption",
-                    value: "0 W",
+                    value: "-- W",
                     percentage: "",
                     iconClass: "fa fa-bolt",
                     detail: "",
@@ -64,7 +64,7 @@ export default {
                 },
                 generation: {
                     title: "Generation",
-                    value: "0 W",
+                    value: "-- W",
                     percentage: "",
                     iconClass: "fa fa-sun",
                     iconBackground: "bg-gradient-danger",
@@ -72,7 +72,7 @@ export default {
                 },
                 flexibility: {
                     title: "Flexibility",
-                    value: "0 W",
+                    value: "-- W",
                     percentage: "",
                     iconClass: "ni ni-sound-wave",
                     percentageColor: "text-danger",
@@ -81,7 +81,7 @@ export default {
                 },
                 members: {
                     title: "Members",
-                    value: "4",
+                    value: "--",
                     percentage: "",
                     iconClass: "fa fa-user",
                     iconBackground: "bg-gradient-warning",

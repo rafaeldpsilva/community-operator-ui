@@ -127,12 +127,17 @@
                     data: []
                 },
                 grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
+                    left: '4%',
+                    right: '5%',
+                    bottom: '4%',
                     containLabel: true
                 },
                 xAxis: {
+                    name: 'Hours (h)',
+                    nameLocation: 'middle',
+                    nameTextStyle:{
+                        padding: [5, 0, 0, 0]
+                    },
                     type: 'category',
                     boundaryGap: false,
                     data: [],
@@ -155,6 +160,11 @@
                     },
                 },
                 yAxis: {
+                    name: 'Energy (kWh)',
+                    nameLocation: 'middle',
+                    nameTextStyle:{
+                        padding: [0, 0, 35, 0]
+                    },
                     type: 'value'
                 },
                 series: []
