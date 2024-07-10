@@ -106,7 +106,7 @@ export default {
       } else {
         var json = [];
         for (const ev of todayEvents) {
-          json.push({ "time": ev[0], "accept": ev[1], "declined": ev[2], "pending": ev[3] })
+          json.push({ "time": ev[0], "accept": ev[1]["accepted"], "declined": ev[1]["declined"], "pending": ev[1]["pending"] })
         }
         this.events = json
       }
