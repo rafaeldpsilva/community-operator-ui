@@ -1,35 +1,18 @@
 <template>
-    <Transition name="modal">
-        <div v-if="show" class="modal-mask" @keydown.esc="close()">
-            <div class="modal-container">
-                <div class="modal-header ">
-                    <div class="d-flex justify-content-between w-100">
-                        <h5 name="header">Event</h5>
-                        <button class="btn btn-transparent align-self-start" type="button" aria-haspopup="true"
-                            aria-expanded="false" @click="close()">
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="card">
-                        <div class="pb-0 card-header mb-0" @click="getMonitoringValues()">
-                        <h6 >{{ title }}</h6>
-                        <p v-if="loading" class="text-sm" >
-                            <i class="fas fa-circle-notch fa-spin"></i>
-                            <span class="font-weight-bold">{{ detail1 }}</span>
-                        </p>
-                        </div>
-                        <div class="p-3 card-body">
-                        <div class="chart">
-                            <v-chart class="chart" :option="option" autoresize />
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="card">
+        <div class="pb-0 card-header mb-0" @click="getMonitoringValues()">
+        <h6 >{{ title }}</h6>
+        <p v-if="loading" class="text-sm" >
+            <i class="fas fa-circle-notch fa-spin"></i>
+            <span class="font-weight-bold">{{ detail1 }}</span>
+        </p>
         </div>
-    </Transition>
+        <div class="p-3 card-body">
+        <div class="chart">
+            <v-chart class="chart" :option="option" autoresize />
+        </div>
+        </div>
+    </div>
 </template>
 <script>
 import { use } from 'echarts/core';
@@ -57,7 +40,6 @@ export default defineComponent({
         VChart,
     },
     props: {
-        show: Boolean,
         event_time: String,
         title: {
             type: String,
@@ -91,31 +73,10 @@ export default defineComponent({
     methods: {
         async getMonitoringValues(){
             const response = await DemandResponseService.getDemandResponseEvent(this.event_time);
-            console.log('eventmonitoring', response['aggregated_balance'])
             if (response == false){
                 this.loading = false
             } else{
-                let aggregated_balance = response['aggregated_balance']
-                if (aggregated_balance[0][1] != null) {
-                    let corrections = aggregated_balance[1];
-                    
-                    for(let i = 0; i < corrections.length; i++){
-                        for(let j = 0; j < corrections[i].length; j++){
-                            if (j <= i){
-                                this.option.series[i+1].data.push(NaN);
-                            } else {
-                                //if (j == i){
-                                //    this.option.series[i+1].data.push(aggregated_balance[0][j])
-                                //}else{
-                                    this.option.series[i+1].data.push(corrections[i][j]);
-                                //}
-                            }
-                        }
-                        //this.option.series[i+1].data = corrections[i]
-                    }
-                }
-                console.log(this.option.series[1].data)
-                this.option.series[0].data = aggregated_balance[0];
+                this.option.series[0].data = response['aggregated_balance'];
             }
             this.loading = false;
         },
