@@ -29,6 +29,8 @@
           <thead>
             <tr>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Time</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Total</th>
+              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Reserve</th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Accepted</th>
               <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Declined</th>
               <th class="align-start text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Pending</th>
@@ -42,6 +44,12 @@
                     <h6 class="mb-0 text-sm">{{ event.time }}</h6>
                   </div>
                 </div>
+              </td>
+              <td class="limited-width">
+                <p class="text-xs font-weight-bold mb-0 text-black">{{ event.total }}</p>
+              </td>
+              <td class="limited-width">
+                <p class="text-xs font-weight-bold mb-0 text-black">{{ event.reserve }}</p>
               </td>
               <td class="limited-width">
                 <p class="text-xs font-weight-bold mb-0 text-success">{{ event.accept }}</p>
@@ -104,8 +112,29 @@ export default {
         this.events = []
       } else {
         var json = [];
-        for (const ev of todayEvents) {
-          json.push({ "time": ev[0], "accept": ev[1]["accepted"], "declined": ev[1]["declined"], "pending": ev[1]["pending"] })
+        for(const ev of todayEvents){
+          let total = 0;
+          
+          let accepted = 0;
+          for(const key in ev[1]['accepted']){
+            const len = ev[1]['accepted'][key].length
+            total += len;
+            accepted += len;
+          }
+          let declined = 0;
+          for(const key in ev[1]['declined']){
+            const len = ev[1]['declined'][key].length
+            total += len;
+            declined += len;
+          }
+          let pending = 0;
+          for(const key in ev[1]['pending']){
+            const len = ev[1]['pending'][key].length
+            total += len;
+            pending += len;
+          }
+          let reserve = total - accepted - declined - pending;
+          json.push({ "time": ev[0],"total": total, "reserve": reserve, "accept": accepted, "declined": declined, "pending": pending })
         }
         this.events = json
       }

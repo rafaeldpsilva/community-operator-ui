@@ -3,7 +3,7 @@ import Dashboard from "../views/Dashboard.vue";
 import DemandResponse from "../views/DemandResponse.vue";
 import Batteries from "../views/Batteries.vue";
 import Tables from "../views/Tables.vue";
-import Billing from "../views/Billing.vue";
+import P2P from "../views/P2P.vue";
 import VirtualReality from "../views/VirtualReality.vue";
 import Profile from "../views/Profile.vue";
 import Signup from "../views/Signup.vue";
@@ -36,9 +36,9 @@ const routes = [
     component: Tables,
   },
   {
-    path: "/billing",
-    name: "Billing",
-    component: Billing,
+    path: "/p2p",
+    name: "P2P",
+    component: P2P,
   },
   {
     path: "/virtual-reality",

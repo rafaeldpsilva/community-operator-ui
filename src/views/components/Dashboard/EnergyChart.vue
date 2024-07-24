@@ -102,18 +102,21 @@
                         name: 'Consumption',
                         type: 'line',
                         showSymbol: false,
+                        color: '#825ee4',
                         data: [0]
                     },
                     {
                         name: 'Generation',
                         type: 'line',
                         showSymbol: false,
+                        color: '#f56036',
                         data: [0]
                     },
                     {
                         name: 'Flexibility',
                         type: 'line',
                         showSymbol: false,
+                        color: '#2dce89',
                         data: [0]
                     }
                 ]

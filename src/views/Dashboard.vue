@@ -98,6 +98,9 @@ export default {
     mounted() {
         this.updateMonitoringValues();
         this.getMembers();
+        this.monitoringInterval = setInterval(() => {
+            this.updateMonitoringValues();
+        }, 5000);
     },
     methods: {
         async updateMonitoringValues() {
@@ -110,6 +113,9 @@ export default {
             let members = await DashboardService.getMembers();
             this.stats.members.value = members
         }
-    }
+    },
+    beforeUnmount() {
+        clearInterval(this.monitoringInterval);
+    },
 };
 </script>

@@ -23,7 +23,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="p in participants" :key="p.fairscore">
+            <tr v-for="p in limitedParticipants" :key="p.fairscore">
               <td>
                 <div class="d-flex px-2 py-1">
                   <div class="d-flex flex-column justify-content-center">
@@ -55,6 +55,11 @@
             </tr>
           </tbody>
       </table>
+      <div class="text-center mt-3">
+          <button @click="toggleShowMore" class="btn btn-invisible">
+            <i :class="showMore ? 'fas fa-angle-up' : 'fas fa-angle-down'"></i>
+          </button>
+        </div>
     </div>
   </div>
 </div></template>
@@ -67,8 +72,15 @@ export default {
   data() {
     return {
       mainParticipants: [],
+      showMore: false,
+      initialLimit: 5,
       participants: [],
       loading: true,
+    }
+  },
+  computed: {
+    limitedParticipants() {
+      return this.showMore ? this.participants : this.participants.slice(0, this.initialLimit);
     }
   },
   async mounted() {
@@ -95,6 +107,9 @@ export default {
       this.mainParticipants = response['main_participants']
       this.loading = false;
     },
+    toggleShowMore() {
+      this.showMore = !this.showMore;
+    }
   }
 }
 </script>

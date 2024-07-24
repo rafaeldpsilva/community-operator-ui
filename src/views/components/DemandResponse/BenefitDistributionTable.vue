@@ -26,7 +26,7 @@
                 </div>
               </td>
               <td class="align-middle text-center text-sm">
-                <p class="text-xs font-weight-bold mb-0">{{ benefit.benefit }}</p>
+                <p class="text-xs font-weight-bold mb-0">{{ parseFloat(benefit.benefit).toFixed(2) }}</p>
               </td>
             </tr>
           </tbody>

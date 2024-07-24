@@ -17,6 +17,13 @@
         </sidenav-item>
       </li>
       <li class="nav-item">
+        <sidenav-item url="/p2p" :class="getRoute() === 'p2p' ? 'active' : ''" :navText="'P2P Transactions'">
+          <template v-slot:icon>
+            <i class="fa fa-people-arrows text-danger text-sm opacity-10"></i>
+          </template>
+        </sidenav-item>
+      </li>
+      <li class="nav-item">
         <sidenav-item url="/batteries" :class="getRoute() === 'batteries' ? 'active' : ''" :navText="'Batteries'">
           <template v-slot:icon>
             <i class="fas fa-battery-three-quarters text-success text-sm opacity-10"></i>
