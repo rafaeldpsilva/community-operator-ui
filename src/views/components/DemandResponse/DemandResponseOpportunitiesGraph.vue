@@ -15,7 +15,8 @@
               Event Hour
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" :class="showDropdown ? 'show' : ''">
-              <div v-for="p in dropportunities" :key="p">
+              <a v-if="dropportunities.length == 0" class="dropdown-item" disabled>No Reducing Opportunities</a>
+              <div v-else v-for="p in dropportunities" :key="p">
                 <a class="dropdown-item" @click="setEventHour(p)">{{ p }}</a>
               </div>
             </div>
@@ -94,11 +95,8 @@ export default defineComponent({
       this.option.series[2].data = await ForecastService.getFlexibility()
       const dro = await DemandResponseService.getDRO()
 
-      if (dro['reducing'].length == 0){
-        this.dropportunities = ['No opportunities']
-      } else {
-        this.dropportunities = Object.keys(dro['reducing']).map(Number)
-      }
+      this.dropportunities = Object.keys(dro['reducing']).map(Number)
+      
       const periodArray = Array(24).fill(NaN);
       Object.keys(dro['reducing']).forEach(key => {
           const hour = parseInt(key);
@@ -165,12 +163,14 @@ export default defineComponent({
           name: 'Reducing',
           type: 'scatter',
           showSymbol: false,
+          color: '#596CFF',
           data: []
         },
         {
           name: 'Surplus',
           type: 'scatter',
           showSymbol: false,
+          color: '#F56565',
           data: []
         },
       ]
