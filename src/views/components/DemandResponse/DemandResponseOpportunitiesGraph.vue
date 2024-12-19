@@ -144,18 +144,21 @@ export default defineComponent({
           name: 'Consumption',
           type: 'line',
           showSymbol: false,
+          color: '#825ee4',
           data: []
         },
         {
           name: 'Generation',
           type: 'line',
           showSymbol: false,
+          color: '#f56036',
           data: []
         },
         {
           name: 'Flexibility',
           type: 'line',
           showSymbol: false,
+          color: '#2dce89',
           data: []
         },
         {

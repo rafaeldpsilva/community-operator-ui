@@ -8,10 +8,10 @@
         <div class="col-md-2 justify-content-end align-items-center">
           <div class="btn-group" role="group">
             <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked @click='loadCost'>
-            <label class="btn btn-outline-warning" for="btnradio1">Cost</label>
+            <label class="btn btn-outline-warning" for="btnradio1">Cost (€)</label>
 
             <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" @click='loadQuantity'>
-            <label class="btn btn-outline-warning" for="btnradio2">Quantity</label>
+            <label class="btn btn-outline-warning" for="btnradio2">Quantity (kW)</label>
           </div>
         </div>
       </div>
@@ -34,6 +34,7 @@ import {
   VisualMapComponent
 } from 'echarts/components';
 import CommunityService from '../../../services/community/CommunityService';
+import P2PService from '../../../services/p2p/P2PService';
 
 use([
   TooltipComponent,
@@ -50,12 +51,13 @@ export default defineComponent({
   props: {
     title: {
       type: String,
-      default: "To be defined",
+      default: "Transactions",
     }
   },
   data() {
     return {
-      transactions: [],
+      cost: [],
+      quantity: []
     }
   },
   async mounted() {
@@ -68,19 +70,19 @@ export default defineComponent({
       let bought = [];
       for (let x = 0; x < 27; x++) {
         for (let y = 0; y < 27; y++) {
-          if (this.transactions[x][y]==1){
-            const value =Math.floor(Math.random()*12);
-            if (value > max){
-              max = value;
-            }
-            if (y > x){
-              sold.push([y, x, value]);
-              bought.push([x, y, value]);
-            } 
+          let value = this.quantity[x][y].reduce(function (x, y) {
+              return x + y;
+          }, 0);
+          value = value /1000
+          if (x > y){
+            sold.push([y, x, Math.trunc(value)]);
+            bought.push([x, y, Math.trunc(value)]);
+          } 
+          if (value > max){
+            max = value;
           }
         }
       }
-      console.log(max)
       sold = sold.map((item) => {
         return [item[1], item[0], item[2] || '-'];
       });
@@ -96,15 +98,21 @@ export default defineComponent({
     loadCost(){
       let sold = [];
       let bought = [];
+      let max = 0;
       for (let x = 0; x < 27; x++) {
-        for (let y = 0; y < 27; y++) {
-          if (this.transactions[x][y]==1){
-            const value =Math.random().toFixed(2);
-            //const value =Math.floor(Math.random()* 11);
-            if (y > x){
-              sold.push([y, x, value]);
-              bought.push([x, y, value]);
-            } 
+        for (let y = 0; y < 27; y++) {  
+          const value = this.cost[x][y];
+          if (x > y){
+            if (value > 0){
+              sold.push([x, y, (value).toFixed(4)]);
+              bought.push([y, x, (value).toFixed(4)]);
+            } else{
+              sold.push([x, y, value]);
+              bought.push([y, x, value]);
+            }
+            if (value > max){
+            max = value;
+          }
           }
         }
       }
@@ -118,25 +126,18 @@ export default defineComponent({
       this.option.visualMap.precision = 2
       this.option.series[0].data = sold
       this.option.series[1].data = bought
-      this.option.visualMap.max = 1
+      this.option.visualMap.max = max
     },
     async loadP2PTransaction(){
       const members = await CommunityService.getCommunity();
       const names = members.map(building => building.name);
-      
+      const res = await P2PService.getBidding();
+      console.log(res)
+      this.cost = res['costs']
+      this.quantity = res['transactions']
+      console.log(this.cost)
       this.option.xAxis.data = names;
       this.option.yAxis.data = names;
-      for (let x = 0; x < 27; x++) {
-        this.transactions.push([])
-        for (let y = 0; y < 27; y++) {
-          this.transactions[x].push([])
-          if (Math.random()> 0.7){
-            this.transactions[x][y].push(1)
-          }else{
-            this.transactions[x][y].push(0)
-          }
-        }
-      }
       this.loadCost()
     }
   },
@@ -155,7 +156,7 @@ export default defineComponent({
               height: '80%',
               width: '85%',
               top: '10%',
-              left: '7%'
+              left: '5%'
           },
           xAxis: {
             name: 'Buyers',
@@ -198,7 +199,7 @@ export default defineComponent({
                 emphasis: {
                     itemStyle: {
                     shadowBlur: 10,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    shadowColor: 'rgba(20, 40, 0, 0.5)'
                     }
                 }
               },
