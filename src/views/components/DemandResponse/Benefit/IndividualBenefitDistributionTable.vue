@@ -30,13 +30,13 @@
                 </div>
               </td>
               <td class="align-middle text-center text-sm">
-                <p class="text-xs font-weight-bold mb-0">{{ benefit.contribution }}</p>
+                <p class="text-xs font-weight-bold mb-0">{{ (benefit.contribution).toFixed(4) }}</p>
               </td>
               <td class="align-middle text-center text-sm">
                 <p class="text-xs font-weight-bold mb-0">{{ benefit.eur }}</p>
               </td>
               <td class="align-middle text-center text-sm">
-                <p class="text-xs font-weight-bold mb-0">{{ benefit.penalization_f }}</p>
+                <p class="text-xs font-weight-bold mb-0">{{ (benefit.penalization_f).toFixed(4) }}</p>
               </td>
               <td class="align-middle text-center text-sm">
                 <p class="text-xs font-weight-bold mb-0">{{ benefit.penalization_p }}</p>

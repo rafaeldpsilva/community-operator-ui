@@ -2,8 +2,13 @@
   <div class="card mb-4">
     <div class="card-header pb-0">
       <div class="row">
-        <div class="col-md-11">
+        <div class="col-md-10">
           <h6 class="mb-0">Benefit Distribution</h6>
+        </div>
+        <div class="col-md-1 justify-content-end align-items-center">
+          <button class="btn btn-sm btn-warning mb-0" @click="distribute()">
+            <i class="fas fa-mail-bulk"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -64,6 +69,9 @@ export default {
     this.getBenefits()
   },
   methods: {
+    async distribute(){
+      await DemandResponseService.sendBenefits();
+    },
     async getBenefits(){
       const benefits = await DemandResponseService.getBenefits();
       this.detailedBenefits = benefits['detailed']

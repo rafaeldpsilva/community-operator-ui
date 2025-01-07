@@ -21,7 +21,7 @@
                             
                             <div class="col-1 d-flex align-items-center justify-content-center">
                                 <button class="btn btn-sm btn-warning mb-0 w-50" :class="isButtonDisabled ? 'disabled' : ''" @click="sendEventHour()">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                    <i class="fas fa-caret-right" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
@@ -117,7 +117,7 @@ export default {
     },
 }
 </script>
-<style>
+<style scoped>
 .modal-mask {
     position: fixed;
     z-index: 9999;
@@ -153,7 +153,7 @@ export default {
 
 .modal-header h5 {
     margin-top: 0;
-    color: orange;
+    color: #fb6340;
 }
 
 .modal-default-button {

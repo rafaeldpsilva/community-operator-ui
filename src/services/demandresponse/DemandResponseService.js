@@ -98,6 +98,20 @@ const DemandResponseService =  {
         return res
       })
   },
+  async sendBenefits(){
+    return await fetch(url + '/demandresponse/benefits',{
+      method: 'POST',
+      body: JSON.stringify({}),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(res =>{
+        return res
+      })
+  },
   async getDemandResponseEvent(event_time){
     return await fetch(url + '/demandresponse/event',{
       method: 'POST',
