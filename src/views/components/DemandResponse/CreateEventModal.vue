@@ -49,7 +49,7 @@
                                             <i class="fa fa-check" aria-hidden="true"></i>
                                         </button>
                                         <button class="btn btn-sm btn-danger mb-0 mx-1 w-0" @click="close()">
-                                            <i class="fa fa-close" aria-hidden="true"></i>
+                                            <i class="fa fa-times" aria-hidden="true"></i>
                                         </button>
                                     </div>
                                 </div>

@@ -9,7 +9,7 @@
           >
             ©
             {{ new Date().getFullYear() }},
-            <i class="fa fa-flash"></i> by
+            <i class="fas fa-bolt"></i> by
             <a
               href="https://www.gecad.isep.ipp.pt"
               class="font-weight-bold"
