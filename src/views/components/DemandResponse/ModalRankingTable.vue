@@ -13,15 +13,11 @@
             <thead>
               <tr>
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Flexibility</th>
-                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 tooltip">Metric 1
-                  <span class="tooltiptext">Description for Metric 1</span>
-                </th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Flexibility (kWh)</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Metric 1</th>
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Metric 2</th>
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Metric 3</th>
-                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 tooltip">Metric 4
-                  <span class="tooltiptext">Description for Metric 1</span>
-                </th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 ">Metric 4</th>
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Total Score</th>
                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Fair Score</th>
               </tr>
@@ -36,19 +32,19 @@
                   </div>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ p.flexibility }}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ p.flexibility/1000 }}</p>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ p.metric1 }}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ (p.metric1).toFixed(2) }}</p>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ p.metric2 }}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ (p.metric2).toFixed(2) }}</p>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ p.metric3 }}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ (p.metric3).toFixed(2) }}</p>
                 </td>
                 <td>
-                  <p class="text-xs font-weight-bold mb-0">{{ p.metric4 }}</p>
+                  <p class="text-xs font-weight-bold mb-0">{{ (p.metric4).toFixed(2) }}</p>
                 </td>
                 <td class="align-middle text-center text-sm">
                   <p class="text-xs font-weight-bold mb-0">{{ p.totalscore }}</p>

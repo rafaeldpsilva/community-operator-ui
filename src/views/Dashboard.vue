@@ -105,9 +105,9 @@ export default {
     methods: {
         async updateMonitoringValues() {
             let energyValues = await DashboardService.getEnergyValues();
-            this.stats.consumption.value = energyValues[0] + ' W';
-            this.stats.generation.value = energyValues[1] + ' W';
-            this.stats.flexibility.value = energyValues[2] + ' W';
+            this.stats.consumption.value = energyValues[0]/1000 + ' kW';
+            this.stats.generation.value = energyValues[1]/1000 + ' kW';
+            this.stats.flexibility.value = energyValues[2]/1000 + ' kW';
         },
         async getMembers(){
             let members = await DashboardService.getMembers();

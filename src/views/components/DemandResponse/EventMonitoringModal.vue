@@ -73,11 +73,25 @@ export default defineComponent({
     methods: {
         async getMonitoringValues(){
             const response = await DemandResponseService.getDemandResponseEvent(this.event_time);
+            console.log(response)
             if (response == false){
                 this.loading = false
-            } else{
-                this.option.series[0].data = response['aggregated_balance'];
+            } else {
+                this.option.series[0].data = response['aggregated_balance'][0];
             }
+
+            Object.keys(response['corrections']).forEach(key => {
+                const correctionNumber = parseInt(key.split(' ')[1]);
+                const array = response['corrections'][key];
+
+                if (array.length > 0) {
+                    const nanArray = Array(correctionNumber).fill(NaN);
+                    response['corrections'][key] = [...nanArray, ...array];
+                    this.option.series[correctionNumber].data = response['corrections'][key]
+                }
+            });
+
+            console.log(response['corrections']);
             this.loading = false;
         },
         close() {
@@ -90,7 +104,7 @@ export default defineComponent({
             trigger: 'axis'
         },
         legend: {
-            data: ['w/ DR', 'w/o DR', 'w/o Correction 1', 'w/o Correction 2', 'w/o Correction 3', 'w/o Correction 4', 'w/o Correction 5']
+            data: ['Aggregated Balance', 'Correction 1', 'Correction 2', 'Correction 3', 'Correction 4', 'Correction 5']
         },
         grid: {
             left: '3%',
@@ -99,52 +113,56 @@ export default defineComponent({
             containLabel: true
         },
         xAxis: {
+            name: 'Minutes (m)',
+            nameLocation: 'middle',
+            nameTextStyle:{
+                padding: [5, 0, 0, 0]
+            },
             type: 'category',
             boundaryGap: false,
             data: [0, 10, 20, 30, 40, 50, 60]
         },
         yAxis: {
+            name: 'Energy (Wh)',
+            nameLocation: 'middle',
+            nameTextStyle:{
+                padding: [0, 0, 35, 0]
+            },
             type: 'value'
         },
         series: [
             {
-            name: 'w/ DR',
+            name: 'Aggregated Balance',
             type: 'line',
             showSymbol: false,
             data: []
             },
             {
-            name: 'w/o DR',
+            name: 'Correction 1',
             type: 'line',
             showSymbol: false,
             data: []
             },
             {
-            name: 'w/o Correction 1',
+            name: 'Correction 2',
             type: 'line',
             showSymbol: false,
             data: []
             },
             {
-            name: 'w/o Correction 2',
+            name: 'Correction 3',
             type: 'line',
             showSymbol: false,
             data: []
             },
             {
-            name: 'w/o Correction 3',
+            name: 'Correction 4',
             type: 'line',
             showSymbol: false,
             data: []
             },
             {
-            name: 'w/o Correction 4',
-            type: 'line',
-            showSymbol: false,
-            data: []
-            },
-            {
-            name: 'w/o Correction 5',
+            name: 'Correction 5',
             type: 'line',
             showSymbol: false,
             data: []

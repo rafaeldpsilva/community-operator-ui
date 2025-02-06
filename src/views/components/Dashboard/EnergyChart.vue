@@ -59,9 +59,9 @@
             async loadOverview() {
                 let overview = await DashboardService.getEnergyHistoric();
                 this.option.xAxis.data = overview[0]
-                this.option.series[0].data = overview[1];
-                this.option.series[1].data = overview[2];
-                this.option.series[2].data = overview[3];
+                this.option.series[0].data = overview[1].map(element => element / 1000);
+                this.option.series[1].data = overview[2].map(element => element / 1000);
+                this.option.series[2].data = overview[3].map(element => element / 1000);
                 this.loading = false;
             },
         },
@@ -74,7 +74,7 @@
                     data: ['Consumption', 'Generation', 'Flexibility']
                 },
                 grid: {
-                    left: '4%',
+                    left: '5%',
                     right: '5%',
                     bottom: '3%',
                     containLabel: true
@@ -90,7 +90,7 @@
                     data: [0]
                 },
                 yAxis: {
-                    name: 'Energy (Wh)',
+                    name: 'Energy (kWh)',
                     nameLocation: 'middle',
                     nameTextStyle:{
                         padding: [0, 0, 35, 0]

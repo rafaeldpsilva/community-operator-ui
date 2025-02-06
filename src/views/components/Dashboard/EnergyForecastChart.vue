@@ -59,9 +59,12 @@
             async loadOverview() {
                 
                 this.option.xAxis.data = [...Array(24).keys()];
-                this.option.series[0].data = await ForecastService.getConsumption();
-                this.option.series[1].data = await ForecastService.getGeneration();
-                this.option.series[2].data = await ForecastService.getFlexibility();
+                const consumption = await ForecastService.getConsumption()
+                this.option.series[0].data = consumption.map(element => element / 1000);
+                const generation = await ForecastService.getGeneration();
+                this.option.series[1].data = generation.map(element => element / 1000);
+                const flexibility = await ForecastService.getFlexibility();
+                this.option.series[2].data = flexibility.map(element => element / 1000);
                 this.loading = false;
             },
         },
@@ -74,7 +77,7 @@
                     data: ['Consumption', 'Generation', 'Flexibility']
                 },
                 grid: {
-                    left: '4%',
+                    left: '7%',
                     right: '5%',
                     bottom: '3%',
                     containLabel: true
@@ -90,7 +93,7 @@
                     data: [0]
                 },
                 yAxis: {
-                    name: 'Energy (Wh)',
+                    name: 'Energy (kWh)',
                     nameLocation: 'middle',
                     nameTextStyle:{
                         padding: [0, 0, 35, 0]
